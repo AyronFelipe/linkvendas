@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Header extends React.Component{
 
@@ -7,16 +8,9 @@ export default class Header extends React.Component{
 			<header>
 				<nav className="navbar navbar-light bg-primary justify-content-between">
 					<a className="navbar-brand">NorteLink</a>
-					<form className="navbar-left navbar-form nav-search" action="">
-						<div className="input-group">
-							<input type="text" placeholder="Search ..." className="form-control" />
-							<div className="input-group-append">
-								<span className="input-group-text">
-									<i className="fa fa-search search-icon"></i>
-								</span>
-							</div>
-						</div>
-					</form>
+					<Link to="/login/">
+						<button className="btn btn-outline-light my-2 my-sm-0" type="submit">Login</button>
+					</Link>
 				</nav>
 			</header>
 		)
