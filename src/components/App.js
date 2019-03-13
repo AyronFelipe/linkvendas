@@ -5,23 +5,23 @@ import Login from './Login';
 
 class Initial extends React.Component{
 
-	render(){
-		return(
-			<Header />
-		)
-	}
+    render(){
+        return(
+            <Header />
+        )
+    }
 }
 
 export default class App extends React.Component{
 
-	render(){
-		return(
-			<Router>
-				<React.Fragment>
-					<Route path='/' exact component={Initial} />
-					<Route path='/login/' component={Login} />
-				</React.Fragment>
-			</Router>
-		)
-	}
+    render(){
+        return(
+            <Router>
+                <React.Fragment>
+                    <Route path='/' exact component={Initial} />
+                    <Route path='/login/' component={Login} />
+                </React.Fragment>
+            </Router>
+        )
+    }
 }
