@@ -15,10 +15,10 @@ export default class Login extends React.Component{
 
     render(){
         return(
-            <div className="login">
+            <div className="login" style={{ backgroundColor: '#1565c0' }}>
                 <div className="wrapper wrapper-login">
                     <div className="container container-login animated fadeIn">
-                        <h3 className="text-center">Login</h3>
+                        <h3 className="text-center"><i className="icon-login" style={{ marginRight: '5px' }}></i> Login</h3>
                         <div className="login-form">
                             <div className="form-group form-floating-label">
                                 <input id="usuario" name="usuario" type="text" className="form-control input-border-bottom" required />
