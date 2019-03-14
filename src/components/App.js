@@ -1,16 +1,14 @@
 import React from 'react';
-import Header from './Header';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './Login';
 import MainExternal from './MainExternal';
+import Clientes from './Clientes';
 
 class Initial extends React.Component{
 
     render(){
         return(
-            <div className="wrapper">
-                <MainExternal />
-            </div>
+            <MainExternal />
         )
     }
 }
@@ -20,10 +18,11 @@ export default class App extends React.Component{
     render(){
         return(
             <Router>
-                <React.Fragment>
+                <div className="wrapper">
                     <Route path='/' exact component={Initial} />
                     <Route path='/login/' component={Login} />
-                </React.Fragment>
+                    <Route path='/clientes/' component={Clientes} />
+                </div>
             </Router>
         )
     }

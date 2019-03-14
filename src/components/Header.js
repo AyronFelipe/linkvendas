@@ -6,11 +6,25 @@ export default class Header extends React.Component{
     render(){
         return(
             <header className="main-header">
-                <nav className="navbar navbar-light bg-primary justify-content-between">
-                    <a className="navbar-brand">NorteLink</a>
-                    <Link to="/login/">
-                        <button className="btn btn-outline-light btn-round my-2 my-sm-0" type="submit">Login</button>
-                    </Link>
+                <div className="logo-header" data-background-color="blue">
+                    <a href="#" className="logo">
+                        <img src="../../assets/images/logo.png" style={{ height: '35px', width: '108px' }} alt="navbar brand" className="navbar-brand" />
+                    </a>
+                    <button className="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon">
+                            <i className="icon-menu"></i>
+                        </span>
+                    </button>
+                    <button className="topbar-toggler more"><i className="icon-options-vertical"></i></button>
+                    <div className="nav-toggle">
+                        <button className="btn btn-toggle toggle-sidebar">
+                            <i className="icon-menu"></i>
+                        </button>
+                    </div>
+                </div>
+                <nav className="navbar navbar-header navbar-expand-lg" data-background-color="blue">
+                    <div className="container-fluid">
+                    </div>
                 </nav>
             </header>
         )

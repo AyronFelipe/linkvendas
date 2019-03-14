@@ -15,24 +15,26 @@ export default class MainExternal extends React.Component{
                     </div>
                     <div className="login-aside w-50 d-flex align-items-center justify-content-center bg-primary-gradient">
                         <div className="container container-login container-transparent animated fadeIn">
-                            <h1 className="text-center text-white page-title">Gerenciamento de Pré-vendas</h1>
+                            <h1 className="text-center text-white page-title"><i className="fas fa-cog"></i> Gerenciamento de Pré-vendas</h1>
                             <div className="row">
                                 <div className="col-md-6 col-sm-12">
                                     <div className="card card-stats card-primary card-round">
-                                        <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-5">
-                                                    <div className="icon-big text-center">
-                                                        <i className="flaticon-users"></i>
+                                        <Link to="/clientes/">
+                                            <div className="card-body">
+                                                <div className="row">
+                                                    <div className="col-5">
+                                                        <div className="icon-big text-center">
+                                                            <i className="flaticon-users"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="col-7 col-stats">
-                                                    <div className="numbers">
-                                                        <p className="card-category">Clientes</p>
+                                                    <div className="col-7 col-stats">
+                                                        <div className="numbers">
+                                                            <p className="card-category">Clientes</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="col-md-6 col-sm-12">
