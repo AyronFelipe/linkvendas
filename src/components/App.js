@@ -2,12 +2,15 @@ import React from 'react';
 import Header from './Header';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Login from './Login';
+import MainExternal from './MainExternal';
 
 class Initial extends React.Component{
 
     render(){
         return(
-            <Header />
+            <div className="wrapper">
+                <MainExternal />
+            </div>
         )
     }
 }

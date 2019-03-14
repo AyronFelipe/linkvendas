@@ -15,7 +15,7 @@ export default class Login extends React.Component{
 
     render(){
         return(
-            <div className="login" style={{ backgroundColor: '#1565c0' }}>
+            <div className="login bg-primary-gradient">
                 <div className="wrapper wrapper-login">
                     <div className="container container-login animated fadeIn">
                         <h3 className="text-center"><i className="icon-login" style={{ marginRight: '5px' }}></i> Login</h3>
