@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import SideMenu from './SideMenu';
 
 export default class Clientes extends React.Component{
 
@@ -7,6 +8,7 @@ export default class Clientes extends React.Component{
         return(
             <React.Fragment>
                 <Header />
+                <SideMenu />
                 <div className="main-panel">
                     <div className="content">
                         <div className="panel-header bg-primary-gradient">
