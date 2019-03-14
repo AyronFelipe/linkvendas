@@ -24,6 +24,12 @@ export default class Header extends React.Component{
                 </div>
                 <nav className="navbar navbar-header navbar-expand-lg" data-background-color="blue">
                     <div className="container-fluid">
+                        <ul className="navbar-nav topbar-nav ml-md-auto align-items-center">
+                            <li className="nav-item">
+                                <a href="#" className="nav-link">
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </header>
