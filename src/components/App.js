@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './Login';
 import MainExternal from './MainExternal';
 import Clientes from './Clientes';
+import NovoCliente from './NovoCliente';
 
 class Initial extends React.Component{
 
@@ -21,7 +22,8 @@ export default class App extends React.Component{
                 <div className="wrapper">
                     <Route path='/' exact component={Initial} />
                     <Route path='/login/' component={Login} />
-                    <Route path='/clientes/' component={Clientes} />
+                    <Route path='/clientes/' exact component={Clientes} />
+                    <Route path='/novo-cliente/' component={NovoCliente} />
                 </div>
             </Router>
         )

@@ -43,7 +43,7 @@ export default class MainExternal extends React.Component{
                                             <div className="row">
                                                 <div className="col-5">
                                                     <div className="icon-big text-center">
-                                                        <i class="la flaticon-box-1"></i>
+                                                        <i className="la flaticon-box-1"></i>
                                                     </div>
                                                 </div>
                                                 <div className="col-7 col-stats">
