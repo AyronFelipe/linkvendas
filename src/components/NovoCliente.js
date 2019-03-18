@@ -18,7 +18,6 @@ export default class NovoCliente extends React.Component{
     }
 
     render(){
-        console.log(this.state.showInscEstadual)
         return(
             <React.Fragment>
                 <Header />
@@ -159,11 +158,11 @@ export default class NovoCliente extends React.Component{
                                                         <div className="form-check">
                                                             <p className="text-muted">Sexo</p><br />
                                                             <label className="form-radio-label">
-                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="M" />
+                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="M" name="sexo" />
                                                                 <span className="form-radio-sign text-muted">Masculino</span>
                                                             </label>
                                                             <label className="form-radio-label ml-3">
-                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="F" />
+                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="F" name="sexo" />
                                                                 <span className="form-radio-sign text-muted">Feminino</span>
                                                             </label>
                                                         </div>
@@ -171,7 +170,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-check">
                                                             <label className="form-check-label mt-md-5">
-                                                                <input className="form-check-input" type="checkbox" value="true" />
+                                                                <input className="form-check-input" type="checkbox" value="true" name="consumidor" />
                                                                 <span className="form-check-sign">O cliente é consumidor final?</span>
                                                             </label>
                                                         </div>
@@ -179,7 +178,7 @@ export default class NovoCliente extends React.Component{
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button className="btn btn-primary btn-lg btn-block"><i class="fas fa-save"></i> Salvar</button>
+                                                        <button className="btn btn-primary btn-lg btn-block"><i className="fas fa-save"></i> Salvar</button>
                                                     </div>
                                                 </div>
                                             </form>
