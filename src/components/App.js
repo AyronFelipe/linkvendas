@@ -4,6 +4,7 @@ import Login from './Login';
 import MainExternal from './MainExternal';
 import Clientes from './Clientes';
 import NovoCliente from './NovoCliente';
+import Produtos from './Produtos';
 
 class Initial extends React.Component{
 
@@ -24,6 +25,7 @@ export default class App extends React.Component{
                     <Route path='/login/' component={Login} />
                     <Route path='/clientes/' exact component={Clientes} />
                     <Route path='/novo-cliente/' component={NovoCliente} />
+                    <Route path='/produtos/' exact component={Produtos} />
                 </div>
             </Router>
         )
