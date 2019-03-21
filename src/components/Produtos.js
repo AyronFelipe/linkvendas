@@ -4,6 +4,14 @@ import SideMenu from './SideMenu';
 
 export default class Produtos extends React.Component{
 
+    componentDidMount() {
+        $('#basic-datatables').DataTable({
+            "language": {
+                "url": '//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'
+            }
+        });
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -30,7 +38,7 @@ export default class Produtos extends React.Component{
                                         </div>
                                         <div className="card-body">
                                             <div className="table-responsive">
-                                                <table className="table mt-3">
+                                                <table className="table mt-3" id="basic-datatables">
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>

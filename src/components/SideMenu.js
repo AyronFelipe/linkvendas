@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export default class SideMenu extends React.Component{
 
@@ -9,11 +10,28 @@ export default class SideMenu extends React.Component{
                     <div className="sidebar-content">
                         <ul className="nav nav-primary">
                             <li className="nav-item">
-                                <a data-toggle="collapse" href="#dashboard" className="collapsed" aria-expanded="false">
-                                    <i className="fas fa-home"></i>
-                                    <p>Início</p>
-                                    <span className="caret"></span>
-                                </a>
+                                <Link to="/clientes/">
+                                    <div data-toggle="collapse" className="collapsed" aria-expanded="false">
+                                        <i className="flaticon-users"></i>
+                                        <p>Clientes</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/produtos/">
+                                    <div data-toggle="collapse" className="collapsed" aria-expanded="false">
+                                        <i className="la flaticon-box-1"></i>
+                                        <p>Produtos</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/pre-vendas/">
+                                    <div data-toggle="collapse" className="collapsed" aria-expanded="false">
+                                        <i className="flaticon-success"></i>
+                                        <p>Pré-vendas</p>
+                                    </div>
+                                </Link>
                             </li>
                         </ul>
                     </div>

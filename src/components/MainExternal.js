@@ -77,20 +77,22 @@ export default class MainExternal extends React.Component{
                                 </div>
                                 <div className="col-md-6 col-sm-12">
                                     <div className="card card-stats card-secondary card-round">
-                                        <div className="card-body ">
-                                            <div className="row">
-                                                <div className="col-5">
-                                                    <div className="icon-big text-center">
-                                                        <i className="flaticon-success"></i>
+                                        <Link to="/pre-vendas/">
+                                            <div className="card-body ">
+                                                <div className="row">
+                                                    <div className="col-5">
+                                                        <div className="icon-big text-center">
+                                                            <i className="flaticon-success"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="col-7 col-stats">
-                                                    <div className="numbers">
-                                                        <p className="card-category">Pré-vendas</p>
+                                                    <div className="col-7 col-stats">
+                                                        <div className="numbers">
+                                                            <p className="card-category">Pré-vendas</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

@@ -5,6 +5,8 @@ import MainExternal from './MainExternal';
 import Clientes from './Clientes';
 import NovoCliente from './NovoCliente';
 import Produtos from './Produtos';
+import Prevendas from './Prevendas';
+import NovaPrevenda from './NovaPrevenda';
 
 class Initial extends React.Component{
 
@@ -26,6 +28,8 @@ export default class App extends React.Component{
                     <Route path='/clientes/' exact component={Clientes} />
                     <Route path='/novo-cliente/' component={NovoCliente} />
                     <Route path='/produtos/' exact component={Produtos} />
+                    <Route path='/pre-vendas/' exact component={Prevendas} />
+                    <Route path='/nova-pre-venda/' component={NovaPrevenda} />
                 </div>
             </Router>
         )
