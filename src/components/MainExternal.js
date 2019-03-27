@@ -10,10 +10,10 @@ export default class MainExternal extends React.Component{
                     <div className="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center bg-white">
                         <img src="../../assets/images/logo.png" className="img-fluid d-none d-sm-block" alt="Logo Responsive" />
                         <Link to="/login/">
-                            <button className="btn btn-primary btn-lg mt-5 d-none d-sm-block"><i className="icon-login mr-2"></i> Login</button>
+                            <button className="btn btn-nortelink btn-lg mt-5 d-none d-sm-block"><i className="icon-login mr-2"></i> Login</button>
                         </Link>
                     </div>
-                    <div className="login-aside w-50 d-flex align-items-center justify-content-center bg-primary-gradient">
+                    <div className="login-aside w-50 d-flex align-items-center justify-content-center bg-nortelink">
                         <div className="container container-login container-transparent animated fadeIn">
                             <h1 className="text-center text-white page-title"><i className="fas fa-cog"></i> Gerenciamento de Pré-vendas</h1>
                             <div className="row">

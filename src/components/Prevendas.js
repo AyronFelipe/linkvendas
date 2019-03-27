@@ -20,16 +20,16 @@ export default class Prevendas extends React.Component{
                 <SideMenu />
                 <div className="main-panel">
                     <div className="content">
-                        <div className="panel-header bg-primary-gradient">
+                        <div className="panel-header bg-nortelink">
                             <div className="page-inner py-5">
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
-                                        <h2 className="text-white pb-2 fw-bold">Gerenciamento de Prevendas</h2>
+                                        <h2 className="text-white pb-2 fw-bold">Gerenciamento de Pré-vendas</h2>
                                         <h5 className="text-white op-7 mb-2">Nesta seção você pode buscar e cadastrar suas pré-vendas</h5>
                                     </div>
                                     <div className="ml-md-auto py-2 py-md-0">
                                         <Link to="/nova-pre-venda/">
-                                            <button className="btn btn-primary btn-round"><i className="la flaticon-add mr-2"></i> Cadastrar Pré-venda</button>
+                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Cadastrar Pré-venda</button>
                                         </Link>
                                     </div>
                                 </div>
@@ -49,6 +49,7 @@ export default class Prevendas extends React.Component{
                                                         <tr>
                                                             <th>Número</th>
                                                             <th>Período</th>
+                                                            <th>Ações</th>
                                                         </tr>
                                                     </thead>
                                                 </table>

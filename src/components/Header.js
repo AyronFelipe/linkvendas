@@ -5,9 +5,9 @@ export default class Header extends React.Component{
     render(){
         return(
             <header className="main-header">
-                <div className="logo-header" data-background-color="blue">
+                <div className="logo-header" data-background-color="nortelink">
                     <a href="#" className="logo">
-                        <img src="../../assets/images/logo.png" style={{ height: '35px', width: '108px' }} alt="navbar brand" className="navbar-brand" />
+                        <img src="../../assets/images/logobranco.png" style={{ height: '35px', width: '108px' }} alt="navbar brand" className="navbar-brand" />
                     </a>
                     <button className="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon">
@@ -21,7 +21,7 @@ export default class Header extends React.Component{
                         </button>
                     </div>
                 </div>
-                <nav className="navbar navbar-header navbar-expand-lg" data-background-color="blue">
+                <nav className="navbar navbar-header navbar-expand-lg" data-background-color="nortelink">
                     <div className="container-fluid">
                         <ul className="navbar-nav topbar-nav ml-md-auto align-items-center">
                             <li className="nav-item">

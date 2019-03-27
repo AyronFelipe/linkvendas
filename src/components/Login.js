@@ -15,7 +15,7 @@ export default class Login extends React.Component{
 
     render(){
         return(
-            <div className="login bg-primary-gradient">
+            <div className="login bg-nortelink">
                 <div className="wrapper wrapper-login">
                     <div className="container container-login animated fadeIn">
                         <h3 className="text-center"><i className="icon-login" style={{ marginRight: '5px' }}></i> Login</h3>
@@ -36,7 +36,7 @@ export default class Login extends React.Component{
                                 <label htmlFor="id_loja" className="placeholder">ID de sua loja</label>
                             </div>
                             <div className="form-action mb-3">
-                                <button className="btn btn-primary btn-rounded btn-login">Login</button>
+                                <button className="btn btn-nortelink btn-rounded btn-login">Login</button>
                             </div>
                         </div>
                     </div>

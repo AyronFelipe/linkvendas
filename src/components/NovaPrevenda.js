@@ -11,7 +11,7 @@ export default class NovaPrevenda extends React.Component{
                 <SideMenu />
                 <div className="main-panel">
                     <div className="content">
-                        <div className="panel-header bg-primary-gradient">
+                        <div className="panel-header bg-nortelink">
                             <div className="page-inner py-5">
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
@@ -76,8 +76,10 @@ export default class NovaPrevenda extends React.Component{
                                                     </div>
                                                 </div>
                                                 <div className="row">
+                                                </div>
+                                                <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button className="btn btn-primary btn-lg btn-block"><i className="fas fa-save"></i> Salvar</button>
+                                                        <button className="btn btn-nortelink btn-round btn-lg btn-block"><i className="fas fa-save"></i> Salvar</button>
                                                     </div>
                                                 </div>
                                             </form>

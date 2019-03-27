@@ -20,7 +20,7 @@ export default class Clientes extends React.Component{
                 <SideMenu />
                 <div className="main-panel">
                     <div className="content">
-                        <div className="panel-header bg-primary-gradient">
+                        <div className="panel-header bg-nortelink">
                             <div className="page-inner py-5">
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
@@ -29,7 +29,7 @@ export default class Clientes extends React.Component{
                                     </div>
                                     <div className="ml-md-auto py-2 py-md-0">
                                         <Link to="/novo-cliente/">
-                                            <button className="btn btn-primary btn-round"><i className="la flaticon-add mr-2"></i> Cadastrar Cliente</button>
+                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Cadastrar Cliente</button>
                                         </Link>
                                     </div>
                                 </div>
@@ -48,8 +48,8 @@ export default class Clientes extends React.Component{
                                                     <thead>
                                                         <tr>
                                                             <th>Nome</th>
-                                                            <th>E-mail</th>
-                                                            <th>Celular</th>
+                                                            <th>CPF / CNPJ</th>
+                                                            <th>Ações</th>
                                                         </tr>
                                                     </thead>
                                                 </table>

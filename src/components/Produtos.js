@@ -19,7 +19,7 @@ export default class Produtos extends React.Component{
                 <SideMenu />
                 <div className="main-panel">
                     <div className="content">
-                        <div className="panel-header bg-primary-gradient">
+                        <div className="panel-header bg-nortelink">
                             <div className="page-inner py-5">
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
@@ -41,7 +41,7 @@ export default class Produtos extends React.Component{
                                                 <table className="table mt-3" id="basic-datatables">
                                                     <thead>
                                                         <tr>
-                                                            <th>ID</th>
+                                                            <th>Código</th>
                                                             <th>Descrição</th>
                                                             <th>Ações</th>
                                                         </tr>

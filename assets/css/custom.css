@@ -1,0 +1,17 @@
+.bg-nortelink {
+    background-color: #153e4d !important;
+}
+
+.btn-nortelink {
+    background: #27A44F !important;
+    border-color: #27A44F !important;
+    color: #ffffff !important;
+}
+
+.navbar-header[data-background-color="nortelink"] {
+    background: #153e4d !important;
+}
+
+.logo-header[data-background-color="nortelink"] {
+    background: #153e4d !important;
+}
