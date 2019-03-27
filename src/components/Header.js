@@ -2,6 +2,26 @@ import React from 'react';
 
 export default class Header extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.state = {toggle_topbar: false, topbar_open: 1};
+    }
+
+    toggleTopBar = () => {
+        let topbar = $('.topbar-toggler');
+
+        if (this.state.topbar_open == 1) {
+            $('html').removeClass('topbar_open');
+            topbar.removeClass('toggled');
+            this.setState({ topbar_open: 0});
+        } else {
+            $('html').addClass('topbar_open');
+            topbar.addClass('toggled');
+            this.setState({ topbar_open: 1});
+        }
+        this.setState({ toggle_topbar: true});
+    }
+
     minimizeSidebar = () => {
         let minimize_sidebar = false;
         let mini_sidebar = 0;
@@ -33,6 +53,7 @@ export default class Header extends React.Component{
     }
 
     componentDidMount(){
+        this.toggleTopBar();
         this.minimizeSidebar();
     }
 
@@ -48,7 +69,9 @@ export default class Header extends React.Component{
                             <i className="icon-menu"></i>
                         </span>
                     </button>
-                    <button className="topbar-toggler more"><i className="icon-options-vertical"></i></button>
+                    <button className="topbar-toggler more" onClick={this.toggleTopBar}>
+                        <i className="icon-options-vertical"></i>
+                    </button>
                     <div className="nav-toggle">
                         <button className="btn btn-toggle toggle-sidebar" onClick={this.minimizeSidebar}>
                             <i className="icon-menu"></i>
