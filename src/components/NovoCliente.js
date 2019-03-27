@@ -6,14 +6,20 @@ export default class NovoCliente extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { showInscEstadual: false }
+        this.state = {show_pessoa_juridica: false, show_pessoa_fisica: false }
     }
 
-    showInscEstadual = (event) => {
+    showPessoa = (event) => {
         if ( event.target.value == 'J' ) {
-            this.setState({ showInscEstadual: true });
+            this.setState({ show_pessoa_juridica: true });
         } else {
-            this.setState({ showInscEstadual: false });
+            this.setState({ show_pessoa_juridica: false });
+        }
+
+        if ( event.target.value == 'F' ) {
+            this.setState({ show_pessoa_fisica: true });
+        } else {
+            this.setState({ show_pessoa_fisica: false });
         }
     }
 
@@ -53,7 +59,7 @@ export default class NovoCliente extends React.Component{
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <select name="pessoa" id="pessoa" className="form-control input-border-bottom" required onChange={ this.showInscEstadual }>
+                                                            <select name="pessoa" id="pessoa" className="form-control input-border-bottom" required onChange={this.showPessoa}>
                                                                 <option value="">&nbsp;</option>
                                                                 <option value="J">Pessoa Jurídica</option>
                                                                 <option value="F">Pessoa Física</option>
@@ -62,15 +68,32 @@ export default class NovoCliente extends React.Component{
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {this.state.showInscEstadual ?
+                                                {this.state.show_pessoa_juridica ?
                                                     <div className="row">
-                                                        <div className="col-sm-12">
+                                                        <div className="col-md-6 col-sm-12">
                                                             <div className="form-group form-floating-label">
                                                                 <input type="text" name="insc_estadual" id="insc_estadual" className="form-control input-border-bottom" required />
                                                                 <label htmlFor="insc_estadual" className="placeholder">Número da Inscrição Estadual <span className="text-danger">*</span></label>
                                                             </div>
                                                         </div>
-                                                    </div> : null}
+                                                        <div className="col-md-6 col-sm-12">
+                                                            <div className="form-group form-floating-label">
+                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control input-border-bottom" required />
+                                                                <label htmlFor="cpf_cnpj" className="placeholder">CNPJ <span className="text-danger">*</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div> : null
+                                                }
+                                                {this.state.show_pessoa_fisica ?
+                                                    <div className="row">
+                                                        <div className="col-md-6 col-sm-12">
+                                                            <div className="form-group form-floating-label">
+                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control input-border-bottom" required />
+                                                                <label htmlFor="cpf_cnpj" className="placeholder">CPF <span className="text-danger">*</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </div> : null
+                                                }
                                                 <label className="mt-3"><b>Endereço</b></label>
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
@@ -154,19 +177,21 @@ export default class NovoCliente extends React.Component{
                                                             <input type="date" name="data_nasc" id="data_nasc" className="form-control input-border-bottom" required />
                                                         </div>
                                                     </div>
-                                                    <div className="col-md-4 col-sm-12">
-                                                        <div className="form-check">
-                                                            <p className="text-muted">Sexo</p><br />
-                                                            <label className="form-radio-label">
-                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="M" name="sexo" />
-                                                                <span className="form-radio-sign text-muted">Masculino</span>
-                                                            </label>
-                                                            <label className="form-radio-label ml-3">
-                                                                <input className="form-radio-input" type="radio" name="optionsRadios" value="F" name="sexo" />
-                                                                <span className="form-radio-sign text-muted">Feminino</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
+                                                    {this.state.show_pessoa_fisica ?
+                                                        <div className="col-md-4 col-sm-12">
+                                                            <div className="form-check">
+                                                                <p className="text-muted">Sexo</p><br />
+                                                                <label className="form-radio-label">
+                                                                    <input className="form-radio-input" type="radio" name="optionsRadios" value="M" name="sexo" />
+                                                                    <span className="form-radio-sign text-muted">Masculino</span>
+                                                                </label>
+                                                                <label className="form-radio-label ml-3">
+                                                                    <input className="form-radio-input" type="radio" name="optionsRadios" value="F" name="sexo" />
+                                                                    <span className="form-radio-sign text-muted">Feminino</span>
+                                                                </label>
+                                                            </div>
+                                                        </div> : null
+                                                    }
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-check">
                                                             <label className="form-check-label mt-md-5">
