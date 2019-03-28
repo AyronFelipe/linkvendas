@@ -1,11 +1,19 @@
 import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
+import axios from 'axios';
+
+const CEP_LENGTH = 8;
 
 export default class NovoCliente extends React.Component{
 
     constructor(props){
         super(props);
+        this.endereco = React.createRef();
+        this.bairro = React.createRef();
+        this.cidade = React.createRef();
+        this.id_municipio = React.createRef();
+        this.uf = React.createRef();
         this.state = {show_pessoa_juridica: false, show_pessoa_fisica: false }
     }
 
@@ -20,6 +28,23 @@ export default class NovoCliente extends React.Component{
             this.setState({ show_pessoa_fisica: true });
         } else {
             this.setState({ show_pessoa_fisica: false });
+        }
+    }
+
+    carregaInfoCep = (event) => {
+        if (event.target.value.length == CEP_LENGTH) {
+            axios.get(`https://viacep.com.br/ws/${event.target.value}/json/`)
+            .then(res => {
+                if (res.data.erro) {
+                    alert('CEP não encontrado.');
+                } else {
+                    this.endereco.current.value = res.data.logradouro;
+                    this.bairro.current.value = res.data.bairro;
+                    this.cidade.current.value = res.data.localidade;
+                    this.id_municipio.current.value = res.data.ibge;
+                    this.uf.current.value = res.data.uf;
+                }
+            });
         }
     }
 
@@ -98,13 +123,13 @@ export default class NovoCliente extends React.Component{
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="cep" id="cep" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="cep" id="cep" className="form-control input-border-bottom" required onChange={this.carregaInfoCep} />
                                                             <label htmlFor="cep" className="placeholder">CEP <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="endereco" id="endereco" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="endereco" ref={this.endereco} id="endereco" className="form-control input-border-bottom" required />
                                                             <label htmlFor="endereco" className="placeholder">Logradouro <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
@@ -118,25 +143,25 @@ export default class NovoCliente extends React.Component{
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="bairro" id="bairro" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="bairro" ref={this.bairro} id="bairro" className="form-control input-border-bottom" required />
                                                             <label htmlFor="bairro" className="placeholder">Bairro <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="cidade" id="cidade" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="cidade" ref={this.cidade} id="cidade" className="form-control input-border-bottom" required />
                                                             <label htmlFor="cidade" className="placeholder">Cidade <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_municipio" id="id_municipio" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="id_municipio" ref={this.id_municipio} id="id_municipio" className="form-control input-border-bottom" required />
                                                             <label htmlFor="id_municipio" className="placeholder">Códido do Município (IBGE) <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                     <div className="col-md-2 col-sm-12">
                                                         <div className="form-group form-floating-label">
-                                                            <input type="text" name="uf" id="uf" className="form-control input-border-bottom" required />
+                                                            <input type="text" name="uf" ref={this.uf} id="uf" className="form-control input-border-bottom" required />
                                                             <label htmlFor="uf" className="placeholder">Estado <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
