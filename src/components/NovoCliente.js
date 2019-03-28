@@ -36,7 +36,14 @@ export default class NovoCliente extends React.Component{
             axios.get(`https://viacep.com.br/ws/${event.target.value}/json/`)
             .then(res => {
                 if (res.data.erro) {
-                    alert('CEP não encontrado.');
+                    swal("Erro!", "CEP não encontrado", {
+                        icon: "error",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-danger'
+                            }
+                        },
+                    });
                 } else {
                     this.endereco.current.value = res.data.logradouro;
                     this.bairro.current.value = res.data.bairro;
