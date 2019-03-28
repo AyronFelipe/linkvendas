@@ -20,20 +20,22 @@ export default class Login extends React.Component{
                     <div className="container container-login animated fadeIn">
                         <h3 className="text-center"><i className="icon-login" style={{ marginRight: '5px' }}></i> Login</h3>
                         <div className="login-form">
-                            <div className="form-group form-floating-label">
-                                <input id="usuario" name="usuario" type="text" className="form-control input-border-bottom" required />
-                                <label htmlFor="usuario" className="placeholder">Nome</label>
+                            <div className="form-group">
+                                <label htmlFor="usuario">Nome</label>
+                                <input id="usuario" name="usuario" type="text" className="form-control" required />
                             </div>
-                            <div className="form-group form-floating-label">
-                                <input ref={this.senha} id="senha" name="senha" type={this.state.type} className="form-control input-border-bottom" required />
-                                <label htmlFor="senha" className="placeholder">Senha</label>
-                                <div className="show-password" onClick={() => this.changeSenhaType(event)}>
-                                    <i className="icon-eye"></i>
+                            <div className="form-group">
+                                <label htmlFor="senha">Senha</label>
+                                <div className="position-relative">
+                                    <input ref={this.senha} id="senha" name="senha" type={this.state.type} className="form-control" required />
+                                    <div className="show-password" onClick={() => this.changeSenhaType(event)}>
+                                        <i className="icon-eye"></i>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="form-group form-floating-label">
-                                <input id="id_loja" name="id_loja" type="text" className="form-control input-border-bottom" required />
-                                <label htmlFor="id_loja" className="placeholder">ID de sua loja</label>
+                            <div className="form-group">
+                                <label htmlFor="id_loja">ID de sua loja</label>
+                                <input id="id_loja" name="id_loja" type="text" className="form-control" required />
                             </div>
                             <div className="form-action mb-3">
                                 <button className="btn btn-nortelink btn-rounded btn-login">Login</button>

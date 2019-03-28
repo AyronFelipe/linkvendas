@@ -32,46 +32,46 @@ export default class NovaPrevenda extends React.Component{
                                             <form>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_venda" id="id_venda" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
                                                             <label htmlFor="id_venda" className="placeholder">ID da Venda Temporária <span className="text-danger">*</span></label>
+                                                            <input type="text" name="id_venda" id="id_venda" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_cliente" id="id_cliente" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
                                                             <label htmlFor="id_cliente" className="placeholder">Código do Cliente <span className="text-danger">*</span></label>
+                                                            <input type="text" name="id_cliente" id="id_cliente" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_tab_preco" id="id_tab_preco" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
                                                             <label htmlFor="id_tab_preco" className="placeholder">ID da Tabela de Preço <span className="text-danger">*</span></label>
+                                                            <input type="text" name="id_tab_preco" id="id_tab_preco" className="form-control" required />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_plano_pag" id="id_plano_pag" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
                                                             <label htmlFor="id_plano_pag" className="placeholder">ID do plano de pagamento <span className="text-danger">*</span></label>
+                                                            <input type="text" name="id_plano_pag" id="id_plano_pag" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_pos" id="id_pos" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
                                                             <label htmlFor="id_pos" className="placeholder">ID da posição inicial da pré-venda </label>
+                                                            <input type="text" name="id_pos" id="id_pos" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-sm-12 col-md-4">
-                                                        <div className="form-group form-floating-label">
-                                                            <select name="mod_venda" id="mod_venda" className="form-control input-border-bottom" required>
+                                                        <div className="form-group">
+                                                            <label htmlFor="mod_venda" className="placeholder">Modalidade da venda <span className="text-danger">*</span></label>
+                                                            <select name="mod_venda" id="mod_venda" className="form-control" required>
                                                                 <option value="">&nbsp;</option>
                                                                 <option value="1">Normal</option>
                                                                 <option value="2">Futura</option>
                                                                 <option value="9">NFC-e</option>
                                                             </select>
-                                                            <label htmlFor="mod_venda" className="placeholder">Modalidade da venda <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                 </div>

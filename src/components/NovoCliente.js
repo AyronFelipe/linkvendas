@@ -84,34 +84,34 @@ export default class NovoCliente extends React.Component{
                                                 <label><b>Informações Gerais</b></label>
                                                 <div className="row">
                                                     <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="nome" id="nome" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="nome" className="placeholder">Nome <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="nome">Nome <span className="text-danger">*</span></label>
+                                                            <input type="text" name="nome" id="nome" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <select name="pessoa" id="pessoa" className="form-control input-border-bottom" required onChange={this.showPessoa}>
+                                                        <div className="form-group">
+                                                            <label htmlFor="pessoa">Pessoa Física ou Jurídica <span className="text-danger">*</span></label>
+                                                            <select name="pessoa" id="pessoa" className="form-control" required onChange={this.showPessoa}>
                                                                 <option value="">&nbsp;</option>
                                                                 <option value="J">Pessoa Jurídica</option>
                                                                 <option value="F">Pessoa Física</option>
                                                             </select>
-                                                            <label htmlFor="pessoa" className="placeholder">Pessoa Física ou Jurídica <span className="text-danger">*</span></label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 {this.state.show_pessoa_juridica ?
                                                     <div className="row">
                                                         <div className="col-md-6 col-sm-12">
-                                                            <div className="form-group form-floating-label">
-                                                                <input type="text" name="insc_estadual" id="insc_estadual" className="form-control input-border-bottom" required />
-                                                                <label htmlFor="insc_estadual" className="placeholder">Número da Inscrição Estadual <span className="text-danger">*</span></label>
+                                                            <div className="form-group">
+                                                                <label htmlFor="insc_estadual">Número da Inscrição Estadual <span className="text-danger">*</span></label>
+                                                                <input type="text" name="insc_estadual" id="insc_estadual" className="form-control" required />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-6 col-sm-12">
-                                                            <div className="form-group form-floating-label">
-                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control input-border-bottom" required />
-                                                                <label htmlFor="cpf_cnpj" className="placeholder">CNPJ <span className="text-danger">*</span></label>
+                                                            <div className="form-group">
+                                                                <label htmlFor="cpf_cnpj">CNPJ <span className="text-danger">*</span></label>
+                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control" required />
                                                             </div>
                                                         </div>
                                                     </div> : null
@@ -119,9 +119,9 @@ export default class NovoCliente extends React.Component{
                                                 {this.state.show_pessoa_fisica ?
                                                     <div className="row">
                                                         <div className="col-md-6 col-sm-12">
-                                                            <div className="form-group form-floating-label">
-                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control input-border-bottom" required />
-                                                                <label htmlFor="cpf_cnpj" className="placeholder">CPF <span className="text-danger">*</span></label>
+                                                            <div className="form-group">
+                                                                <label htmlFor="cpf_cnpj">CPF <span className="text-danger">*</span></label>
+                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control" required />
                                                             </div>
                                                         </div>
                                                     </div> : null
@@ -129,90 +129,90 @@ export default class NovoCliente extends React.Component{
                                                 <label className="mt-3"><b>Endereço</b></label>
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="cep" id="cep" className="form-control input-border-bottom" required onChange={this.carregaInfoCep} />
-                                                            <label htmlFor="cep" className="placeholder">CEP <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="cep">CEP <span className="text-danger">*</span></label>
+                                                            <input type="text" name="cep" id="cep" className="form-control" required onChange={this.carregaInfoCep} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="endereco" ref={this.endereco} id="endereco" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="endereco" className="placeholder">Logradouro <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="endereco">Logradouro <span className="text-danger">*</span></label>
+                                                            <input type="text" name="endereco" ref={this.endereco} id="endereco" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-2 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="numero_end" id="numero_end" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="numero_end" className="placeholder">Número <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="numero_end">Número <span className="text-danger">*</span></label>
+                                                            <input type="text" name="numero_end" id="numero_end" className="form-control" required />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="bairro" ref={this.bairro} id="bairro" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="bairro" className="placeholder">Bairro <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="bairro">Bairro <span className="text-danger">*</span></label>
+                                                            <input type="text" name="bairro" ref={this.bairro} id="bairro" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="cidade" ref={this.cidade} id="cidade" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="cidade" className="placeholder">Cidade <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="cidade">Cidade <span className="text-danger">*</span></label>
+                                                            <input type="text" name="cidade" ref={this.cidade} id="cidade" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="id_municipio" ref={this.id_municipio} id="id_municipio" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="id_municipio" className="placeholder">Códido do Município (IBGE) <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="id_municipio">Códido do Município (IBGE) <span className="text-danger">*</span></label>
+                                                            <input type="text" name="id_municipio" ref={this.id_municipio} id="id_municipio" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-2 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="uf" ref={this.uf} id="uf" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="uf" className="placeholder">Estado <span className="text-danger">*</span></label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="uf">Estado <span className="text-danger">*</span></label>
+                                                            <input type="text" name="uf" ref={this.uf} id="uf" className="form-control" required />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="ponto_ref" className="placeholder">Ponto de referência</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="ponto_ref">Ponto de referência</label>
+                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control" required />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <label className="mt-3"><b>Informações Adicionais</b></label>
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="telefone" id="telefone" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="telefone" className="placeholder">Telefone</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="telefone">Telefone</label>
+                                                            <input type="text" name="telefone" id="telefone" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="celular" id="celular" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="celular" className="placeholder">Celular</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="celular">Celular</label>
+                                                            <input type="text" name="celular" id="celular" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <input type="text" name="email" id="email" className="form-control input-border-bottom" required />
-                                                            <label htmlFor="email" className="placeholder">E-mail</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="email">E-mail</label>
+                                                            <input type="text" name="email" id="email" className="form-control" required />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
-                                                        <div className="form-group form-floating-label">
-                                                            <p className="text-muted">Data de Nascimento</p>
-                                                            <input type="date" name="data_nasc" id="data_nasc" className="form-control input-border-bottom" required />
+                                                        <div className="form-group">
+                                                            <label htmlFor="data_nasc">Data de Nascimento</label>
+                                                            <input type="date" name="data_nasc" id="data_nasc" className="form-control" required />
                                                         </div>
                                                     </div>
                                                     {this.state.show_pessoa_fisica ?
                                                         <div className="col-md-4 col-sm-12">
                                                             <div className="form-check">
-                                                                <p className="text-muted">Sexo</p><br />
+                                                                <label>Sexo</label><br/>
                                                                 <label className="form-radio-label">
                                                                     <input className="form-radio-input" type="radio" name="optionsRadios" value="M" name="sexo" />
                                                                     <span className="form-radio-sign text-muted">Masculino</span>
