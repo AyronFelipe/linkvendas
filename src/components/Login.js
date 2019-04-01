@@ -40,7 +40,6 @@ export default class Login extends React.Component{
             }
         })
         .catch((error) => {
-            console.log(error.response);
             swal("Erro!", `${error.response.data.message}`, {
                 icon: "error",
                 buttons: {

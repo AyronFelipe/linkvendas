@@ -2,8 +2,60 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+
 
 export default class Clientes extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state = {clientes: [], carregaInfo: true};
+    }
+
+    getClientes = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: 1,
+            }
+        })
+        .then((res) => {
+            console.log(res.data);
+            this.setState({clientes: res.data, carregaInfo: false});
+        })
+        .catch((error) => {
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            });
+        });
+    }
+
+    renderClientes = () => {
+        if (this.state.carregaInfo) {
+            return <tr>
+                <td colSpan="5">
+                    <div className="loader loader-lg"></div>
+                </td>
+            </tr>
+        } else {
+            return this.state.clientes.map((cliente) => 
+                <tr key={cliente.id}>
+                    <td>{cliente.nome}</td>
+                    <td>{cliente.cpf_cnpj}</td>
+                    <td><button className="btn btn-small btn-nortelink">OPA</button></td>
+                </tr>
+            )
+        }
+    }
 
     componentDidMount() {
         $('#basic-datatables').DataTable({
@@ -11,6 +63,7 @@ export default class Clientes extends React.Component{
                 "url": '//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'
             }
         });
+        this.getClientes();
     }
 
     render(){
@@ -44,7 +97,7 @@ export default class Clientes extends React.Component{
                                         </div>
                                         <div className="card-body">
                                             <div className="table-responsive">
-                                                <table className="table mt-3" id="basic-datatables">
+                                                <table className="table mt-3">
                                                     <thead>
                                                         <tr>
                                                             <th>Nome</th>
@@ -52,6 +105,9 @@ export default class Clientes extends React.Component{
                                                             <th>Ações</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
+                                                        {this.renderClientes()}
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
