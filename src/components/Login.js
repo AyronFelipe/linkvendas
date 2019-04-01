@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
+import qs from 'qs';
+import { storageToken, isAuthenticated } from '../auth';
 
 export default class Login extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {type: 'password', usuario: '', senha: '', id_loja: ''};
+        this.state = {type: 'password', usuario: '', senha: '', loja: ''};
         this.senha = React.createRef();
         this.changeSenhaType = this.changeSenhaType.bind(this);
     }
@@ -20,13 +22,34 @@ export default class Login extends React.Component{
 
     handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://api.nortelink.com.br/api/v1/login/`, {
+        let config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        let body = {
             usuario: this.state.usuario,
             senha: this.state.senha,
-            id_loja: this.state.id_loja
-        }).then(res => {
-            console.log(res);
+            loja: this.state.loja
+        }
+        axios.post(`http://api.nortelink.com.br/api/v1/login/`, qs.stringify(body), config)
+        .then((res) => {
+            storageToken(res.data.token);
+            if (isAuthenticated()) {
+                window.location.href = "/clientes/";
+            }
         })
+        .catch((error) => {
+            console.log(error.response);
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            });
+        });
     }
 
     render(){
@@ -51,8 +74,8 @@ export default class Login extends React.Component{
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="id_loja">ID de sua loja</label>
-                                    <input id="id_loja" name="id_loja" type="text" className="form-control" value={this.state.id_loja} onChange={this.changeHandler} required />
+                                    <label htmlFor="loja">ID de sua loja</label>
+                                    <input id="loja" name="loja" type="text" className="form-control" value={this.state.loja} onChange={this.changeHandler} required />
                                 </div>
                                 <div className="form-action mb-3">
                                     <button className="btn btn-nortelink btn-rounded btn-login" type="submit">Login</button>

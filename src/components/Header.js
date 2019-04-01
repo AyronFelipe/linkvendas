@@ -1,4 +1,5 @@
 import React from 'react';
+import { logout } from '../auth';
 
 export default class Header extends React.Component{
 
@@ -59,7 +60,11 @@ export default class Header extends React.Component{
         }
         $(window).resize();
         this.setState({minimize_sidebar: true});
+    }
 
+    logout = () => {
+        logout();
+        window.location.href = '/login/';
     }
 
     componentDidMount(){
@@ -93,8 +98,7 @@ export default class Header extends React.Component{
                     <div className="container-fluid">
                         <ul className="navbar-nav topbar-nav ml-md-auto align-items-center">
                             <li className="nav-item">
-                                <a href="#" className="nav-link">
-                                </a>
+                                <button type="button" className="btn btn-round btn-nortelink" onClick={this.logout}><i className="icon-logout mr-2"></i> Sair</button>
                             </li>
                         </ul>
                     </div>

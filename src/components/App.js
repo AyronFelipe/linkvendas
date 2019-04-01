@@ -7,6 +7,8 @@ import NovoCliente from './NovoCliente';
 import Produtos from './Produtos';
 import Prevendas from './Prevendas';
 import NovaPrevenda from './NovaPrevenda';
+import PrivateRoute from './PrivateRoute';
+import { isAuthenticated } from '../auth';
 
 class Initial extends React.Component{
 
@@ -19,17 +21,22 @@ class Initial extends React.Component{
 
 export default class App extends React.Component{
 
+    constructor(props){
+        super(props)
+        this.state = {authenticated: isAuthenticated()}
+    }
+
     render(){
         return(
             <Router>
                 <div className="wrapper">
                     <Route path='/' exact component={Initial} />
                     <Route path='/login/' component={Login} />
-                    <Route path='/clientes/' exact component={Clientes} />
-                    <Route path='/novo-cliente/' component={NovoCliente} />
-                    <Route path='/produtos/' exact component={Produtos} />
-                    <Route path='/pre-vendas/' exact component={Prevendas} />
-                    <Route path='/nova-pre-venda/' component={NovaPrevenda} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/clientes/' exact component={Clientes} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/novo-cliente/' component={NovoCliente} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/produtos/' exact component={Produtos} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/pre-vendas/' exact component={Prevendas} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/nova-pre-venda/' component={NovaPrevenda} />
                 </div>
             </Router>
         )
