@@ -51,7 +51,7 @@ export default class Clientes extends React.Component{
                 <tr key={cliente.id}>
                     <td>{cliente.nome}</td>
                     <td>{cliente.cpf_cnpj}</td>
-                    <td><button className="btn btn-small btn-nortelink">OPA</button></td>
+                    <td><button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button></td>
                 </tr>
             )
         }
