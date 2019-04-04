@@ -10,6 +10,14 @@ export default class SideMenu extends React.Component{
                     <div className="sidebar-content">
                         <ul className="nav nav-primary">
                             <li className="nav-item">
+                                <Link to="/main/">
+                                    <div data-toggle="collapse" href="#dashboard" className="collapsed" aria-expanded="false">
+                                        <i className="fas fa-home"></i>
+                                        <p>Início</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link to="/clientes/">
                                     <div data-toggle="collapse" className="collapsed" aria-expanded="false">
                                         <i className="flaticon-users"></i>
@@ -30,6 +38,14 @@ export default class SideMenu extends React.Component{
                                     <div data-toggle="collapse" className="collapsed" aria-expanded="false">
                                         <i className="flaticon-success"></i>
                                         <p>Pré-vendas</p>
+                                    </div>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/vendas/">
+                                    <div data-toggle="collapse" className="collapsed" aria-expanded="false">
+                                        <i className="flaticon-analytics"></i>
+                                        <p>Vendas</p>
                                     </div>
                                 </Link>
                             </li>

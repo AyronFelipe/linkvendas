@@ -36,7 +36,7 @@ export default class Login extends React.Component{
         .then((res) => {
             storageToken(res.data.token);
             if (isAuthenticated()) {
-                window.location.href = "/clientes/";
+                window.location.href = "/main/";
             }
         })
         .catch((error) => {

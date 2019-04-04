@@ -16,7 +16,7 @@ export default class NovaPrevenda extends React.Component{
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
                                         <h2 className="text-white pb-2 fw-bold">Cadastro de Pré-vendas</h2>
-                                        <h5 className="text-white op-7 mb-2">Nesta seção você pode cadastrar pré-vendas</h5>
+                                        <h5 className="text-white op-7 mb-2">>Nesta seção você pode buscar e cadastrar suas pré-vendas</h5>
                                     </div>
                                 </div>
                             </div>
