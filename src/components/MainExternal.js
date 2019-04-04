@@ -59,20 +59,22 @@ export default class MainExternal extends React.Component{
                                 </div>
                                 <div className="col-md-6 col-sm-12">
                                     <div className="card card-stats card-success card-round">
-                                        <div className="card-body ">
-                                            <div className="row">
-                                                <div className="col-5">
-                                                    <div className="icon-big text-center">
-                                                        <i className="flaticon-analytics"></i>
+                                        <Link to="/vendas/">
+                                            <div className="card-body ">
+                                                <div className="row">
+                                                    <div className="col-5">
+                                                        <div className="icon-big text-center">
+                                                            <i className="flaticon-analytics"></i>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="col-7 col-stats">
-                                                    <div className="numbers">
-                                                        <p className="card-category">Vendas</p>
+                                                    <div className="col-7 col-stats">
+                                                        <div className="numbers">
+                                                            <p className="card-category">Vendas</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 </div>
                                 <div className="col-md-6 col-sm-12">

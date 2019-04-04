@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
+import qs from 'qs';
 
 const CEP_LENGTH = 8;
 
@@ -71,6 +72,11 @@ export default class NovoCliente extends React.Component{
                     this.cidade.current.value = res.data.localidade;
                     this.id_municipio.current.value = res.data.ibge;
                     this.uf.current.value = res.data.uf;
+                    this.setState({ endereco: res.data.logradouro});
+                    this.setState({bairro: res.data.bairro});
+                    this.setState({ cidade: res.data.localidade});
+                    this.setState({ id_municipio: res.data.ibge});
+                    this.setState({uf: res.data.uf});
                 }
             });
         }
@@ -113,7 +119,7 @@ export default class NovoCliente extends React.Component{
             window.location.href = "/clientes/";
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.message}`, {
+            swal("Erro!", `${error.response.data.erros} `, {
                 icon: "error",
                 buttons: {
                     confirm: {
@@ -161,7 +167,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="pessoa">Pessoa Física ou Jurídica <span className="text-danger">*</span></label>
-                                                            <select name="pessoa" id="pessoa" className="form-control" required onChange={this.showPessoa}>
+                                                            <select name="pessoa" id="pessoa" className="form-control" required onInput={this.showPessoa} onChange={this.changeHandler}>
                                                                 <option value="">&nbsp;</option>
                                                                 <option value="J">Pessoa Jurídica</option>
                                                                 <option value="F">Pessoa Física</option>
@@ -200,7 +206,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="cep">CEP <span className="text-danger">*</span></label>
-                                                            <input type="text" name="cep" id="cep" className="form-control" required onChange={this.carregaInfoCep} />
+                                                            <input type="text" name="cep" id="cep" className="form-control" required onInput={this.carregaInfoCep} onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
@@ -246,7 +252,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="ponto_ref">Ponto de referência</label>
-                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control" onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -254,20 +260,20 @@ export default class NovoCliente extends React.Component{
                                                 <div className="row">
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="telefone">Telefone</label>
+                                                            <label htmlFor="telefone">Telefone <span className="text-danger">*</span></label>
                                                             <input type="text" name="telefone" id="telefone" className="form-control" onChange={this.changeHandler} required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="celular">Celular</label>
+                                                            <label htmlFor="celular">Celular <span className="text-danger">*</span></label>
                                                             <input type="text" name="celular" id="celular" className="form-control" onChange={this.changeHandler} required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="email">E-mail</label>
-                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,7 +281,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="data_nasc">Data de Nascimento</label>
-                                                            <input type="date" name="data_nasc" id="data_nasc" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="date" name="data_nasc" id="data_nasc" className="form-control" onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                     {this.state.show_pessoa_fisica ?

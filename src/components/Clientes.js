@@ -60,7 +60,23 @@ export default class Clientes extends React.Component{
     }
 
     buscaCliente = () => {
-        return true;
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                id: this.id.current.value,
+                page: PRIMEIRA_PAGE
+            }
+        })
+        .then((res) => {
+            this.setState({ clientes: res.data });
+        })
+        .catch((error) => {
+            console.log(error.response.data);
+        });
     }
 
     componentDidMount() {

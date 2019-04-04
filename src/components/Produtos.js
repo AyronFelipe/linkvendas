@@ -61,7 +61,7 @@ export default class Produtos extends React.Component{
             }
         })
         .then((res) => {
-            console.log(res);
+            this.setState({produtos: res.data});
         })
         .catch((error) => {
             console.log(error.response.data);
