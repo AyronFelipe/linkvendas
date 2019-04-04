@@ -51,12 +51,13 @@ export default class Produtos extends React.Component{
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
             },
-            data: {
+            params: {
                 id: this.id.current.value,
                 descr: this.descr.current.value,
                 codbar: this.codbar.current.value,
                 ref: this.ref.current.value,
                 parcial: this.parcial.current.value,
+                page: PRIMEIRA_PAGE
             }
         })
         .then((res) => {
