@@ -5,11 +5,14 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
+const PRIMEIRA_PAGE = 1;
+
 export default class Clientes extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {clientes: [], carregaInfo: true};
+        this.id = React.createRef();
+        this.state = { clientes: [], carregaInfo: true, page: PRIMEIRA_PAGE};
     }
 
     getClientes = () => {
@@ -20,11 +23,10 @@ export default class Clientes extends React.Component{
                 'Authorization': `Bearer ${localStorage.token}`
             },
             params: {
-                page: 1,
+                page: this.state.page,
             }
         })
         .then((res) => {
-            console.log(res.data);
             this.setState({clientes: res.data, carregaInfo: false});
         })
         .catch((error) => {
@@ -51,10 +53,14 @@ export default class Clientes extends React.Component{
                 <tr key={cliente.id}>
                     <td>{cliente.nome}</td>
                     <td>{cliente.cpf_cnpj}</td>
-                    <td><button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button></td>
+                    <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
                 </tr>
             )
         }
+    }
+
+    buscaCliente = () => {
+        return true;
     }
 
     componentDidMount() {
@@ -93,6 +99,28 @@ export default class Clientes extends React.Component{
                                 <div className="col-sm-12">
                                     <div className="card">
                                         <div className="card-header">
+                                            <div className="card-title">Busca</div>
+                                        </div>
+                                        <div className="card-body">
+                                            <form>
+                                                <div className="row">
+                                                    <div className="col-sm-12">
+                                                        <div className="form-group">
+                                                            <label htmlFor="id">Código ou CPF ou CNPJ do cliente sem formatação</label>
+                                                            <input type="text" ref={this.id} name="id" id="id" className="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-sm-12 col-md-3 offset-md-9">
+                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div className="card">
+                                        <div className="card-header">
                                             <div className="card-title">Tabela de Clientes</div>
                                         </div>
                                         <div className="card-body">
@@ -109,6 +137,24 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
+                                                <nav>
+                                                    <ul className="pagination justify-content-end">
+                                                        {this.state.page != PRIMEIRA_PAGE ?
+                                                            <li className="page-item">
+                                                                <a className="page-link" href="#" tabindex="-1">Anterior</a>
+                                                            </li> 
+                                                        :
+                                                            <React.Fragment>
+                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page}</a></li>
+                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page + 1}</a></li>
+                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page + 2}</a></li>
+                                                                <li className="page-item">
+                                                                    <a className="page-link" href="#">Próxima</a>
+                                                                </li>
+                                                            </React.Fragment>
+                                                        }
+                                                    </ul>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>
