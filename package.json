@@ -4,7 +4,6 @@
   "description": "Frontend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-prebuild": "npm install",
     "build": "webpack --mode production",
     "heroku-postbuild ": "npm run build",
