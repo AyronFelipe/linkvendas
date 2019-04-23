@@ -75,7 +75,7 @@ export default class Clientes extends React.Component{
             this.setState({ clientes: res.data });
         })
         .catch((error) => {
-            console.log(error.response.data);
+            console.log(error.response);
         });
     }
 
@@ -161,7 +161,7 @@ export default class Clientes extends React.Component{
                                                             </li> 
                                                         :
                                                             <React.Fragment>
-                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page}</a></li>
+                                                                <li className="page-item active"><a className="page-link" href="#">{this.state.page}</a></li>
                                                                 <li className="page-item"><a className="page-link" href="#">{this.state.page + 1}</a></li>
                                                                 <li className="page-item"><a className="page-link" href="#">{this.state.page + 2}</a></li>
                                                                 <li className="page-item">
