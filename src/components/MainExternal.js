@@ -8,7 +8,7 @@ export default class MainExternal extends React.Component{
             <div className="login">
                 <div className="wrapper wrapper-login wrapper-login-full p-0">
                     <div className="login-aside w-50 d-flex flex-column align-items-center justify-content-center text-center bg-white">
-                        <img src="../../assets/images/logo.png" className="img-fluid" alt="Logo Responsive" />
+                        <img src="static/images/logo.png" className="img-fluid" alt="Logo Responsive" />
                         <Link to="/login/">
                             <button className="btn btn-nortelink btn-lg mt-5"><i className="icon-login mr-2"></i> Login</button>
                         </Link>

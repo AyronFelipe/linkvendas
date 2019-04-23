@@ -78,7 +78,7 @@ export default class Header extends React.Component{
             <header className="main-header">
                 <div className="logo-header" data-background-color="nortelink">
                     <a href="#" className="logo">
-                        <img src="../../assets/images/logobranco.png" style={{ height: '35px', width: '108px' }} alt="navbar brand" className="navbar-brand" />
+                        <img src="static/images/logobranco.png" style={{ height: '35px', width: '108px' }} alt="navbar brand" className="navbar-brand" />
                     </a>
                     <button className="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation" onClick={this.toggleSidebar}>
                         <span className="navbar-toggler-icon">
