@@ -13,7 +13,6 @@ export default class Produtos extends React.Component{
         this.descr = React.createRef();
         this.codbar = React.createRef();
         this.ref = React.createRef();
-        this.parcial = React.createRef();
         this.state = { produtos: [], carregaInfo: true, page: PRIMEIRA_PAGE };
     }
 
@@ -44,49 +43,47 @@ export default class Produtos extends React.Component{
         });
     }
 
-    buscaProduto = () => {
-        let produto_list = [];
+    buscaProduto = (page) => {
 
-        for (let index = 1; index < 5; index++) {
-            axios({
-                url: `http://api.nortelink.com.br/api/v1/produtos/`,
-                method: `get`,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {
-                    id: this.id.current.value,
-                    descr: this.descr.current.value,
-                    codbar: this.codbar.current.value,
-                    ref: this.ref.current.value,
-                    parcial: this.parcial.current.value,
-                    page: index
+        let produto_list = [];
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/produtos/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                id: this.id.current.value,
+                descricao: this.descr.current.value,
+                cod_barras: this.codbar.current.value,
+                referencia: this.ref.current.value,
+                page: page
+            }
+        })
+        .then((res) => {
+            res.data.map((produto) => {
+                if (produto.id == this.id.current.value || produto.descricao.includes(this.descr.current.value) || produto.cod_barras == this.codbar.current.value || produto.referencia == this.ref.current.value ) {
+                    produto_list.push(produto);
                 }
-            })
-            .then((res) => {
-                res.data.map((produto) => {
-                    if (produto.id == this.id.current.value || produto.codbar == this.id.current.value || produto.ref == this.id.current.value || produto.descr == this.id.current.value || produto.parcial == this.id.current.value) {
-                        produto_list.push(cliente);
-                    }
-                });
-                if (produto_list.length > 0) {
-                    this.setState({ clientes: produto_list });
-                } else {
-                    this.setState({ produtos: [] });
-                }
-            })
-            .catch((error) => {
-                this.setState({ carregaInfo: false });
-                swal("Erro!", `${error.response.data.message}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                });
             });
-        }
+            if (produto_list.length > 0) {
+                this.setState({ produtos: produto_list, carregaInfo: false });
+            } else {
+                this.buscaProduto(page + 1);
+                this.setState({ carregaInfo: true });
+            }
+        })
+        .catch((error) => {
+            this.setState({ carregaInfo: false });
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            });
+        });
     }
 
     renderProdutos = () => {
@@ -179,16 +176,8 @@ export default class Produtos extends React.Component{
                                                     </div>
                                                 </div>
                                                 <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="parcial">Descrição parcial do produto</label>
-                                                            <input type="text" ref={this.parcial} name="parcial" id="parcial" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaProduto}><i className="fas fa-search"></i> Buscar</button>
+                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={() => this.buscaProduto(1)}><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </form>
