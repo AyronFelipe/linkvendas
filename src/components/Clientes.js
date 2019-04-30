@@ -30,6 +30,7 @@ export default class Clientes extends React.Component{
             this.setState({clientes: res.data, carregaInfo: false});
         })
         .catch((error) => {
+            this.setState({ carregaInfo: false });
             swal("Erro!", `${error.response.data.message}`, {
                 icon: "error",
                 buttons: {
@@ -49,17 +50,26 @@ export default class Clientes extends React.Component{
                 </td>
             </tr>
         } else {
-            return this.state.clientes.map((cliente) => 
-                <tr key={cliente.id}>
-                    <td>{cliente.nome}</td>
-                    <td>{cliente.cpf_cnpj}</td>
-                    <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
-                </tr>
-            )
+            if (this.state.clientes.length >= 1) {
+                return this.state.clientes.map((cliente) => 
+                    <tr key={cliente.id}>
+                        <td>{cliente.nome}</td>
+                        <td>{cliente.cpf_cnpj}</td>
+                        <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                )
+            } else {
+                return(
+                    <tr>
+                        <td colSpan="5">Nenhum cliente cadastrado</td>
+                    </tr>
+                );
+            }
         }
     }
 
-    buscaCliente = () => {
+    buscaCliente = (page) => {
+        let cliente_list = [];
         axios({
             url: `http://api.nortelink.com.br/api/v1/clientes/`,
             method: `get`,
@@ -68,14 +78,31 @@ export default class Clientes extends React.Component{
             },
             params: {
                 id: this.id.current.value,
-                page: PRIMEIRA_PAGE
+                page: page,
             }
         })
         .then((res) => {
-            this.setState({ clientes: res.data });
+            res.data.map((cliente) => {
+                if (cliente.cpf_cnpj == this.id.current.value) {
+                    cliente_list.push(cliente);
+                }
+            });
+            if (cliente_list.length > 0) {
+                this.setState({ clientes: cliente_list, carregaInfo: false });
+            }else{
+                this.buscaCliente(page + 1);
+                this.setState({ carregaInfo: true });
+            }
         })
         .catch((error) => {
-            console.log(error.response);
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            });
         });
     }
 
@@ -129,7 +156,7 @@ export default class Clientes extends React.Component{
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
+                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={() => this.buscaCliente(1)}><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </form>

@@ -45,27 +45,48 @@ export default class Produtos extends React.Component{
     }
 
     buscaProduto = () => {
-        axios({
-            url: `http://api.nortelink.com.br/api/v1/produtos/`,
-            method: `get`,
-            headers: {
-                'Authorization': `Bearer ${localStorage.token}`
-            },
-            params: {
-                id: this.id.current.value,
-                descr: this.descr.current.value,
-                codbar: this.codbar.current.value,
-                ref: this.ref.current.value,
-                parcial: this.parcial.current.value,
-                page: PRIMEIRA_PAGE
-            }
-        })
-        .then((res) => {
-            this.setState({produtos: res.data});
-        })
-        .catch((error) => {
-            console.log(error.response.data);
-        });
+        let produto_list = [];
+
+        for (let index = 1; index < 5; index++) {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+                params: {
+                    id: this.id.current.value,
+                    descr: this.descr.current.value,
+                    codbar: this.codbar.current.value,
+                    ref: this.ref.current.value,
+                    parcial: this.parcial.current.value,
+                    page: index
+                }
+            })
+            .then((res) => {
+                res.data.map((produto) => {
+                    if (produto.id == this.id.current.value || produto.codbar == this.id.current.value || produto.ref == this.id.current.value || produto.descr == this.id.current.value || produto.parcial == this.id.current.value) {
+                        produto_list.push(cliente);
+                    }
+                });
+                if (produto_list.length > 0) {
+                    this.setState({ clientes: produto_list });
+                } else {
+                    this.setState({ produtos: [] });
+                }
+            })
+            .catch((error) => {
+                this.setState({ carregaInfo: false });
+                swal("Erro!", `${error.response.data.message}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                });
+            });
+        }
     }
 
     renderProdutos = () => {
@@ -76,13 +97,21 @@ export default class Produtos extends React.Component{
                 </td>
             </tr>
         } else {
-            return this.state.produtos.map((produto) =>
-                <tr key={produto.id}>
-                    <td>{produto.id}</td>
-                    <td>{produto.descricao}</td>
-                    <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
-                </tr>
-            )
+            if (this.state.produtos.length >= 1) {
+                return this.state.produtos.map((produto) =>
+                    <tr key={produto.id}>
+                        <td>{produto.id}</td>
+                        <td>{produto.descricao}</td>
+                        <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                )
+            } else {
+                return(
+                    <tr>
+                        <td colSpan="5">Nenhum produto cadastrado</td>
+                    </tr>
+                )
+            }
         }
     }
 

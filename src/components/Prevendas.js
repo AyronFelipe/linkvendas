@@ -23,13 +23,15 @@ export default class Prevendas extends React.Component{
             },
             params: {
                 page: PRIMEIRA_PAGE,
+                data_ini: new Date(),
+                data_fim: new Date(),
             }
         })
         .then((res) => {
             this.setState({ prevendas: res.data, carregaInfo: false });
         })
         .catch((error) => {
-            console.log(error.response.data);
+            this.setState({ carregaInfo: false });
             swal("Erro!", `${error.response.data.message}`, {
                 icon: "error",
                 buttons: {
@@ -49,13 +51,21 @@ export default class Prevendas extends React.Component{
                 </td>
             </tr>
         } else {
-            return this.state.prevendas.map((prevenda) =>
-                <tr key={prevenda.id}>
-                    <td>{prevenda.id}</td>
-                    <td>{prevenda.descricao}</td>
-                    <td><button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button></td>
-                </tr>
-            )
+            if (this.state.prevendas.length) {
+                return this.state.prevendas.map((prevenda) =>
+                    <tr key={prevenda.id}>
+                        <td>{prevenda.id}</td>
+                        <td>{prevenda.descricao}</td>
+                        <td><button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button></td>
+                    </tr>
+                )
+            } else {
+                return(
+                    <tr>
+                        <td colSpan="5">Nenhuma pré-venda cadastrada</td>
+                    </tr>
+                );
+            }
         }
     }
 
