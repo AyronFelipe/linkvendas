@@ -56,14 +56,12 @@ export default class Produtos extends React.Component{
             params: {
                 id: this.id.current.value,
                 descricao: this.descr.current.value,
-                cod_barras: this.codbar.current.value,
-                referencia: this.ref.current.value,
                 page: page
             }
         })
         .then((res) => {
             res.data.map((produto) => {
-                if (produto.id == this.id.current.value || produto.descricao.includes(this.descr.current.value) || produto.cod_barras == this.codbar.current.value || produto.referencia == this.ref.current.value ) {
+                if (produto.id == this.id.current.value || produto.descricao.includes(this.descr.current.value) ) {
                     produto_list.push(produto);
                 }
             });
@@ -163,20 +161,6 @@ export default class Produtos extends React.Component{
                                                         <div className="form-group">
                                                             <label htmlFor="descr">Descrição do produto</label>
                                                             <input type="text" ref={this.descr} name="descr" id="descr" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="codbar">Código de barras do produto</label>
-                                                            <input type="text" ref={this.codbar} name="codbar" id="codbar" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="ref">Referência do produto</label>
-                                                            <input type="text" ref={this.ref} name="ref" id="ref" className="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>

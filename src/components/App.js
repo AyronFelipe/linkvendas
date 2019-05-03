@@ -46,6 +46,7 @@ export default class App extends React.Component{
                     <PrivateRoute authenticated={this.state.authenticated} path='/nova-pre-venda/' component={NovaPrevenda} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/nova-venda/' component={NovaVenda} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produto/:id/detalhe/' component={DetalheProduto} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/cliente/:id/detalhe/' component={DetalheCliente} />
                 </div>
             </Router>
         )

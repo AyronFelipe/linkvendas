@@ -3,8 +3,6 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 
-const PRIMEIRA_PAGE = 1;
-
 export default class DetalheProduto extends React.Component {
 
     constructor(props){
@@ -12,7 +10,7 @@ export default class DetalheProduto extends React.Component {
         this.state = { produto: '', carregaInfo: true };
     }
 
-    getProduto = (page) => {
+    getProduto = () => {
         let pathname = window.location.pathname;
         let produto_id = pathname.split('/')[2];
         axios({
@@ -34,11 +32,11 @@ export default class DetalheProduto extends React.Component {
                     }
                 },
             });
-        })
+        });
     }
 
     componentDidMount = () => {
-        this.getProduto(PRIMEIRA_PAGE)
+        this.getProduto();
     }
 
     render(){

@@ -55,46 +55,39 @@ export default class Clientes extends React.Component{
                     <tr key={cliente.id}>
                         <td>{cliente.nome}</td>
                         <td>{cliente.cpf_cnpj}</td>
-                        <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
+                        <td>
+                            <Link to={`/cliente/${cliente.id}/detalhe/`}>
+                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
+                            </Link>
+                        </td>
                     </tr>
                 )
             } else {
                 return(
                     <tr>
-                        <td colSpan="5">Nenhum cliente cadastrado</td>
+                        <td colSpan="5">Nenhum cliente encontrado</td>
                     </tr>
                 );
             }
         }
     }
 
-    buscaCliente = (page) => {
+    buscaCliente = () => {
         let cliente_list = [];
+        this.setState({ carregaInfo: true });
         axios({
-            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            url: `http://api.nortelink.com.br/api/v1/clientes/${this.id.current.value}`,
             method: `get`,
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
             },
-            params: {
-                id: this.id.current.value,
-                page: page,
-            }
         })
         .then((res) => {
-            res.data.map((cliente) => {
-                if (cliente.cpf_cnpj == this.id.current.value) {
-                    cliente_list.push(cliente);
-                }
-            });
-            if (cliente_list.length > 0) {
-                this.setState({ clientes: cliente_list, carregaInfo: false });
-            }else{
-                this.buscaCliente(page + 1);
-                this.setState({ carregaInfo: true });
-            }
+            cliente_list.push(res.data);
+            this.setState({ clientes: cliente_list, carregaInfo: false });
         })
         .catch((error) => {
+            this.setState({ clientes: '', carregaInfo: false });
             swal("Erro!", `${error.response.data.message}`, {
                 icon: "error",
                 buttons: {
@@ -156,7 +149,7 @@ export default class Clientes extends React.Component{
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={() => this.buscaCliente(1)}><i className="fas fa-search"></i> Buscar</button>
+                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </form>
