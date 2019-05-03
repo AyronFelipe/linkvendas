@@ -51,7 +51,7 @@ export default class DetalheCliente extends React.Component {
                             <div className="page-inner py-5">
                                 <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                     <div>
-                                        <h2 className="text-white pb-2 fw-bold">Detalhe de Produto</h2>
+                                        <h2 className="text-white pb-2 fw-bold">Detalhes do Cliente</h2>
                                     </div>
                                 </div>
                             </div>
