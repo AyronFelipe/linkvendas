@@ -119,7 +119,7 @@ export default class NovoCliente extends React.Component{
             window.location.href = "/clientes/";
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.erros} `, {
+            swal("Erro!", `${error.response.data} `, {
                 icon: "error",
                 buttons: {
                     confirm: {

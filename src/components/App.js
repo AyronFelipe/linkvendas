@@ -8,6 +8,7 @@ import Produtos from './Produtos';
 import Prevendas from './Prevendas';
 import NovaPrevenda from './NovaPrevenda';
 import Vendas from './Vendas';
+import NovaVenda from './NovaVenda';
 import MainInterno from './MainInterno';
 import PrivateRoute from './PrivateRoute';
 import { isAuthenticated } from '../auth';
@@ -41,6 +42,7 @@ export default class App extends React.Component{
                     <PrivateRoute authenticated={this.state.authenticated} path='/produtos/' exact component={Produtos} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/pre-vendas/' exact component={Prevendas} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/nova-pre-venda/' component={NovaPrevenda} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/nova-venda/' component={NovaVenda} />
                 </div>
             </Router>
         )
