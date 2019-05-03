@@ -6,7 +6,7 @@ export default class SearchPlanoPagamento extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { plano_pagamento: '', readonly: false };
+        this.state = { plano_pagamento: '', readonly: true };
         this.input = React.createRef();
     }
 

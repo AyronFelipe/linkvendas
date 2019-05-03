@@ -102,7 +102,13 @@ export default class NovaPrevenda extends React.Component{
             console.log(res);
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.erros} `, {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message
+            }
+            swal("Erro!", `${erro}`, {
                 icon: "error",
                 buttons: {
                     confirm: {

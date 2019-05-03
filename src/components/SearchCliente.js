@@ -6,7 +6,7 @@ export default class SearchParceiro extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { cliente: '', readonly: false };
+        this.state = { cliente: '', readonly: true };
         this.input = React.createRef();
     }
 
