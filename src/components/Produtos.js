@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const PRIMEIRA_PAGE = 1;
 
@@ -99,7 +100,11 @@ export default class Produtos extends React.Component{
                     <tr key={produto.id}>
                         <td>{produto.id}</td>
                         <td>{produto.descricao}</td>
-                        <td><button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button></td>
+                        <td>
+                            <Link to={`/produto/${produto.id}/detalhe/`}>
+                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
+                            </Link>
+                        </td>
                     </tr>
                 )
             } else {

@@ -180,24 +180,6 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
-                                                <nav>
-                                                    <ul className="pagination justify-content-end">
-                                                        {this.state.page != PRIMEIRA_PAGE ?
-                                                            <li className="page-item">
-                                                                <a className="page-link" href="#" tabindex="-1">Anterior</a>
-                                                            </li> 
-                                                        :
-                                                            <React.Fragment>
-                                                                <li className="page-item active"><a className="page-link" href="#">{this.state.page}</a></li>
-                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page + 1}</a></li>
-                                                                <li className="page-item"><a className="page-link" href="#">{this.state.page + 2}</a></li>
-                                                                <li className="page-item">
-                                                                    <a className="page-link" href="#">Próxima</a>
-                                                                </li>
-                                                            </React.Fragment>
-                                                        }
-                                                    </ul>
-                                                </nav>
                                             </div>
                                         </div>
                                     </div>
