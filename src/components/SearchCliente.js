@@ -21,12 +21,8 @@ export default class SearchParceiro extends React.Component {
         })
             .then((name) => {
                 if (!name) throw null;
-                const PARAMS = {
-                    page: PAGE,
-                    id: name
-                }
                 this.setState({ cliente: name });
-                return fetch(`http://api.nortelink.com.br/api/v1/clientes?page=${encodeURIComponent(PARAMS.page)}`, {
+                return fetch(`http://api.nortelink.com.br/api/v1/clientes/${name}`, {
                     method: `GET`,
                     headers: { 'Authorization': `Bearer ${localStorage.token}` },
                 });
@@ -35,23 +31,20 @@ export default class SearchParceiro extends React.Component {
                 return results.json();
             })
             .then((json) => {
-                let cliente_encontrado_list = []
-                json.map((cliente) => {
-                    if (cliente.cpf_cnpj == this.state.cliente || cliente.id == this.state.cliente) {
-                        cliente_encontrado_list.push(cliente);
-                    }
-                });
-                const cliente_encontrado = cliente_encontrado_list[0];
-                if (!cliente_encontrado) {
+                if (json.status == 404) {
                     return swal("Cliente não encontrado");
+                } else {
+                    let cliente_encontrado_list = []
+                    cliente_encontrado_list.push(json);
+                    const cliente_encontrado = cliente_encontrado_list[0];
+                    swal({
+                        title: "Cliente encontrado!",
+                        text: cliente_encontrado.nome,
+                    });
+                    this.input.current.value = cliente_encontrado.id;
+                    this.setState({ readonly: true });
+                    this.props.onChange(this.input.current.name, this.input.current.value);
                 }
-                swal({
-                    title: "Cliente encontrado!",
-                    text: cliente_encontrado.nome,
-                });
-                this.input.current.value = cliente_encontrado.id;
-                this.setState({ readonly: true });
-                this.props.onChange(this.input.current.name, this.input.current.value);
             });
     }
 

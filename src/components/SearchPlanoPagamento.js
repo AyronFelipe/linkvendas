@@ -21,12 +21,8 @@ export default class SearchPlanoPagamento extends React.Component {
         })
             .then((name) => {
                 if (!name) throw null;
-                const PARAMS = {
-                    page: PAGE,
-                    id: name
-                }
                 this.setState({ plano_pagamento: name });
-                return fetch(`http://api.nortelink.com.br/api/v1/planospag?page=${encodeURIComponent(PARAMS.page)}`, {
+                return fetch(`http://api.nortelink.com.br/api/v1/planospag/${name}/`, {
                     method: `GET`,
                     headers: { 'Authorization': `Bearer ${localStorage.token}` },
                 });
@@ -35,23 +31,20 @@ export default class SearchPlanoPagamento extends React.Component {
                 return results.json();
             })
             .then((json) => {
-                let plano_pagamento_encontrado_list = []
-                json.map((plano_pagamento) => {
-                    if (plano_pagamento.id == this.state.plano_pagamento || plano_pagamento.nome.includes(this.state.plano_pagamento)) {
-                        plano_pagamento_encontrado_list.push(plano_pagamento);
-                    }
-                });
-                const plano_pagamento_encontrado = plano_pagamento_encontrado_list[0];
-                if (!plano_pagamento_encontrado) {
+                if (json.status == 404) {
                     return swal("Plano de Pagamento não encontrado");
+                } else {
+                    let plano_pagamento_encontrado_list = []
+                    plano_pagamento_encontrado_list.push(json);
+                    const plano_pagamento_encontrado = plano_pagamento_encontrado_list[0];
+                    swal({
+                        title: "Plano de Pagamento encontrado!",
+                        text: plano_pagamento_encontrado.nome,
+                    });
+                    this.input.current.value = plano_pagamento_encontrado.id;
+                    this.setState({ readonly: true });
+                    this.props.onChange(this.input.current.name, this.input.current.value);
                 }
-                swal({
-                    title: "Plano de Pagamento encontrado!",
-                    text: plano_pagamento_encontrado.nome,
-                });
-                this.input.current.value = plano_pagamento_encontrado.id;
-                this.setState({ readonly: true });
-                this.props.onChange(this.input.current.name, this.input.current.value);
             });
     }
 

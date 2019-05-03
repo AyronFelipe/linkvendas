@@ -21,12 +21,8 @@ export default class Search extends React.Component{
         })
         .then((name) => {
             if (!name) throw null;
-            const PARAMS = {
-                page: PAGE,
-                id: name
-            }
             this.setState({ parceiro: name });
-            return fetch(`http://api.nortelink.com.br/api/v1/parceiros?page=${encodeURIComponent(PARAMS.page)}`, {
+            return fetch(`http://api.nortelink.com.br/api/v1/parceiros/${name}`, {
                 method: `GET`,
                 headers: { 'Authorization': `Bearer ${localStorage.token}` },
             });
@@ -35,23 +31,21 @@ export default class Search extends React.Component{
             return results.json();
         })
         .then((json) => {
-            let parceiro_encontrado_list = []
-            json.map((parceiro) => {
-                if (parceiro.id == this.state.parceiro || parceiro.nome.includes(this.state.parceiro)) {
-                    parceiro_encontrado_list.push(parceiro);
-                }
-            });
-            const parceiro_encontrado = parceiro_encontrado_list[0];
-            if (!parceiro_encontrado) {
+            console.log(json);
+            if (json.status == 404) {
                 return swal("Parceiro não encontrado");
+            } else {
+                let parceiro_encontrado_list = []
+                parceiro_encontrado_list.push(json);
+                const parceiro_encontrado = parceiro_encontrado_list[0];
+                swal({
+                    title: "Parceiro encontrado!",
+                    text: parceiro_encontrado.nome,
+                });
+                this.input.current.value = parceiro_encontrado.id;
+                this.setState({ readonly: true });
+                this.props.onChange(this.input.current.name, this.input.current.value);
             }
-            swal({
-                title: "Parceiro encontrado!",
-                text: parceiro_encontrado.nome,
-            });
-            this.input.current.value = parceiro_encontrado.id;
-            this.setState({ readonly: true });
-            this.props.onChange(this.input.current.name, this.input.current.value);
         });
     }
 
