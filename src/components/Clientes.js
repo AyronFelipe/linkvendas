@@ -3,6 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { verifyToken } from '../utils';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -38,6 +39,9 @@ export default class Clientes extends React.Component{
                         className: 'btn btn-danger'
                     }
                 },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
             });
         });
     }
@@ -95,6 +99,8 @@ export default class Clientes extends React.Component{
                         className: 'btn btn-danger'
                     }
                 },
+            }).then(() => {
+                verifyToken(error.response.data.message);
             });
         });
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
+import { verifyToken } from '../utils';
 
 
 export default class DetalheCliente extends React.Component {
@@ -32,6 +33,9 @@ export default class DetalheCliente extends React.Component {
                         className: 'btn btn-danger'
                     }
                 },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
             });
         });
     }

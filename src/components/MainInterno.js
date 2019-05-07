@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+
 
 const PRIMEIRA_PAGE = 1;
 

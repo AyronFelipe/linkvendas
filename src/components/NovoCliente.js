@@ -3,6 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import qs from 'qs';
+import { verifyToken } from '../utils';
 
 const CEP_LENGTH = 8;
 
@@ -126,6 +127,9 @@ export default class NovoCliente extends React.Component{
                         className: 'btn btn-danger'
                     }
                 },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
             });
         })
     }
