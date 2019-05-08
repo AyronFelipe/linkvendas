@@ -7,6 +7,10 @@ import { verifyToken } from '../utils';
 
 const CEP_LENGTH = 8;
 
+const inputStyle = {
+    textTransform: 'uppercase'
+}
+
 export default class NovoCliente extends React.Component{
 
     constructor(props){
@@ -68,23 +72,23 @@ export default class NovoCliente extends React.Component{
                         },
                     });
                 } else {
-                    this.endereco.current.value = res.data.logradouro;
-                    this.bairro.current.value = res.data.bairro;
-                    this.cidade.current.value = res.data.localidade;
+                    this.endereco.current.value = res.data.logradouro.toUpperCase();
+                    this.bairro.current.value = res.data.bairro.toUpperCase();
+                    this.cidade.current.value = res.data.localidade.toUpperCase();
                     this.id_municipio.current.value = res.data.ibge;
-                    this.uf.current.value = res.data.uf;
-                    this.setState({ endereco: res.data.logradouro});
-                    this.setState({bairro: res.data.bairro});
-                    this.setState({ cidade: res.data.localidade});
+                    this.uf.current.value = res.data.uf.toUpperCase();
+                    this.setState({ endereco: res.data.logradouro.toUpperCase()});
+                    this.setState({bairro: res.data.bairro.toUpperCase()});
+                    this.setState({ cidade: res.data.localidade.toUpperCase()});
                     this.setState({ id_municipio: res.data.ibge});
-                    this.setState({uf: res.data.uf});
+                    this.setState({uf: res.data.uf.toUpperCase()});
                 }
             });
         }
     }
 
     changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value.toUpperCase() });
     }
 
     handleSubmit = (e) => {
@@ -117,7 +121,16 @@ export default class NovoCliente extends React.Component{
         }
         axios.post(`http://api.nortelink.com.br/api/v1/clientes/`, qs.stringify(body), config)
         .then((res) => {
-            window.location.href = "/clientes/";
+            swal("Cliente cadastrado com sucesso", {
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-success'
+                    }
+                },
+            }).then(() => {
+                window.location.href = "/clientes/";
+            });
         })
         .catch((error) => {
             swal("Erro!", `${error.response.data} `, {
@@ -165,7 +178,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="nome">Nome <span className="text-danger">*</span></label>
-                                                            <input type="text" name="nome" id="nome" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="nome" id="nome" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
@@ -216,7 +229,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="endereco">Logradouro <span className="text-danger">*</span></label>
-                                                            <input type="text" name="endereco" ref={this.endereco} id="endereco" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="endereco" ref={this.endereco} id="endereco" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-2 col-sm-12">
@@ -230,25 +243,25 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="bairro">Bairro <span className="text-danger">*</span></label>
-                                                            <input type="text" name="bairro" ref={this.bairro} id="bairro" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="bairro" ref={this.bairro} id="bairro" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="cidade">Cidade <span className="text-danger">*</span></label>
-                                                            <input type="text" name="cidade" ref={this.cidade} id="cidade" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="cidade" ref={this.cidade} id="cidade" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-3 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="id_municipio">Códido do Município (IBGE) <span className="text-danger">*</span></label>
-                                                            <input type="text" name="id_municipio" ref={this.id_municipio} id="id_municipio" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="id_municipio" ref={this.id_municipio} id="id_municipio" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-2 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="uf">Estado <span className="text-danger">*</span></label>
-                                                            <input type="text" name="uf" ref={this.uf} id="uf" className="form-control" onChange={this.changeHandler} required />
+                                                            <input type="text" name="uf" ref={this.uf} id="uf" className="form-control" onChange={this.changeHandler} required style={inputStyle} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -256,7 +269,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="ponto_ref">Ponto de referência</label>
-                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control" onChange={this.changeHandler} />
+                                                            <input type="text" name="ponto_ref" id="ponto_ref" className="form-control" onChange={this.changeHandler} style={inputStyle} />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -277,7 +290,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="email">E-mail</label>
-                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} />
+                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} style={inputStyle} />
                                                         </div>
                                                     </div>
                                                 </div>

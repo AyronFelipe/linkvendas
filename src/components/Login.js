@@ -3,6 +3,10 @@ import axios from 'axios';
 import qs from 'qs';
 import { storageToken, isAuthenticated } from '../auth';
 
+const inputStyle = {
+    textTransform: 'uppercase'
+}
+
 export default class Login extends React.Component{
 
     constructor(props){
@@ -17,7 +21,7 @@ export default class Login extends React.Component{
     }
 
     changeHandler = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+        this.setState({[e.target.name]: e.target.value.toUpperCase()});
     }
 
     handleSubmit = (e) => {
@@ -61,7 +65,7 @@ export default class Login extends React.Component{
                             <div className="login-form">
                                 <div className="form-group">
                                     <label htmlFor="usuario">Nome</label>
-                                    <input id="usuario" name="usuario" type="text" className="form-control" value={this.state.usuario} onChange={this.changeHandler} required />
+                                    <input id="usuario" name="usuario" type="text" className="form-control" value={this.state.usuario} onChange={this.changeHandler} style={inputStyle} required />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="senha">Senha</label>
