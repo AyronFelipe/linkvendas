@@ -31,7 +31,6 @@ export default class SearchParceiro extends React.Component{
             return results.json();
         })
         .then((json) => {
-            console.log(json);
             if (json.status == 404) {
                 return swal("Parceiro não encontrado");
             } else {
