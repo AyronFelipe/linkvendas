@@ -78,11 +78,6 @@ export default class NovaPrevenda extends React.Component{
         this.setState({ [field]: value });
     }
 
-    handlerItem = (item) => {
-        const list = this.state.itens.concat(item);
-        this.setState({ itens: list });
-    }
-
     showDadosPrazo = (value) => {
         if (value == '003') {
             this.setState({ show_dados_prazo: true });
@@ -209,6 +204,67 @@ export default class NovaPrevenda extends React.Component{
         });
     }
 
+    excluirProduto = (id_item) => {
+        axios.delete(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${id_item}`, config)
+        .then((res) => {
+            swal("Item excluído com sucesso", {
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-success'
+                    }
+                },
+            })
+            .then(() => {
+                axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
+                .then((res) => {
+                    this.setState({ itens: res.data.itens });
+                })
+                .catch((error) => {
+                    let erro = '';
+                    if (error.response.data.erros) {
+                        erro = error.response.data.erros;
+                    } else {
+                        erro = error.response.data.message
+                    }
+                    this.id_venda.current.value = '';
+                    this.vl_total.current.value = '';
+                    this.setState({ itens: [], id_venda: res.data.id_venda, vl_total: res.data.vl_total });
+                    swal("Atenção!", `${erro}`, {
+                        icon: "warning",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-warning'
+                            }
+                        },
+                    })
+                    .then(() => {
+                        verifyToken(error.response.data.message);
+                    });
+                });
+            });
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        })
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -280,7 +336,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                         <td>{ item.descricao }</td>
                                                                                         <td>{ item.preco }</td>
                                                                                         <td>{ item.quantidade }</td>
-                                                                                        <td><button className="btn btn-danger"><i className="fas fa-trash-alt"></i></button></td>
+                                                                                        <td><button className="btn btn-danger" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
                                                                                     </tr>
                                                                                 )}
                                                                             </tbody>
