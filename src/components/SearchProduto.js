@@ -1,18 +1,16 @@
 import React from 'react';
 
-const PAGE = 1;
-
-export default class SearchCliente extends React.Component {
+export default class SearchProduto extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { cliente: '', readonly: true };
+        this.state = { produto: '', readonly: true };
         this.input = React.createRef();
     }
 
-    searchCliente = () => {
+    searchProduto = () => {
         swal({
-            text: "Código ou CPF ou CNPJ do cliente sem formatação",
+            text: "Código do Produto",
             content: "input",
             button: {
                 text: "Procurar!",
@@ -21,8 +19,8 @@ export default class SearchCliente extends React.Component {
         })
             .then((name) => {
                 if (!name) throw null;
-                this.setState({ cliente: name });
-                return fetch(`http://api.nortelink.com.br/api/v1/clientes/${name}`, {
+                this.setState({ produto: name });
+                return fetch(`http://api.nortelink.com.br/api/v1/produtos/${name}`, {
                     method: `GET`,
                     headers: { 'Authorization': `Bearer ${localStorage.token}` },
                 });
@@ -32,16 +30,16 @@ export default class SearchCliente extends React.Component {
             })
             .then((json) => {
                 if (json.status == 404) {
-                    return swal("Cliente não encontrado");
+                    return swal("Produto não encontrado");
                 } else {
-                    let cliente_encontrado_list = []
-                    cliente_encontrado_list.push(json);
-                    const cliente_encontrado = cliente_encontrado_list[0];
+                    let produto_encontrado_list = []
+                    produto_encontrado_list.push(json);
+                    const produto_encontrado = produto_encontrado_list[0];
                     swal({
-                        title: "Cliente encontrado!",
-                        text: cliente_encontrado.nome,
+                        title: "Produto encontrado!",
+                        text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
                     });
-                    this.input.current.value = cliente_encontrado.id;
+                    this.input.current.value = produto_encontrado.id;
                     this.setState({ readonly: true });
                     this.props.onChange(this.input.current.name, this.input.current.value);
                 }

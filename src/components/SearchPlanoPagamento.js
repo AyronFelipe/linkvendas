@@ -1,7 +1,5 @@
 import React from 'react';
 
-const PAGE = 1;
-
 export default class SearchPlanoPagamento extends React.Component {
 
     constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react';
 
 const PAGE = 1;
 
-export default class Search extends React.Component{
+export default class SearchParceiro extends React.Component{
 
     constructor(props){
         super(props);

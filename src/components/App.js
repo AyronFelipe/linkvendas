@@ -35,6 +35,7 @@ export default class App extends React.Component{
         return(
             <Router>
                 <div className="wrapper">
+                    <PrivateRoute authenticated={this.state.authenticated} path='/nova-pre-venda/' component={NovaPrevenda} />
                     <Route path='/' exact component={Initial} />
                     <Route path='/login/' component={Login} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/main/' exact component={MainInterno} />
@@ -43,7 +44,6 @@ export default class App extends React.Component{
                     <PrivateRoute authenticated={this.state.authenticated} path='/novo-cliente/' component={NovoCliente} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produtos/' exact component={Produtos} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/pre-vendas/' exact component={Prevendas} />
-                    <PrivateRoute authenticated={this.state.authenticated} path='/nova-pre-venda/' component={NovaPrevenda} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/nova-venda/' component={NovaVenda} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produto/:id/detalhe/' component={DetalheProduto} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/cliente/:id/detalhe/' component={DetalheCliente} />
