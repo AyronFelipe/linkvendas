@@ -7,6 +7,10 @@ import { verifyToken } from '../utils';
 
 const PRIMEIRA_PAGE = 1;
 
+const inputStyle = {
+    textTransform: 'uppercase'
+}
+
 export default class Produtos extends React.Component{
 
     constructor(props){
@@ -47,9 +51,10 @@ export default class Produtos extends React.Component{
         });
     }
 
-    buscaProduto = (page) => {
-
+    buscaProduto = (e, page) => {
+        e.preventDefault();
         let produto_list = [];
+        this.setState({ carregaInfo: true });
         axios({
             url: `http://api.nortelink.com.br/api/v1/produtos/`,
             method: `get`,
@@ -58,14 +63,25 @@ export default class Produtos extends React.Component{
             },
             params: {
                 id: this.id.current.value,
-                descricao: this.descr.current.value,
+                descricao: this.descr.current.value.toUpperCase(),
                 page: page
             }
         })
         .then((res) => {
             res.data.map((produto) => {
-                if (produto.id == this.id.current.value || produto.descricao.includes(this.descr.current.value) ) {
-                    produto_list.push(produto);
+                if (this.id.current.value == '') {
+                    if (produto.descricao.includes(this.descr.current.value.toUpperCase())) {
+                        produto_list.push(produto);
+                    }
+                } else if (this.descr.current.value == '') {
+                    if (produto.id === this.id.current.value) {
+                        produto_list.push(produto);
+                    }
+                } else {
+                    if (produto.id === this.id.current.value && produto.descricao.includes(this.descr.current.value.toUpperCase()) ) {
+                        produto_list.push(produto);
+
+                    }
                 }
             });
             if (produto_list.length > 0) {
@@ -76,8 +92,8 @@ export default class Produtos extends React.Component{
             }
         })
         .catch((error) => {
-            this.setState({ carregaInfo: false });
-            swal("Erro!", `${error.response.data.message}`, {
+            this.setState({ carregaInfo: false, });
+            swal("Erro!", `Produto não encontrado`, {
                 icon: "error",
                 buttons: {
                     confirm: {
@@ -114,7 +130,7 @@ export default class Produtos extends React.Component{
             } else {
                 return(
                     <tr>
-                        <td colSpan="5">Nenhum produto cadastrado</td>
+                        <td colSpan="5">Nenhum produto encontrado</td>
                     </tr>
                 )
             }
@@ -155,7 +171,7 @@ export default class Produtos extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
-                                            <form>
+                                            <form onSubmit={(e) => this.buscaProduto(e, 1)}>
                                                 <div className="row">
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group">
@@ -166,13 +182,13 @@ export default class Produtos extends React.Component{
                                                     <div className="col-md-6 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="descr">Descrição do produto</label>
-                                                            <input type="text" ref={this.descr} name="descr" id="descr" className="form-control" />
+                                                            <input type="text" ref={this.descr} name="descr" id="descr" className="form-control" style={inputStyle} />
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={() => this.buscaProduto(1)}><i className="fas fa-search"></i> Buscar</button>
+                                                        <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block"><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </form>

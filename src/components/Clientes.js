@@ -76,7 +76,8 @@ export default class Clientes extends React.Component{
         }
     }
 
-    buscaCliente = () => {
+    buscaCliente = (e) => {
+        e.preventDefault();
         let cliente_list = [];
         this.setState({ carregaInfo: true });
         axios({
@@ -144,7 +145,7 @@ export default class Clientes extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
-                                            <form>
+                                            <form onSubmit={this.buscaCliente}>
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="form-group">
@@ -155,7 +156,7 @@ export default class Clientes extends React.Component{
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
+                                                        <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block"><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </form>
