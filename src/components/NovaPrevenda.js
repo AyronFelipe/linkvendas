@@ -45,6 +45,7 @@ export default class NovaPrevenda extends React.Component{
             quantidade: '',
             produtos: [],
             itens: [],
+            readOnly: false,
         };
         this.childCliente = React.createRef();
         this.childPlanoPagamento = React.createRef();
@@ -52,6 +53,7 @@ export default class NovaPrevenda extends React.Component{
         this.childProduto = React.createRef();
         this.id_venda = React.createRef();
         this.vl_total = React.createRef();
+        this.vl_itens = React.createRef();
     }
 
     triggerChildClienteSearch = () => {
@@ -96,10 +98,10 @@ export default class NovaPrevenda extends React.Component{
             id_plano_pag: this.state.id_plano_pag,
             id_pos: this.state.id_pos,
             mod_venda: this.state.mod_venda,
-            vl_itens: this.state.vl_itens,
+            vl_itens: parseFloat(this.state.vl_itens),
             vl_desconto: this.state.vl_desconto,
             vl_acrescimo: this.state.vl_acrescimo,
-            vl_total: this.state.vl_total,
+            vl_total: parseFloat(this.state.vl_total),
             vl_entrada: this.state.vl_entrada,
             parcelas: this.state.parcelas,
             vl_parcela: this.state.vl_parcela,
@@ -139,6 +141,7 @@ export default class NovaPrevenda extends React.Component{
     addProduto = (e) => {
         let url = '';
         e.preventDefault();
+        const list_soma = [];
 
         let body = {
             id_produto: this.state.id_produto,
@@ -155,13 +158,19 @@ export default class NovaPrevenda extends React.Component{
         axios.post(url, qs.stringify(body), config)
         .then((res) => {
             this.id_venda.current.value = res.data.id_venda;
-            this.vl_total.current.value = res.data.vl_total;
-            this.setState({ id_venda: res.data.id_venda, vl_total: res.data.vl_total });
+            this.setState({ id_venda: res.data.id_venda });
             axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
-                .then((res) => {
+            .then((res) => {
                     this.setState({ itens: res.data.itens });
                     $('#modal').modal('hide');
                     document.getElementById('modal-form').reset();
+                    this.state.itens.map((item) => {
+                        list_soma.push(item.preco * item.quantidade);
+                    })
+                    let soma = list_soma.reduce((a, b) => a + b, 0);
+                    this.setState({ vl_itens: soma, vl_total: soma });
+                    this.vl_itens.current.value = this.state.vl_itens;
+                    this.vl_total.current.value = this.state.vl_total;
                 })
                 .catch((error) => {
                     let erro = '';
@@ -313,7 +322,7 @@ export default class NovaPrevenda extends React.Component{
                                                             <div className="card-body">
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-3">
-                                                                        <button className="btn btn-nortelink btn-lg btn-block" data-toggle="modal" data-target="#modal"><i className="la flaticon-add"></i> Adicionar Produto</button>
+                                                                        <button className="btn btn-nortelink btn-lg btn-block" data-toggle="modal" data-target="#modal" type="button"><i className="la flaticon-add"></i> Adicionar Produto</button>
                                                                     </div>
                                                                 </div>
                                                                 {
@@ -364,7 +373,7 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
                                                                             <label htmlFor="id_venda" className="placeholder">Código da Venda Temporária <span className="text-danger">*</span></label>
-                                                                            <input name="id_venda" id="id_venda" className="form-control" onChange={this.changeHandler} required ref={this.id_venda} readOnly={true} />
+                                                                            <input name="id_venda" id="id_venda" className="form-control" onChange={this.changeHandler} required ref={this.id_venda} readOnly={this.state.readOnly} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
@@ -413,7 +422,7 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_itens">Valor total dos produtos <span className="text-danger">*</span></label>
-                                                                            <input type="text" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required />
+                                                                            <input type="number" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required readOnly={this.state.readOnly} ref={this.vl_itens} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
@@ -431,7 +440,7 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_total">Valor total da venda <span className="text-danger">*</span></label>
-                                                                            <input type="text" id="vl_total" name="vl_total" className="form-control" ref={this.vl_total} onChange={this.changeHandler} required readOnly={true} />
+                                                                            <input type="number" id="vl_total" name="vl_total" className="form-control" ref={this.vl_total} onChange={this.changeHandler} required readOnly={this.state.readOnly} />
                                                                         </div>
                                                                     </div>
                                                                 </div>
