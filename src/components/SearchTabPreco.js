@@ -1,16 +1,16 @@
 import React from 'react';
 
-export default class SearchProduto extends React.Component {
+export default class SearchTabPreco extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { produto: '', readonly: true };
+        this.state = { tab_preco: '', readonly: true };
         this.input = React.createRef();
     }
 
-    searchProduto = () => {
+    searchTabPreco = () => {
         swal({
-            text: "Código do Produto",
+            text: "Código da Tabela de Preço",
             content: "input",
             button: {
                 text: "Procurar!",
@@ -19,8 +19,8 @@ export default class SearchProduto extends React.Component {
         })
             .then((name) => {
                 if (!name) throw null;
-                this.setState({ produto: name });
-                return fetch(`http://api.nortelink.com.br/api/v1/produtos/${name}`, {
+                this.setState({ tab_preco: name });
+                return fetch(`http://api.nortelink.com.br/api/v1/produtos/tabprecos/${name}`, {
                     method: `GET`,
                     headers: { 'Authorization': `Bearer ${localStorage.token}` },
                 });
@@ -30,16 +30,16 @@ export default class SearchProduto extends React.Component {
             })
             .then((json) => {
                 if (json.status == 404) {
-                    return swal("Produto não encontrado");
+                    return swal("Tabela de Preço não encontrada");
                 } else {
-                    let produto_encontrado_list = []
-                    produto_encontrado_list.push(json);
-                    const produto_encontrado = produto_encontrado_list[0];
+                    let tab_preco_encontrado_list = []
+                    tab_preco_encontrado_list.push(json);
+                    const tab_preco_encontrado = tab_preco_encontrado_list[0];
                     swal({
-                        title: "Produto encontrado!",
-                        text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
+                        title: "Tabela de Preço encontrada!",
+                        text: `${tab_preco_encontrado.descricao}`,
                     });
-                    this.input.current.value = produto_encontrado.id;
+                    this.input.current.value = tab_preco_encontrado.id;
                     this.setState({ readonly: true });
                     this.props.onChange(this.input.current.name, this.input.current.value);
                     this.props.onInput();

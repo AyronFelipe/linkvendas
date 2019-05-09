@@ -149,7 +149,7 @@ export default class Clientes extends React.Component{
                                                 <div className="row">
                                                     <div className="col-sm-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="id">Código ou CPF ou CNPJ do cliente sem formatação</label>
+                                                            <label htmlFor="id">Código, CPF ou CNPJ do cliente sem formatação</label>
                                                             <input type="text" ref={this.id} name="id" id="id" className="form-control" />
                                                         </div>
                                                     </div>

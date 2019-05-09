@@ -5,6 +5,7 @@ import SearchCliente from './SearchCliente';
 import SearchPlanoPagamento from './SearchPlanoPagamento';
 import SearchParceiro from './SearchParceiro';
 import SearchProduto from './SearchProduto';
+import SearchTabPreco from './SearchTabPreco';
 import axios from 'axios';
 import qs from 'qs';
 import { verifyToken } from '../utils';
@@ -45,15 +46,18 @@ export default class NovaPrevenda extends React.Component{
             quantidade: '',
             produtos: [],
             itens: [],
-            readOnly: false,
+            readOnly: true,
+            id_tab_preco: '',
         };
         this.childCliente = React.createRef();
         this.childPlanoPagamento = React.createRef();
         this.childParceiro = React.createRef();
         this.childProduto = React.createRef();
+        this.childTabPreco = React.createRef();
         this.id_venda = React.createRef();
         this.vl_total = React.createRef();
         this.vl_itens = React.createRef();
+        this.preco = React.createRef();
     }
 
     triggerChildClienteSearch = () => {
@@ -70,6 +74,10 @@ export default class NovaPrevenda extends React.Component{
 
     triggerChildProdutoSearch = () => {
         this.childProduto.current.searchProduto();
+    }
+
+    triggerChildTabPrecoSearch = () => {
+        this.childTabPreco.current.searchTabPreco();
     }
 
     changeHandler = (e) => {
@@ -145,8 +153,9 @@ export default class NovaPrevenda extends React.Component{
 
         let body = {
             id_produto: this.state.id_produto,
-            preco: this.state.preco,
             quantidade: this.state.quantidade,
+            id_tab_preco: this.state.id_tab_preco,
+            preco: this.state.preco,
         }
 
         if (this.state.id_venda == '') {
@@ -274,6 +283,35 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
+    handleInput = () => {
+        if (this.state.id_produto != '' && this.state.id_tab_preco != '') {
+            axios.get(`http://api.nortelink.com.br/api/v1/produtos/${this.state.id_produto}/precos/${this.state.id_tab_preco}`, config)
+            .then((res) => {
+                this.setState({ preco: res.data.preco_venda });
+                this.preco.current.value = res.data.preco_venda;
+            })
+            .catch((error) => {
+                let erro = '';
+                if (error.response.data.erros) {
+                    erro = error.response.data.erros;
+                } else {
+                    erro = error.response.data.message;
+                }
+                swal("Erro!", `${erro}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            })
+        }
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -333,7 +371,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 <tr>
                                                                                     <th>Código</th>
                                                                                     <th>Nome</th>
-                                                                                    <th>Preço</th>
+                                                                                    <th>Preço da unidade</th>
                                                                                     <th>Quantidade</th>
                                                                                     <th>Ações</th>
                                                                                 </tr>
@@ -551,7 +589,7 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
                                                 <div className="input-group">
-                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} />
+                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-nortelink" type="button" onClick={this.triggerChildProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
                                                     </div>
@@ -560,8 +598,19 @@ export default class NovaPrevenda extends React.Component{
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
+                                                <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
+                                                <div className="input-group">
+                                                    <SearchTabPreco name="id_tab_preco" id="id_tab_preco" ref={this.childTabPreco} onChange={this.changeHandlerChild} onInput={this.handleInput} />
+                                                    <div className="input-group-append">
+                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerChildTabPrecoSearch}><i className="fas fa-search"></i> Procurar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário do produto <span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} />
+                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={this.state.readOnly} />
                                             </div>
                                         </div>
                                         <div className="col-12">
