@@ -345,7 +345,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                         <td>{ item.descricao }</td>
                                                                                         <td>{ item.preco }</td>
                                                                                         <td>{ item.quantidade }</td>
-                                                                                        <td><button className="btn btn-danger" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
+                                                                                        <td><button className="btn btn-danger" type="button" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
                                                                                     </tr>
                                                                                 )}
                                                                             </tbody>
