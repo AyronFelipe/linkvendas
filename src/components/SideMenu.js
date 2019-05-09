@@ -41,14 +41,6 @@ export default class SideMenu extends React.Component{
                                     </div>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/vendas/">
-                                    <div data-toggle="collapse" className="collapsed" aria-expanded="false">
-                                        <i className="flaticon-analytics"></i>
-                                        <p>Vendas</p>
-                                    </div>
-                                </Link>
-                            </li>
                         </ul>
                     </div>
                 </div>
