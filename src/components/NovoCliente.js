@@ -88,7 +88,7 @@ export default class NovoCliente extends React.Component{
     }
 
     changeHandler = (e) => {
-        this.setState({ [e.target.name]: e.target.value.toUpperCase() });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSubmit = (e) => {
@@ -100,7 +100,7 @@ export default class NovoCliente extends React.Component{
             }
         }
         let body = {
-            nome: this.state.nome,
+            nome: this.state.nome.toUpperCase(),
             pessoa: this.state.pessoa,
             insc_estadual: this.state.insc_estadual,
             cpf_cnpj: this.state.cpf_cnpj,
@@ -133,7 +133,13 @@ export default class NovoCliente extends React.Component{
             });
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data} `, {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message
+            }
+            swal("Erro!", `${erro}`, {
                 icon: "error",
                 buttons: {
                     confirm: {
@@ -290,7 +296,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="email">E-mail</label>
-                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} style={inputStyle} />
+                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                 </div>
