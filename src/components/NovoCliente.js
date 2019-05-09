@@ -111,7 +111,7 @@ export default class NovoCliente extends React.Component{
             cidade: this.state.cidade,
             id_municipio: this.state.id_municipio,
             uf: this.state.uf,
-            ponto_ref: this.state.ponto_ref,
+            ponto_ref: this.state.ponto_ref.toUpperCase(),
             telefone: this.state.telefone,
             celular: this.state.celular,
             email: this.state.email,
