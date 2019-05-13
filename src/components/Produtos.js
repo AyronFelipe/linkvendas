@@ -53,7 +53,6 @@ export default class Produtos extends React.Component{
 
     buscaProduto = (e, page) => {
         e.preventDefault();
-        let produto_list = [];
         this.setState({ carregaInfo: true });
         axios({
             url: `http://api.nortelink.com.br/api/v1/produtos/`,
@@ -63,36 +62,16 @@ export default class Produtos extends React.Component{
             },
             params: {
                 id: this.id.current.value,
-                descricao: this.descr.current.value.toUpperCase(),
+                descr: this.descr.current.value.toUpperCase(),
+                codbar: this.codbar.current.value,
                 page: page
             }
         })
         .then((res) => {
-            res.data.map((produto) => {
-                if (this.id.current.value == '') {
-                    if (produto.descricao.includes(this.descr.current.value.toUpperCase())) {
-                        produto_list.push(produto);
-                    }
-                } else if (this.descr.current.value == '') {
-                    if (produto.id === this.id.current.value) {
-                        produto_list.push(produto);
-                    }
-                } else {
-                    if (produto.id === this.id.current.value && produto.descricao.includes(this.descr.current.value.toUpperCase()) ) {
-                        produto_list.push(produto);
-
-                    }
-                }
-            });
-            if (produto_list.length > 0) {
-                this.setState({ produtos: produto_list, carregaInfo: false });
-            } else {
-                this.buscaProduto(page + 1);
-                this.setState({ carregaInfo: true });
-            }
+            this.setState({ produtos: res.data, carregaInfo: false });
         })
         .catch((error) => {
-            this.setState({ carregaInfo: false, });
+            this.setState({ produtos: '', carregaInfo: false, });
             swal("Erro!", `Produto não encontrado`, {
                 icon: "error",
                 buttons: {
@@ -185,6 +164,12 @@ export default class Produtos extends React.Component{
                                                             <input type="text" ref={this.descr} name="descr" id="descr" className="form-control" style={inputStyle} />
                                                         </div>
                                                     </div>
+                                                    <div className="col-md-6 col-sm-12">
+                                                        <div className="form-group">
+                                                            <label htmlFor="descr">Código de barras produto</label>
+                                                            <input type="text" ref={this.codbar} name="codbar" id="codbar" className="form-control" style={inputStyle} />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-sm-12 col-md-3 offset-md-9">
@@ -220,7 +205,6 @@ export default class Produtos extends React.Component{
                         </div>
                     </div>
                 </div>
-                <h1>OI</h1>
             </React.Fragment>
         )
     }
