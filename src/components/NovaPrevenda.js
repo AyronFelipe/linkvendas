@@ -375,7 +375,7 @@ export default class NovaPrevenda extends React.Component{
                                                     <div className="col-12">
                                                         <div className="card">
                                                             <div className="card-header">
-                                                                <div class="d-flex align-items-center">
+                                                                <div className="d-flex align-items-center">
                                                                     <h5 className="card-title">
                                                                         Adicione produtos à pré-venda
                                                                     </h5>

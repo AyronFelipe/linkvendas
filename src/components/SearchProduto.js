@@ -1,5 +1,8 @@
 import React from 'react';
 
+
+const PAGE = 1;
+
 export default class SearchProduto extends React.Component {
 
     constructor(props) {
@@ -10,8 +13,14 @@ export default class SearchProduto extends React.Component {
 
     searchProduto = () => {
         swal({
-            text: "Código do Produto",
-            content: "input",
+            text: "Descrição do Produto",
+            content: {
+                element: "input",
+                attributes: {
+                    type: "text",
+                    style: "text-transform:uppercase;"
+                }
+            },
             button: {
                 text: "Procurar!",
                 closeModal: false,
@@ -20,7 +29,7 @@ export default class SearchProduto extends React.Component {
             .then((name) => {
                 if (!name) throw null;
                 this.setState({ produto: name });
-                return fetch(`http://api.nortelink.com.br/api/v1/produtos/${name}`, {
+                return fetch(`http://api.nortelink.com.br/api/v1/produtos/?page=${PAGE}&descr=${this.state.produto.toUpperCase()}`, {
                     method: `GET`,
                     headers: { 'Authorization': `Bearer ${localStorage.token}` },
                 });
@@ -32,9 +41,7 @@ export default class SearchProduto extends React.Component {
                 if (json.status == 404) {
                     return swal("Produto não encontrado");
                 } else {
-                    let produto_encontrado_list = []
-                    produto_encontrado_list.push(json);
-                    const produto_encontrado = produto_encontrado_list[0];
+                    const produto_encontrado = json[0];
                     swal({
                         title: "Produto encontrado!",
                         text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
