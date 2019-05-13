@@ -46,7 +46,7 @@ export default class NovaPrevenda extends React.Component{
             quantidade: '',
             produtos: [],
             itens: [],
-            readOnly: true,
+            readOnly: false,
             id_tab_preco: '',
         };
         this.childCliente = React.createRef();
@@ -312,6 +312,28 @@ export default class NovaPrevenda extends React.Component{
         }
     }
 
+    renderProdutos = () => {
+        if (this.state.itens.length > 0) {
+            return(
+                this.state.itens.map((item) =>
+                    <tr key={item.id_item}>
+                        <td>{item.id_produto}</td>
+                        <td>{item.descricao}</td>
+                        <td>{item.preco}</td>
+                        <td>{item.quantidade}</td>
+                        <td><button className="btn btn-danger" type="button" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
+                    </tr>
+                )
+            )
+        } else {
+            return(
+                <tr>
+                    <td colSpan="5">Nenhum produto adicionado</td>
+                </tr>
+            )
+        }
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -353,45 +375,34 @@ export default class NovaPrevenda extends React.Component{
                                                     <div className="col-12">
                                                         <div className="card">
                                                             <div className="card-header">
-                                                                <h5 className="card-title">
-                                                                    Adicione produtos à pré-venda
-                                                                </h5>
+                                                                <div class="d-flex align-items-center">
+                                                                    <h5 className="card-title">
+                                                                        Adicione produtos à pré-venda
+                                                                    </h5>
+                                                                    <button className="btn btn-nortelink btn-lg ml-auto" data-toggle="modal" data-target="#modal" type="button"><i className="la flaticon-add"></i> Adicionar Produto</button>
+                                                                </div>
                                                             </div>
                                                             <div className="card-body">
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-3">
-                                                                        <button className="btn btn-nortelink btn-lg btn-block" data-toggle="modal" data-target="#modal" type="button"><i className="la flaticon-add"></i> Adicionar Produto</button>
                                                                     </div>
                                                                 </div>
-                                                                {
-                                                                    this.state.itens.length > 0 ?
-                                                                    <div className="table-responsive">
-                                                                        <table className="table">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>Código</th>
-                                                                                    <th>Nome</th>
-                                                                                    <th>Preço da unidade</th>
-                                                                                    <th>Quantidade</th>
-                                                                                    <th>Ações</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                {this.state.itens.map((item) =>
-                                                                                    <tr key={item.id_item}>
-                                                                                        <td>{ item.id_produto }</td>
-                                                                                        <td>{ item.descricao }</td>
-                                                                                        <td>{ item.preco }</td>
-                                                                                        <td>{ item.quantidade }</td>
-                                                                                        <td><button className="btn btn-danger" type="button" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
-                                                                                    </tr>
-                                                                                )}
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    :
-                                                                    null
-                                                                }
+                                                                <div className="table-responsive">
+                                                                    <table className="table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Código</th>
+                                                                                <th>Nome</th>
+                                                                                <th>Preço da unidade</th>
+                                                                                <th>Quantidade</th>
+                                                                                <th>Ações</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            {this.renderProdutos()}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

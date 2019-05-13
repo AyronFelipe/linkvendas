@@ -4,6 +4,8 @@ import SideMenu from './SideMenu';
 import axios from 'axios';
 import qs from 'qs';
 import { verifyToken } from '../utils';
+import MaskedInput from 'react-text-mask';
+
 
 const CEP_LENGTH = 8;
 
@@ -22,9 +24,9 @@ export default class NovoCliente extends React.Component{
         this.uf = React.createRef();
         this.state = {
             show_pessoa_juridica: false, 
-            show_pessoa_fisica: false,
+            show_pessoa_fisica: true,
             nome: '',
-            pessoa: '',
+            pessoa: 'F',
             insc_estadual: '',
             cpf_cnpj: '',
             cep: '',
@@ -191,9 +193,8 @@ export default class NovoCliente extends React.Component{
                                                         <div className="form-group">
                                                             <label htmlFor="pessoa">Pessoa Física ou Jurídica <span className="text-danger">*</span></label>
                                                             <select name="pessoa" id="pessoa" className="form-control" required onInput={this.showPessoa} onChange={this.changeHandler}>
-                                                                <option value="">&nbsp;</option>
-                                                                <option value="J">Pessoa Jurídica</option>
                                                                 <option value="F">Pessoa Física</option>
+                                                                <option value="J">Pessoa Jurídica</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -209,7 +210,14 @@ export default class NovoCliente extends React.Component{
                                                         <div className="col-md-6 col-sm-12">
                                                             <div className="form-group">
                                                                 <label htmlFor="cpf_cnpj">CNPJ <span className="text-danger">*</span></label>
-                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control" onChange={this.changeHandler} required />
+                                                                <MaskedInput 
+                                                                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                                                                    guide={false}
+                                                                    name="cpf_cnpj"
+                                                                    id="cpf_cnpj"
+                                                                    className="form-control"
+                                                                    onChange={this.changeHandler}
+                                                                    required />
                                                             </div>
                                                         </div>
                                                     </div> : null
@@ -219,7 +227,14 @@ export default class NovoCliente extends React.Component{
                                                         <div className="col-md-6 col-sm-12">
                                                             <div className="form-group">
                                                                 <label htmlFor="cpf_cnpj">CPF <span className="text-danger">*</span></label>
-                                                                <input type="text" name="cpf_cnpj" id="cpf_cnpj" className="form-control" onChange={this.changeHandler} required />
+                                                                <MaskedInput
+                                                                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                                                                    guide={false}
+                                                                    name="cpf_cnpj"
+                                                                    id="cpf_cnpj"
+                                                                    className="form-control"
+                                                                    onChange={this.changeHandler}
+                                                                    required />
                                                             </div>
                                                         </div>
                                                     </div> : null
@@ -229,7 +244,15 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="cep">CEP <span className="text-danger">*</span></label>
-                                                            <input type="text" name="cep" id="cep" className="form-control" required onInput={this.carregaInfoCep} onChange={this.changeHandler} />
+                                                            <MaskedInput
+                                                                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                                                                guide={false}
+                                                                name="cep"
+                                                                id="cep"
+                                                                className="form-control"
+                                                                onBlur={this.carregaInfoCep}
+                                                                onChange={this.changeHandler}
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-6 col-sm-12">
@@ -241,7 +264,14 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-2 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="numero_end">Número <span className="text-danger">*</span></label>
-                                                            <input type="text" name="numero_end" id="numero_end" className="form-control" onChange={this.changeHandler} required />
+                                                            <MaskedInput
+                                                                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                                                                guide={false}
+                                                                name="numero_end"
+                                                                id="numero_end"
+                                                                className="form-control"
+                                                                onChange={this.changeHandler}
+                                                                required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,13 +314,27 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="telefone">Telefone <span className="text-danger">*</span></label>
-                                                            <input type="text" name="telefone" id="telefone" className="form-control" onChange={this.changeHandler} required />
+                                                            <MaskedInput
+                                                                mask={['(', /\d/, /\d/, ')',/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
+                                                                guide={false}
+                                                                name="telefone"
+                                                                id="telefone"
+                                                                className="form-control"
+                                                                onChange={this.changeHandler}
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="celular">Celular <span className="text-danger">*</span></label>
-                                                            <input type="text" name="celular" id="celular" className="form-control" onChange={this.changeHandler} required />
+                                                            <MaskedInput
+                                                                mask={['(', /\d/, /\d/, ')',/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
+                                                                guide={false}
+                                                                name="celular"
+                                                                id="celular"
+                                                                className="form-control"
+                                                                onChange={this.changeHandler}
+                                                                required />
                                                         </div>
                                                     </div>
                                                     <div className="col-md-4 col-sm-12">

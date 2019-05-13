@@ -4,7 +4,7 @@ export default class SearchTabPreco extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { tab_preco: '', readonly: true };
+        this.state = { tab_preco: '', readonly: false };
         this.input = React.createRef();
     }
 
@@ -47,9 +47,13 @@ export default class SearchTabPreco extends React.Component {
             });
     }
 
+    changeHandler = (e) => {
+        this.props.onChange(this.input.current.name, this.input.current.value);
+    }
+
     render() {
         return (
-            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} required />
+            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required />
         )
     }
 }

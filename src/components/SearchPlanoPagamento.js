@@ -4,7 +4,7 @@ export default class SearchPlanoPagamento extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { plano_pagamento: '', readonly: true };
+        this.state = { plano_pagamento: '', readonly: false };
         this.input = React.createRef();
     }
 
@@ -46,13 +46,17 @@ export default class SearchPlanoPagamento extends React.Component {
             });
     }
 
+    changeHandler = (e) => {
+        this.props.onChange(this.input.current.name, this.input.current.value);
+    }
+
     handlerBlur = (e) => {
         this.props.onBlur(e.target.value);
     }
 
     render() {
         return (
-            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onBlur={this.handlerBlur} required />
+            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onBlur={this.handlerBlur} onChange={this.changeHandler} required />
         )
     }
 }
