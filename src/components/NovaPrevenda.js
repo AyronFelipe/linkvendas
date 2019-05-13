@@ -471,25 +471,25 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_itens">Valor total dos produtos <span className="text-danger">*</span></label>
-                                                                            <input type="number" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required readOnly={this.state.readOnly} ref={this.vl_itens} />
+                                                                            <input type="number" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required readOnly={this.state.readOnly} ref={this.vl_itens} min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_desconto">Valor do desconto sobre os produtos <span className="text-danger">*</span></label>
-                                                                            <input type="text" name="vl_desconto" id="vl_desconto" className="form-control" onChange={this.changeHandler} required />
+                                                                            <input type="text" name="vl_desconto" id="vl_desconto" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_acrescimo">Valor do acréscimo sobre os produtos <span className="text-danger">*</span></label>
-                                                                            <input type="text" name="vl_acrescimo" id="vl_acrescimo" className="form-control" onChange={this.changeHandler} required />
+                                                                            <input type="text" name="vl_acrescimo" id="vl_acrescimo" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_total">Valor total da venda <span className="text-danger">*</span></label>
-                                                                            <input type="number" id="vl_total" name="vl_total" className="form-control" ref={this.vl_total} onChange={this.changeHandler} required readOnly={this.state.readOnly} />
+                                                                            <input type="number" id="vl_total" name="vl_total" className="form-control" ref={this.vl_total} onChange={this.changeHandler} required readOnly={this.state.readOnly} min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -499,19 +499,19 @@ export default class NovaPrevenda extends React.Component{
                                                                         <div className="col-sm-12 col-md-4">
                                                                             <div className="form-group">
                                                                                 <label htmlFor="vl_entrada">Valor de entrada</label>
-                                                                                <input type="text" id="vl_entrada" className="form-control" onChange={this.changeHandler} name="vl_entrada" />
+                                                                                <input type="number" id="vl_entrada" className="form-control" onChange={this.changeHandler} name="vl_entrada" min="0" step="0.01" />
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-sm-12 col-md-4">
                                                                             <div className="form-group">
                                                                                 <label htmlFor="parcelas">Quantidade de parcelas de pagamento</label>
-                                                                                <input type="text" id="parcelas" className="form-control" onChange={this.changeHandler} name="parcelas" />
+                                                                                <input type="number" id="parcelas" className="form-control" onChange={this.changeHandler} name="parcelas" />
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-sm-12 col-md-4">
                                                                             <div className="form-group">
                                                                                 <label htmlFor="vl_parcela">Valor da parcela de pagamento</label>
-                                                                                <input type="text" id="vl_parcela" className="form-control" onChange={this.changeHandler} name="vl_parcela" />
+                                                                                <input type="number" id="vl_parcela" className="form-control" onChange={this.changeHandler} name="vl_parcela" min="0" step="0.01" />
                                                                             </div>
                                                                         </div>
                                                                     </div> : null
@@ -621,13 +621,13 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário do produto <span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={this.state.readOnly} />
+                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={this.state.readOnly} min="0" step="0.01" />
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="quantidade">Quantidade vendida do produto <span className="text-danger">*</span></label>
-                                                <input type="number" name="quantidade" id="quantidade" className="form-control" required onChange={this.changeHandler} />
+                                                <input type="number" name="quantidade" id="quantidade" className="form-control" required onChange={this.changeHandler} min="0" step="0.01" />
                                             </div>
                                         </div>
                                     </div>

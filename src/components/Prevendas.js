@@ -33,11 +33,11 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
+            swal("Atenção!", `${error.response.data.message}`, {
+                icon: "warning",
                 buttons: {
                     confirm: {
-                        className: 'btn btn-danger'
+                        className: 'btn btn-warning'
                     }
                 },
             })
