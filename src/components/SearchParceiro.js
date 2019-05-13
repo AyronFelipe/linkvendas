@@ -42,7 +42,6 @@ export default class SearchParceiro extends React.Component{
                     text: parceiro_encontrado.nome,
                 });
                 this.input.current.value = parceiro_encontrado.id;
-                this.setState({ readonly: true });
                 this.props.onChange(this.input.current.name, this.input.current.value);
             }
         });

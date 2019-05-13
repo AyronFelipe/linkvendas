@@ -40,7 +40,6 @@ export default class SearchProduto extends React.Component {
                         text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
                     });
                     this.input.current.value = produto_encontrado.id;
-                    this.setState({ readonly: true });
                     this.props.onChange(this.input.current.name, this.input.current.value);
                     this.props.onInput();
                 }

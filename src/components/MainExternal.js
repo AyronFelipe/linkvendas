@@ -17,7 +17,7 @@ export default class MainExternal extends React.Component{
                         <div className="container container-login container-transparent animated fadeIn">
                             <h1 className="text-center text-white page-title"><i className="fas fa-cog"></i> Gerenciamento de Pré-vendas</h1>
                             <div className="row">
-                                <div className="col-md-6 col-sm-12">
+                                <div className="col-sm-12">
                                     <div className="card card-stats card-primary card-round">
                                         <Link to="/clientes/">
                                             <div className="card-body">
@@ -37,7 +37,7 @@ export default class MainExternal extends React.Component{
                                         </Link>
                                     </div>
                                 </div>
-                                <div className="col-md-6 col-sm-12">
+                                <div className="col-sm-12">
                                     <div className="card card-stats card-info card-round">
                                         <Link to="/produtos/">
                                             <div className="card-body">
@@ -57,27 +57,7 @@ export default class MainExternal extends React.Component{
                                         </Link>
                                     </div>
                                 </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <div className="card card-stats card-success card-round">
-                                        <Link to="/vendas/">
-                                            <div className="card-body ">
-                                                <div className="row">
-                                                    <div className="col-5">
-                                                        <div className="icon-big text-center">
-                                                            <i className="flaticon-analytics"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-7 col-stats">
-                                                        <div className="numbers">
-                                                            <p className="card-category">Vendas</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-sm-12">
+                                <div className="col-sm-12">
                                     <div className="card card-stats card-secondary card-round">
                                         <Link to="/pre-vendas/">
                                             <div className="card-body ">

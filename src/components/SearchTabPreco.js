@@ -40,7 +40,6 @@ export default class SearchTabPreco extends React.Component {
                         text: `${tab_preco_encontrado.descricao}`,
                     });
                     this.input.current.value = tab_preco_encontrado.id;
-                    this.setState({ readonly: true });
                     this.props.onChange(this.input.current.name, this.input.current.value);
                     this.props.onInput();
                 }

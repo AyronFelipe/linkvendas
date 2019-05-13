@@ -40,7 +40,6 @@ export default class SearchPlanoPagamento extends React.Component {
                         text: plano_pagamento_encontrado.nome,
                     });
                     this.input.current.value = plano_pagamento_encontrado.id;
-                    this.setState({ readonly: true });
                     this.props.onChange(this.input.current.name, this.input.current.value);
                 }
             });
