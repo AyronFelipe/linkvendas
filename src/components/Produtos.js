@@ -16,10 +16,15 @@ export default class Produtos extends React.Component{
     constructor(props){
         super(props);
         this.id = React.createRef();
-        this.descr = React.createRef();
-        this.codbar = React.createRef();
-        this.ref = React.createRef();
-        this.state = { produtos: [], carregaInfo: true, page: PRIMEIRA_PAGE };
+        this.state = { 
+            produtos: [],
+            carregaInfo: true,
+            page: PRIMEIRA_PAGE,
+            order: '',
+            showCodigo: true,
+            showDescricao: false,
+            showCodigoBarras: false,
+        }
     }
 
     getProdutos = () => {
@@ -51,39 +56,65 @@ export default class Produtos extends React.Component{
         });
     }
 
-    buscaProduto = (e, page) => {
+    buscaProduto = (e) => {
         e.preventDefault();
         this.setState({ carregaInfo: true });
-        axios({
-            url: `http://api.nortelink.com.br/api/v1/produtos/`,
-            method: `get`,
-            headers: {
-                'Authorization': `Bearer ${localStorage.token}`
-            },
-            params: {
-                id: this.id.current.value,
-                descr: this.descr.current.value.toUpperCase(),
-                codbar: this.codbar.current.value,
-                page: page
-            }
-        })
-        .then((res) => {
-            this.setState({ produtos: res.data, carregaInfo: false });
-        })
-        .catch((error) => {
-            this.setState({ produtos: '', carregaInfo: false, });
-            swal("Erro!", `Produto não encontrado`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
+        if (this.state.showCodigo) {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/${this.id.current.value}`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
                 },
             })
-            .then(() => {
-                verifyToken(error.response.data.message);
+            .then((res) => {
+                this.setState({ produtos: [res.data], carregaInfo: false });
+            })
+            .catch((error) => {
+                this.setState({ produtos: '', carregaInfo: false, });
+                swal("Erro!", `Produto não encontrado`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
             });
-        });
+        } else {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+                params: {
+                    page: this.state.page,
+                    [this.state.order]: this.id.current.value.toUpperCase(),
+                }
+            })
+            .then((res) => {
+                this.setState({ produtos: res.data, carregaInfo: false });
+            })
+            .catch((error) => {
+                this.setState({ produtos: '', carregaInfo: false, });
+                swal("Erro!", `Produto não encontrado`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            });
+
+        }
     }
 
     renderProdutos = () => {
@@ -113,6 +144,60 @@ export default class Produtos extends React.Component{
                     </tr>
                 )
             }
+        }
+    }
+
+    changeDesejo = (e) => {
+        if (e.target.value == 'id') {
+            this.setState({
+                showCodigo: true,
+                showDescricao: false,
+                showCodigoBarras: false,
+                order: 'id'
+            });
+            this.id.current.value = '';
+        } else if (e.target.value == 'descr') {
+            this.setState({
+                showCodigo: false,
+                showDescricao: true,
+                showCodigoBarras: false,
+                order: 'descr'
+            });
+            this.id.current.value = '';
+        } else {
+            this.setState({
+                showCodigo: false,
+                showDescricao: false,
+                showCodigoBarras: true,
+                order: 'codbar'
+            });
+            this.id.current.value = '';
+
+        }
+    }
+
+    renderOptionsBusca = () => {
+        if (this.state.showCodigo) {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id">Código</label>
+                    <input type="text" placeholder="Código do Produto" ref={this.id} name="id" id="id" className="form-control" />
+                </div>
+            )
+        } else if (this.state.showDescricao) {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id">Descrição</label>
+                    <input type="text" placeholder="Descrição do Produto" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
+                </div>
+            )
+        } else {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id">Código de Barras</label>
+                    <input type="text" placeholder="Código de Barras" ref={this.id} name="id" id="id" className="form-control" />
+                </div>
+            )
         }
     }
 
@@ -150,25 +235,23 @@ export default class Produtos extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
-                                            <form onSubmit={(e) => this.buscaProduto(e, 1)}>
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="desejo">Você deseja buscar produtos por</label>
+                                                        <select name="desejo" id="desejo" className="form-control" onChange={this.changeDesejo}>
+                                                            <option value="">&nbsp;</option>
+                                                            <option value="id">Código</option>
+                                                            <option value="descr">Descrição</option>
+                                                            <option value="cod_barras">Código de barras</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <form onSubmit={this.buscaProduto}>
                                                 <div className="row">
-                                                    <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="id">Código do Produto</label>
-                                                            <input type="text" ref={this.id} name="id" id="id" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="descr">Descrição do produto</label>
-                                                            <input type="text" ref={this.descr} name="descr" id="descr" className="form-control" style={inputStyle} />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-6 col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="descr">Código de barras produto</label>
-                                                            <input type="text" ref={this.codbar} name="codbar" id="codbar" className="form-control" style={inputStyle} />
-                                                        </div>
+                                                    <div className="col-12">
+                                                        {this.renderOptionsBusca()}
                                                     </div>
                                                 </div>
                                                 <div className="row">
