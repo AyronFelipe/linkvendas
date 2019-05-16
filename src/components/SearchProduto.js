@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 
 
 const PAGE = 1;
@@ -41,14 +42,18 @@ export default class SearchProduto extends React.Component {
                 if (json.status == 404) {
                     return swal("Produto não encontrado");
                 } else {
-                    const produto_encontrado = json[0];
-                    swal({
-                        title: "Produto encontrado!",
-                        text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
-                    });
-                    this.input.current.value = produto_encontrado.id;
-                    this.props.onChange(this.input.current.name, this.input.current.value);
-                    this.props.onInput();
+                    if (json.length > 1) {
+                        swal.close();
+                    }else{
+                        const produto_encontrado = json[0];
+                        swal({
+                            title: "Produto encontrado!",
+                            text: `${produto_encontrado.descricao} - ${produto_encontrado.compl_descr}`,
+                        });
+                        this.input.current.value = produto_encontrado.id;
+                        this.props.onChange(this.input.current.name, this.input.current.value);
+                        this.props.onInput();
+                    }
                 }
             });
     }
@@ -59,7 +64,43 @@ export default class SearchProduto extends React.Component {
 
     render() {
         return (
-            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required />
+            <React.Fragment>
+
+                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required />
+                <div className="modal fade" id="modal-many-products">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Escolha um dos produtos abaixo</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <table className="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Produto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>PLAYSTATION</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn btn-nortelink">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 }

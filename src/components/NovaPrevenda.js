@@ -5,7 +5,6 @@ import SearchCliente from './SearchCliente';
 import SearchPlanoPagamento from './SearchPlanoPagamento';
 import SearchParceiro from './SearchParceiro';
 import SearchProduto from './SearchProduto';
-import SearchTabPreco from './SearchTabPreco';
 import axios from 'axios';
 import qs from 'qs';
 import { verifyToken } from '../utils';
@@ -16,6 +15,8 @@ const config = {
         'Authorization': `Bearer ${localStorage.token}`
     }
 };
+
+const PRIMEIRA_PAGE = 1;
 
 export default class NovaPrevenda extends React.Component{
 
@@ -48,12 +49,12 @@ export default class NovaPrevenda extends React.Component{
             itens: [],
             readOnly: false,
             id_tab_preco: '',
+            tabs_preco: [],
         };
         this.childCliente = React.createRef();
         this.childPlanoPagamento = React.createRef();
         this.childParceiro = React.createRef();
         this.childProduto = React.createRef();
-        this.childTabPreco = React.createRef();
         this.id_venda = React.createRef();
         this.vl_total = React.createRef();
         this.vl_itens = React.createRef();
@@ -74,10 +75,6 @@ export default class NovaPrevenda extends React.Component{
 
     triggerChildProdutoSearch = () => {
         this.childProduto.current.searchProduto();
-    }
-
-    triggerChildTabPrecoSearch = () => {
-        this.childTabPreco.current.searchTabPreco();
     }
 
     changeHandler = (e) => {
@@ -283,7 +280,7 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
-    handleInput = () => {
+    handleInput = (e) => {
         if (this.state.id_produto != '' && this.state.id_tab_preco != '') {
             axios.get(`http://api.nortelink.com.br/api/v1/produtos/${this.state.id_produto}/precos/${this.state.id_tab_preco}`, config)
             .then((res) => {
@@ -312,6 +309,35 @@ export default class NovaPrevenda extends React.Component{
         }
     }
 
+    getTabPreco = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/produtos/tabprecos/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: PRIMEIRA_PAGE,
+            }
+        })
+            .then((res) => {
+                this.setState({ tabs_preco: res.data });
+            })
+            .catch((error) => {
+                swal("Erro!", `${error.response.data.message}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                    .then(() => {
+                        verifyToken(error.response.data.message);
+                    });
+            });
+    }
+
     renderProdutos = () => {
         if (this.state.itens.length > 0) {
             return(
@@ -332,6 +358,10 @@ export default class NovaPrevenda extends React.Component{
                 </tr>
             )
         }
+    }
+
+    componentDidMount = () => {
+        this.getTabPreco();
     }
 
     render(){
@@ -610,12 +640,12 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
-                                                <div className="input-group">
-                                                    <SearchTabPreco name="id_tab_preco" id="id_tab_preco" ref={this.childTabPreco} onChange={this.changeHandlerChild} onInput={this.handleInput} />
-                                                    <div className="input-group-append">
-                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerChildTabPrecoSearch}><i className="fas fa-search"></i> Procurar</button>
-                                                    </div>
-                                                </div>
+                                                <select name="id_tab_preco" id="id_tab_preco" onInput={this.handleInput} onChange={this.changeHandler} className="form-control" required>
+                                                    <option value="">&nbsp;</option>
+                                                    {this.state.tabs_preco.map((tab_preco) => 
+                                                        <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
+                                                    )}
+                                                </select>
                                             </div>
                                         </div>
                                         <div className="col-12">

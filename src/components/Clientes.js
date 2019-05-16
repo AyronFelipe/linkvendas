@@ -8,12 +8,23 @@ import { verifyToken } from '../utils';
 
 const PRIMEIRA_PAGE = 1;
 
+const inputStyle = {
+    textTransform: 'uppercase'
+}
+
 export default class Clientes extends React.Component{
 
     constructor(props){
         super(props);
         this.id = React.createRef();
-        this.state = { clientes: [], carregaInfo: true, page: PRIMEIRA_PAGE};
+        this.state = { 
+            clientes: [],
+            carregaInfo: true,
+            page: PRIMEIRA_PAGE,
+            showCodigo: true,
+            showCPFCNPJ: false,
+            showNome: false,
+        };
     }
 
     getClientes = () => {
@@ -78,18 +89,29 @@ export default class Clientes extends React.Component{
 
     buscaCliente = (e) => {
         e.preventDefault();
-        let cliente_list = [];
+        let order = '';
+        if (this.state.showCodigo) {
+            order = 'id';
+        } else if (this.state.showCPFCNPJ) {
+            order = 'cpf_cnpj';
+        } else {
+            order = 'nome';
+        }
         this.setState({ carregaInfo: true });
         axios({
-            url: `http://api.nortelink.com.br/api/v1/clientes/${this.id.current.value}`,
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
             method: `get`,
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
             },
+            params: {
+                page: this.state.page,
+                order: order,
+                value: this.id.current.value.toUpperCase()
+            }
         })
         .then((res) => {
-            cliente_list.push(res.data);
-            this.setState({ clientes: cliente_list, carregaInfo: false });
+            this.setState({ clientes: res.data, carregaInfo: false });
         })
         .catch((error) => {
             this.setState({ clientes: '', carregaInfo: false });
@@ -113,6 +135,56 @@ export default class Clientes extends React.Component{
             }
         });
         this.getClientes();
+    }
+
+    changeDesejo = (e) => {
+        if (e.target.value == 'id') {
+            this.setState({
+                showCodigo: true,
+                showCPFCNPJ: false,
+                showNome: false,
+            });
+            this.id.current.value = '';
+        } else if (e.target.value == 'cpfcnpj') {
+            this.setState({
+                showCodigo: false,
+                showCPFCNPJ: true,
+                showNome: false,
+            });
+            this.id.current.value = '';
+        } else {
+            this.setState({
+                showCodigo: false,
+                showCPFCNPJ: false,
+                showNome: true,
+            });
+            this.id.current.value = '';
+        }
+    }
+
+    renderOptionsBusca = () => {
+        if (this.state.showCodigo) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">Código do cliente</label>
+                    <input type="text" placeholder="Código do Cliente" ref={this.id} name="id" id="id" className="form-control" />
+                </div>
+            );
+        } else if (this.state.showCPFCNPJ) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">CPF ou CNPJ do cliente (sem formatação)</label>
+                    <input type="text" placeholder="CPF ou CNPJ" ref={this.id} name="id" id="id" className="form-control" />
+                </div>
+            );
+        } else {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">Nome do cliente</label>
+                    <input type="text" placeholder="Nome do Cliente" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
+                </div>
+            );
+        }
     }
 
     render(){
@@ -145,13 +217,23 @@ export default class Clientes extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="desejo">Você deseja buscar cliente por</label>
+                                                        <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
+                                                            <option value="">&nbsp;</option>
+                                                            <option value="id">Código</option>
+                                                            <option value="cpfcnpj">CPF ou CNPJ</option>
+                                                            <option value="nome">Nome</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <form onSubmit={this.buscaCliente}>
                                                 <div className="row">
-                                                    <div className="col-sm-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="id">Código, CPF ou CNPJ do cliente sem formatação</label>
-                                                            <input type="text" ref={this.id} name="id" id="id" className="form-control" />
-                                                        </div>
+                                                    <div className="col-12">
+                                                        {this.renderOptionsBusca()}
                                                     </div>
                                                 </div>
                                                 <div className="row">
