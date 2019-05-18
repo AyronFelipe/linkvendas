@@ -62,45 +62,13 @@ export default class SearchProduto extends React.Component {
         this.props.onChange(this.input.current.name, this.input.current.value);
     }
 
+    inputHandler = () => {
+        this.props.onInput();
+    }
+
     render() {
         return (
-            <React.Fragment>
-
-                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required />
-                <div className="modal fade" id="modal-many-products">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Escolha um dos produtos abaixo</h5>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <table className="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Produto</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>PLAYSTATION</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-footer">
-                                <button className="btn btn-nortelink">Adicionar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </React.Fragment>
-        )
+            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} onInput={this.inputHandler} required />
+        );
     }
 }

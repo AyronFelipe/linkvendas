@@ -59,6 +59,7 @@ export default class NovaPrevenda extends React.Component{
         this.vl_total = React.createRef();
         this.vl_itens = React.createRef();
         this.preco = React.createRef();
+        this.id_tab_preco = React.createRef();
     }
 
     triggerChildClienteSearch = () => {
@@ -280,13 +281,11 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
-    handleInput = (e, model) => {
-        let tab_preco = ''
-        if (model == 'tab_preco') {
-            tab_preco = e.target.value
-        }
-        if (this.state.id_produto != '' && tab_preco != '') {
-            axios.get(`http://api.nortelink.com.br/api/v1/produtos/${this.state.id_produto}/precos/${tab_preco}`, config)
+    handleInput = () => {
+        let tab_preco = this.id_tab_preco.current.value;
+        let id_produto = this.childProduto.current.input.current.value;
+        if (id_produto != '' && tab_preco != '') {
+            axios.get(`http://api.nortelink.com.br/api/v1/produtos/${id_produto}/precos/${tab_preco}`, config)
             .then((res) => {
                 this.setState({ preco: res.data.preco_venda });
                 this.preco.current.value = res.data.preco_venda;
@@ -634,7 +633,7 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
                                                 <div className="input-group">
-                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={(e) => this.handleInput(e, 'produto')} />
+                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-nortelink" type="button" onClick={this.triggerChildProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
                                                     </div>
@@ -644,7 +643,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
-                                                <select name="id_tab_preco" id="id_tab_preco" onInput={(e) => this.handleInput(e, 'tab_preco')} onChange={this.changeHandler} className="form-control" required>
+                                                <select name="id_tab_preco" id="id_tab_preco" ref={this.id_tab_preco} onInput={this.handleInput} onChange={this.changeHandler} className="form-control" required>
                                                     <option value="">&nbsp;</option>
                                                     {this.state.tabs_preco.map((tab_preco) => 
                                                         <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
