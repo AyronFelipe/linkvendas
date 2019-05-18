@@ -7,8 +7,6 @@ import NovoCliente from './NovoCliente';
 import Produtos from './Produtos';
 import Prevendas from './Prevendas';
 import NovaPrevenda from './NovaPrevenda';
-import Vendas from './Vendas';
-import NovaVenda from './NovaVenda';
 import MainInterno from './MainInterno';
 import PrivateRoute from './PrivateRoute';
 import DetalheProduto from './DetalheProduto';
@@ -40,11 +38,9 @@ export default class App extends React.Component{
                     <Route path='/login/' component={Login} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/main/' exact component={MainInterno} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/clientes/' exact component={Clientes} />
-                    <PrivateRoute authenticated={this.state.authenticated} path='/vendas/' exact component={Vendas} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/novo-cliente/' component={NovoCliente} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produtos/' exact component={Produtos} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/pre-vendas/' exact component={Prevendas} />
-                    <PrivateRoute authenticated={this.state.authenticated} path='/nova-venda/' component={NovaVenda} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produto/:id/detalhe/' component={DetalheProduto} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/cliente/:id/detalhe/' component={DetalheCliente} />
                 </div>

@@ -280,9 +280,13 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
-    handleInput = (e) => {
-        if (this.state.id_produto != '' && this.state.id_tab_preco != '') {
-            axios.get(`http://api.nortelink.com.br/api/v1/produtos/${this.state.id_produto}/precos/${this.state.id_tab_preco}`, config)
+    handleInput = (e, model) => {
+        let tab_preco = ''
+        if (model == 'tab_preco') {
+            tab_preco = e.target.value
+        }
+        if (this.state.id_produto != '' && tab_preco != '') {
+            axios.get(`http://api.nortelink.com.br/api/v1/produtos/${this.state.id_produto}/precos/${tab_preco}`, config)
             .then((res) => {
                 this.setState({ preco: res.data.preco_venda });
                 this.preco.current.value = res.data.preco_venda;
@@ -630,7 +634,7 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
                                                 <div className="input-group">
-                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} />
+                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={(e) => this.handleInput(e, 'produto')} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-nortelink" type="button" onClick={this.triggerChildProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
                                                     </div>
@@ -640,7 +644,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
-                                                <select name="id_tab_preco" id="id_tab_preco" onInput={this.handleInput} onChange={this.changeHandler} className="form-control" required>
+                                                <select name="id_tab_preco" id="id_tab_preco" onInput={(e) => this.handleInput(e, 'tab_preco')} onChange={this.changeHandler} className="form-control" required>
                                                     <option value="">&nbsp;</option>
                                                     {this.state.tabs_preco.map((tab_preco) => 
                                                         <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
