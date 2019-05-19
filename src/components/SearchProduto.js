@@ -1,5 +1,4 @@
 import React from 'react';
-import Swal from 'sweetalert2'
 
 
 const PAGE = 1;
@@ -8,7 +7,7 @@ export default class SearchProduto extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { produto: '', readonly: false };
+        this.state = { produtos: '', readonly: false };
         this.input = React.createRef();
     }
 
@@ -43,7 +42,11 @@ export default class SearchProduto extends React.Component {
                     return swal("Produto não encontrado");
                 } else {
                     if (json.length > 1) {
-                        swal.close();
+                        swal({
+                            title: "Vários produtos encontrados!",
+                            text: `Selecione na tabela o produto que você deseja adicionar`,
+                        });
+                        this.props.onBlur(json);
                     }else{
                         const produto_encontrado = json[0];
                         swal({
@@ -53,6 +56,7 @@ export default class SearchProduto extends React.Component {
                         this.input.current.value = produto_encontrado.id;
                         this.props.onChange(this.input.current.name, this.input.current.value);
                         this.props.onInput();
+                        this.props.onBlur(json);
                     }
                 }
             });
@@ -68,7 +72,16 @@ export default class SearchProduto extends React.Component {
 
     render() {
         return (
-            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} onInput={this.inputHandler} required />
+            <input 
+                type="text" 
+                ref={this.input} 
+                name={this.props.name} 
+                id={this.props.id} 
+                className="form-control" 
+                readOnly={this.state.readonly} 
+                onChange={this.changeHandler} 
+                onInput={this.inputHandler} 
+                required />
         );
     }
 }

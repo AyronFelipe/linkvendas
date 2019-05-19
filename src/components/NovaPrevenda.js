@@ -50,6 +50,7 @@ export default class NovaPrevenda extends React.Component{
             readOnly: false,
             id_tab_preco: '',
             tabs_preco: [],
+            produtos_encontrados: [],
         };
         this.childCliente = React.createRef();
         this.childPlanoPagamento = React.createRef();
@@ -363,6 +364,47 @@ export default class NovaPrevenda extends React.Component{
         }
     }
 
+    handleBlur = (produtos) => {
+        this.setState({ produtos_encontrados: produtos });
+    }
+
+    renderProdutosEncontrados = () => {
+        if (this.state.produtos_encontrados.length > 1) {
+            return(
+                <div className="table-responsive">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Código</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.produtos_encontrados.map((produto)=>
+                                <tr key={produto.id}>
+                                    <td><input type="radio" name="produto_selecionado" /></td>
+                                    <td>{produto.id}</td>
+                                    <td>{produto.descricao}</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        } else if (this.state.produtos_encontrados.length == 1) {
+            return(
+                <div className="form-group">
+                    <input type="text" readOnly={true} className="form-control" value={this.state.produtos_encontrados[0].descricao} />
+                </div>
+            );
+        } else {
+            return(
+                null
+            );
+        }
+    }
+
     componentDidMount = () => {
         this.getTabPreco();
     }
@@ -633,12 +675,15 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
                                                 <div className="input-group">
-                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} />
+                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} onBlur={this.handleBlur} />
                                                     <div className="input-group-append">
                                                         <button className="btn btn-nortelink" type="button" onClick={this.triggerChildProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="col-12">
+                                            {this.renderProdutosEncontrados()}
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
