@@ -4,6 +4,7 @@ import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { verifyToken } from '../utils';
+import MaskedInput from 'react-text-mask';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -90,12 +91,16 @@ export default class Clientes extends React.Component{
     buscaCliente = (e) => {
         e.preventDefault();
         let order = '';
+        let value = '';
         if (this.state.showCodigo) {
             order = 'id';
+            value = this.id.current.value.toUpperCase();
         } else if (this.state.showCPFCNPJ) {
             order = 'cpf_cnpj';
+            value = $('#cpf_cnpj').val().toUpperCase();
         } else {
             order = 'nome';
+            value = this.id.current.value.toUpperCase();
         }
         this.setState({ carregaInfo: true });
         axios({
@@ -107,7 +112,7 @@ export default class Clientes extends React.Component{
             params: {
                 page: this.state.page,
                 order: order,
-                value: this.id.current.value.toUpperCase()
+                value: value
             }
         })
         .then((res) => {
@@ -174,7 +179,14 @@ export default class Clientes extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">CPF ou CNPJ do cliente (sem formatação)</label>
-                    <input type="text" placeholder="CPF ou CNPJ" ref={this.id} name="id" id="id" className="form-control" />
+                    <MaskedInput
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                        guide={false}
+                        placeholder="CPF ou CNPJ"
+                        className="form-control"
+                        name="id"
+                        id="cpf_cnpj"
+                        required />
                 </div>
             );
         } else {

@@ -558,6 +558,7 @@ export default class NovaPrevenda extends React.Component{
                                                                             <label htmlFor="id_plano_pag" className="placeholder">Planos de pagamento <span className="text-danger">*</span></label>
                                                                             <div className="select2-input">
                                                                                 <select name="id_plano_pag" id="id_plano_pag" className="form-control">
+                                                                                    <option value="">&nbsp;</option>
                                                                                     {this.state.id_plano_pag.map((plano) =>
                                                                                         <option key={plano.id} value={plano.id}>{plano.nome}</option>
                                                                                     )}
