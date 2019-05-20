@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import SearchCliente from './SearchCliente';
-import SearchPlanoPagamento from './SearchPlanoPagamento';
 import SearchParceiro from './SearchParceiro';
 import SearchProduto from './SearchProduto';
 import axios from 'axios';
@@ -26,7 +25,7 @@ export default class NovaPrevenda extends React.Component{
             show_dados_prazo: false,
             id_venda: '',
             id_cliente: '',
-            id_plano_pag: '',
+            id_plano_pag: [],
             id_pos: '',
             mod_venda: '',
             vl_itens: '',
@@ -53,7 +52,6 @@ export default class NovaPrevenda extends React.Component{
             produtos_encontrados: [],
         };
         this.childCliente = React.createRef();
-        this.childPlanoPagamento = React.createRef();
         this.childParceiro = React.createRef();
         this.childProduto = React.createRef();
         this.id_venda = React.createRef();
@@ -65,10 +63,6 @@ export default class NovaPrevenda extends React.Component{
 
     triggerChildClienteSearch = () => {
         this.childCliente.current.searchCliente();
-    }
-
-    triggerChilPlanoPagamentoSearch = () => {
-        this.childPlanoPagamento.current.searchPlanoPagamento();
     }
 
     triggerChildParceiroSearch = () => {
@@ -324,22 +318,57 @@ export default class NovaPrevenda extends React.Component{
                 page: PRIMEIRA_PAGE,
             }
         })
-            .then((res) => {
-                this.setState({ tabs_preco: res.data });
+        .then((res) => {
+            this.setState({ tabs_preco: res.data });
+        })
+        .catch((error) => {
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
             })
-            .catch((error) => {
-                swal("Erro!", `${error.response.data.message}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                    .then(() => {
-                        verifyToken(error.response.data.message);
-                    });
+            .then(() => {
+                verifyToken(error.response.data.message);
             });
+        });
+    }
+
+    getPlanosPag = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/planospag/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: PRIMEIRA_PAGE,
+            }
+        })
+        .then((res) => {
+            this.setState({ id_plano_pag: res.data });
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message;
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        });
     }
 
     renderProdutos = () => {
@@ -368,6 +397,10 @@ export default class NovaPrevenda extends React.Component{
         this.setState({ produtos_encontrados: produtos });
     }
 
+    handleClickRadio = (e) => {
+        this.childProduto.current.input.current.value = e.target.value;
+    }
+
     renderProdutosEncontrados = () => {
         if (this.state.produtos_encontrados.length > 1) {
             return(
@@ -383,7 +416,7 @@ export default class NovaPrevenda extends React.Component{
                         <tbody>
                             {this.state.produtos_encontrados.map((produto)=>
                                 <tr key={produto.id}>
-                                    <td><input type="radio" name="produto_selecionado" /></td>
+                                    <td><input type="radio" name="produto_selecionado" onClick={this.handleClickRadio} value={produto.id} /></td>
                                     <td>{produto.id}</td>
                                     <td>{produto.descricao}</td>
                                 </tr>
@@ -407,6 +440,15 @@ export default class NovaPrevenda extends React.Component{
 
     componentDidMount = () => {
         this.getTabPreco();
+        this.getPlanosPag();
+        $('#id_plano_pag').select2({
+            theme: "bootstrap",
+            width: '100%',
+        });
+        $('.select2-selection').css({
+            'padding-top': '20px',
+            'padding-bottom': '20px'
+        });
     }
 
     render(){
@@ -513,12 +555,13 @@ export default class NovaPrevenda extends React.Component{
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_plano_pag" className="placeholder">Código do plano de pagamento <span className="text-danger">*</span></label>
-                                                                            <div className="input-group">
-                                                                                <SearchPlanoPagamento name="id_plano_pag" id="id_plano_pag" ref={this.childPlanoPagamento} onChange={this.changeHandlerChild} onBlur={this.showDadosPrazo} />
-                                                                                <div className="input-group-append">
-                                                                                    <button className="btn btn-nortelink" type="button" onClick={ this.triggerChilPlanoPagamentoSearch }><i className="fas fa-search"></i> Procurar</button>
-                                                                                </div>
+                                                                            <label htmlFor="id_plano_pag" className="placeholder">Planos de pagamento <span className="text-danger">*</span></label>
+                                                                            <div className="select2-input">
+                                                                                <select name="id_plano_pag" id="id_plano_pag" className="form-control">
+                                                                                    {this.state.id_plano_pag.map((plano) =>
+                                                                                        <option key={plano.id} value={plano.id}>{plano.nome}</option>
+                                                                                    )}
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
