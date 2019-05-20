@@ -1,59 +1,197 @@
 import React from 'react';
+import MaskedInput from 'react-text-mask';
+import axios from 'axios';
 
 const PAGE = 1;
+
+const inputStyle = {
+    textTransform: 'uppercase'
+}
 
 export default class SearchParceiro extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { parceiro: '', readonly: false };
+        this.state = { parceiros: [], readonly: false, showCPFCNPJ: true, showNome: false };
         this.input = React.createRef();
     }
 
     searchParceiro = () => {
-        swal({
-            text: "Código do Parceiro",
-            content: "input",
-            button: {
-                text: "Procurar!",
-                closeModal: false,
-            },
-        })
-        .then((name) => {
-            if (!name) throw null;
-            this.setState({ parceiro: name });
-            return fetch(`http://api.nortelink.com.br/api/v1/parceiros/${name}`, {
-                method: `GET`,
-                headers: { 'Authorization': `Bearer ${localStorage.token}` },
+        $('#modal-parceiro').modal('show');
+    }
+
+    changeDesejo = (e) => {
+        let value = e.target.value;
+        if (value == 'cpf_cnpj') {
+            this.setState({
+                showCPFCNPJ: true,
+                showNome: false
             });
-        })
-        .then((results) => {
-            return results.json();
-        })
-        .then((json) => {
-            if (json.status == 404) {
-                return swal("Parceiro não encontrado");
-            } else {
-                let parceiro_encontrado_list = []
-                parceiro_encontrado_list.push(json);
-                const parceiro_encontrado = parceiro_encontrado_list[0];
-                swal({
-                    title: "Parceiro encontrado!",
-                    text: parceiro_encontrado.nome,
-                });
-                this.input.current.value = parceiro_encontrado.id;
-                this.props.onChange(this.input.current.name, this.input.current.value);
-            }
-        });
+        } else {
+            this.setState({
+                showCPFCNPJ: false,
+                showNome: true
+            });
+
+        }
     }
 
     changeHandler = (e) => {
         this.props.onChange(this.input.current.name, this.input.current.value);
     }
 
+    handleParceiroClick = (e) => {
+        e.preventDefault();
+        let order = '';
+        let value = '';
+        if (this.state.showCPFCNPJ) {
+            order = 'cnpj_cpf';
+            value = $('#cpf_cnpj_parceiro').val();
+        } else {
+            order = 'nome';
+            value = $('#nome_parceiro').val().toUpperCase();
+
+        }
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/parceiros/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: PAGE,
+                order: order,
+                value: value
+            }
+        })
+        .then((res) => {
+            this.setState({ parceiros: res.data });
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message;
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        });
+    }
+
+    renderOptionsBusca = () => {
+        if (this.state.showCPFCNPJ) {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id">CPF ou CNPJ do Parceiro (sem formatação)</label>
+                    <MaskedInput
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+                        guide={false}
+                        placeholder="Insira aqui"
+                        className="form-control"
+                        name="cpf_cnpj"
+                        id="cpf_cnpj_parceiro"
+                        required />
+                </div>
+            );
+        } else if (this.state.showNome) {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id">Nome do Parceiro</label>
+                    <input type="text" placeholder="Insira aqui" name="nome" id="nome_parceiro" className="form-control" style={inputStyle} />
+                </div>
+            );
+        }
+    }
+
+    selecionarParceiro = (e) => {
+        $('#modal-parceiro').modal('hide');
+        this.input.current.value = e.target.value;
+        this.props.onChange(this.input.current.name, this.input.current.value);
+    }
+
+    renderParceirosEncontrados = () => {
+        if (this.state.parceiros.length >= 1) {
+            return(
+                <div className="table-responsive">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Código</th>
+                                <th>Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.parceiros.map((parceiro) => {
+                                return(
+                                    <tr key={parceiro.id}>
+                                        <td><input type="radio" name="parceiro_encontrado" value={parceiro.id} onClick={this.selecionarParceiro} /></td>
+                                        <td>{parceiro.id}</td>
+                                        <td>{parceiro.nome}</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        } else {
+            return null;
+        }
+    }
+
     render(){
         return(
-            <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} />
+            <React.Fragment>
+                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} />
+                <div className="modal fade" id="modal-parceiro">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Procurar Parceiro</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="form-group">
+                                            <label htmlFor="desejo">Você deseja buscar por</label>
+                                            <select id="desejo" className="form-control" onChange={this.changeDesejo}>
+                                                <option value="">&nbsp;</option>
+                                                <option value="cpf_cnpj">CPF/CNPJ</option>
+                                                <option value="nome">Nome</option> 
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-12">
+                                        {this.renderOptionsBusca()}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        {this.renderParceirosEncontrados()}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-nortelink" onClick={this.handleParceiroClick}>Procurar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 } 

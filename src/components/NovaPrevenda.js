@@ -755,7 +755,7 @@ export default class NovaPrevenda extends React.Component{
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button className="btn btn-nortelink">Adicionar</button>
+                                    <button type="submit" className="btn btn-nortelink">Adicionar</button>
                                 </div>
                             </form>
                         </div>
