@@ -3,7 +3,6 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import SearchCliente from './SearchCliente';
 import SearchParceiro from './SearchParceiro';
-import SearchProduto from './SearchProduto';
 import axios from 'axios';
 import qs from 'qs';
 import { verifyToken } from '../utils';
@@ -13,6 +12,10 @@ const config = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': `Bearer ${localStorage.token}`
     }
+};
+
+const inputStyle = {
+    textTransform: 'uppercase'
 };
 
 const PRIMEIRA_PAGE = 1;
@@ -25,7 +28,8 @@ export default class NovaPrevenda extends React.Component{
             show_dados_prazo: false,
             id_venda: '',
             id_cliente: '',
-            id_plano_pag: [],
+            id_plano_pag_options: [],
+            id_plano_pag: '',
             id_pos: '',
             mod_venda: '',
             vl_itens: '',
@@ -50,15 +54,22 @@ export default class NovaPrevenda extends React.Component{
             id_tab_preco: '',
             tabs_preco: [],
             produtos_encontrados: [],
+            showCodigo: true,
+            showDescricao: false,
+            showCodigoBarras: false,
+            order: '',
+            produto_selecionado_id: '',
+            produto_selecionado: [],
         };
         this.childCliente = React.createRef();
         this.childParceiro = React.createRef();
-        this.childProduto = React.createRef();
+        this.produto = React.createRef();
         this.id_venda = React.createRef();
         this.vl_total = React.createRef();
         this.vl_itens = React.createRef();
         this.preco = React.createRef();
         this.id_tab_preco = React.createRef();
+        this.id = React.createRef();
     }
 
     triggerChildClienteSearch = () => {
@@ -69,8 +80,9 @@ export default class NovaPrevenda extends React.Component{
         this.childParceiro.current.searchParceiro();
     }
 
-    triggerChildProdutoSearch = () => {
-        this.childProduto.current.searchProduto();
+    triggerProdutoSearch = () => {
+        $("#modal").modal('hide');
+        $("#modal-produto").modal('show');
     }
 
     changeHandler = (e) => {
@@ -163,36 +175,36 @@ export default class NovaPrevenda extends React.Component{
             this.setState({ id_venda: res.data.id_venda });
             axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
             .then((res) => {
-                    this.setState({ itens: res.data.itens });
-                    $('#modal').modal('hide');
-                    document.getElementById('modal-form').reset();
-                    this.state.itens.map((item) => {
-                        list_soma.push(item.preco * item.quantidade);
-                    })
-                    let soma = list_soma.reduce((a, b) => a + b, 0);
-                    this.setState({ vl_itens: soma, vl_total: soma });
-                    this.vl_itens.current.value = this.state.vl_itens;
-                    this.vl_total.current.value = this.state.vl_total;
+                this.setState({ itens: res.data.itens });
+                $('#modal').modal('hide');
+                document.getElementById('modal-form').reset();
+                this.state.itens.map((item) => {
+                    list_soma.push(item.preco * item.quantidade);
                 })
-                .catch((error) => {
-                    let erro = '';
-                    if (error.response.data.erros) {
-                        erro = error.response.data.erros;
-                    } else {
-                        erro = error.response.data.message
-                    }
-                    swal("Erro!", `${erro}`, {
-                        icon: "error",
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-danger'
-                            }
-                        },
-                    })
-                        .then(() => {
-                            verifyToken(error.response.data.message);
-                        });
+                let soma = list_soma.reduce((a, b) => a + b, 0);
+                this.setState({ vl_itens: soma, vl_total: soma, produto_selecionado: [], produto_selecionado_id: '' });
+                this.vl_itens.current.value = this.state.vl_itens;
+                this.vl_total.current.value = this.state.vl_total;
+            })
+            .catch((error) => {
+                let erro = '';
+                if (error.response.data.erros) {
+                    erro = error.response.data.erros;
+                } else {
+                    erro = error.response.data.message
+                }
+                swal("Erro!", `${erro}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
                 });
+            });
         })
         .catch((error) => {
             let erro = '';
@@ -278,7 +290,7 @@ export default class NovaPrevenda extends React.Component{
 
     handleInput = () => {
         let tab_preco = this.id_tab_preco.current.value;
-        let id_produto = this.childProduto.current.input.current.value;
+        let id_produto = this.produto.current.value;
         if (id_produto != '' && tab_preco != '') {
             axios.get(`http://api.nortelink.com.br/api/v1/produtos/${id_produto}/precos/${tab_preco}`, config)
             .then((res) => {
@@ -348,7 +360,7 @@ export default class NovaPrevenda extends React.Component{
             }
         })
         .then((res) => {
-            this.setState({ id_plano_pag: res.data });
+            this.setState({ id_plano_pag_options: res.data });
         })
         .catch((error) => {
             let erro = '';
@@ -378,8 +390,9 @@ export default class NovaPrevenda extends React.Component{
                     <tr key={item.id_item}>
                         <td>{item.id_produto}</td>
                         <td>{item.descricao}</td>
-                        <td>{item.preco}</td>
+                        <td>{item.preco.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                         <td>{item.quantidade}</td>
+                        <td>{item.vl_total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                         <td><button className="btn btn-danger" type="button" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
                     </tr>
                 )
@@ -387,22 +400,60 @@ export default class NovaPrevenda extends React.Component{
         } else {
             return(
                 <tr>
-                    <td colSpan="5">Nenhum produto adicionado</td>
+                    <td colSpan="6">Nenhum produto adicionado</td>
                 </tr>
             )
         }
     }
 
-    handleBlur = (produtos) => {
-        this.setState({ produtos_encontrados: produtos });
+    handleBlur = (e) => {
+        if (e.target.value != '') {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/${e.target.value}`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+            })
+            .then((res) => {
+                this.setState({ produto_selecionado: [res.data] });
+            })
+            .catch((error) => {
+                swal("Erro!", `Produto não encontrado`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            });
+        }
     }
 
     handleClickRadio = (e) => {
-        this.childProduto.current.input.current.value = e.target.value;
+        $("#modal-produto").modal('hide');
+        $("#modal").modal('show');
+        let id_produto_selecionado = e.target.value;
+        this.setState({ 
+            produto_selecionado_id: e.target.value,
+            id_produto: e.target.value,
+            produtos_encontrados: [],
+            showCodigo: true,
+            showDescricao: false,
+            showCodigoBarras: false,
+            order: 'id'
+        });
+        $('#modal').find('#id_produto').val(id_produto_selecionado);
+        document.getElementById('modal-produto-form').reset();
+        this.handleBlur(e);
     }
 
     renderProdutosEncontrados = () => {
-        if (this.state.produtos_encontrados.length > 1) {
+        if (this.state.produtos_encontrados.length >= 1) {
             return(
                 <div className="table-responsive">
                     <table className="table">
@@ -425,12 +476,6 @@ export default class NovaPrevenda extends React.Component{
                     </table>
                 </div>
             );
-        } else if (this.state.produtos_encontrados.length == 1) {
-            return(
-                <div className="form-group">
-                    <input type="text" readOnly={true} className="form-control" value={this.state.produtos_encontrados[0].descricao} />
-                </div>
-            );
         } else {
             return(
                 null
@@ -441,14 +486,134 @@ export default class NovaPrevenda extends React.Component{
     componentDidMount = () => {
         this.getTabPreco();
         this.getPlanosPag();
-        $('#id_plano_pag').select2({
+        /*$('#id_plano_pag').select2({
             theme: "bootstrap",
             width: '100%',
-        });
+        });*/
         $('.select2-selection').css({
             'padding-top': '20px',
             'padding-bottom': '20px'
         });
+    }
+
+    changeDesejo = (e) => {
+        if (e.target.value == 'id') {
+            this.setState({
+                showCodigo: true,
+                showDescricao: false,
+                showCodigoBarras: false,
+                order: 'id'
+            });
+        } else if (e.target.value == 'descr') {
+            this.setState({
+                showCodigo: false,
+                showDescricao: true,
+                showCodigoBarras: false,
+                order: 'descr'
+            });
+        } else {
+            this.setState({
+                showCodigo: false,
+                showDescricao: false,
+                showCodigoBarras: true,
+                order: 'codbar'
+            });
+
+        }
+    }
+
+    renderOptionsBusca = () => {
+        if (this.state.showCodigo) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">Código</label>
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="codigo" id="codigo" className="form-control" />
+                </div>
+            )
+        } else if (this.state.showDescricao) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">Descrição</label>
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="descricao" id="descricao" className="form-control value" style={inputStyle} />
+                </div>
+            )
+        } else {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id">Código de Barras</label>
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="cod_barras" id="cod_barras" className="form-control value" />
+                </div>
+            )
+        }
+    }
+
+    handleProdutoClick = () => {
+        if (this.state.showCodigo) {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/${this.id.current.value}`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+            })
+            .then((res) => {
+                this.setState({ produtos_encontrados: [res.data] });
+            })
+            .catch((error) => {
+                swal("Erro!", `Produto não encontrado`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            });
+        } else {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/produtos/`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+                params: {
+                    page: PRIMEIRA_PAGE,
+                    [this.state.order]: $('.value').val().toUpperCase(),
+                }
+            })
+            .then((res) => {
+                this.setState({ produtos_encontrados: res.data });
+            })
+            .catch((error) => {
+                swal("Erro!", `Produto não encontrado`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            });
+
+        }
+    }
+
+    renderProdutoSelecionado = () => {
+        if (this.state.produto_selecionado.length) {
+            return(
+                <div className="col-12">
+                    <div className="form-group">
+                        <input type="text" readOnly={true} value={this.state.produto_selecionado[0].descricao} className="form-control" />
+                    </div>
+                </div>
+            );
+        }
     }
 
     render(){
@@ -512,6 +677,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 <th>Nome</th>
                                                                                 <th>Preço da unidade</th>
                                                                                 <th>Quantidade</th>
+                                                                                <th>Preço da Venda</th>
                                                                                 <th>Ações</th>
                                                                             </tr>
                                                                         </thead>
@@ -556,13 +722,13 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
                                                                             <label htmlFor="id_plano_pag" className="placeholder">Planos de pagamento <span className="text-danger">*</span></label>
+                                                                            <select name="id_plano_pag" id="id_plano_pag" className="form-control" onChange={this.changeHandler}>
+                                                                                <option value="">&nbsp;</option>
+                                                                                {this.state.id_plano_pag_options.map((plano) =>
+                                                                                    <option key={plano.id} value={plano.id}>{plano.nome}</option>
+                                                                                )}
+                                                                            </select>
                                                                             <div className="select2-input">
-                                                                                <select name="id_plano_pag" id="id_plano_pag" className="form-control">
-                                                                                    <option value="">&nbsp;</option>
-                                                                                    {this.state.id_plano_pag.map((plano) =>
-                                                                                        <option key={plano.id} value={plano.id}>{plano.nome}</option>
-                                                                                    )}
-                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -688,7 +854,7 @@ export default class NovaPrevenda extends React.Component{
                                                                 </div>
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-3 offset-md-9">
-                                                                        <button className="btn btn-nortelink btn-round btn-lg btn-block"><i className="fas fa-save"></i> Salvar</button>
+                                                                        <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block"><i className="fas fa-save"></i> Salvar</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -719,16 +885,14 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
                                                 <div className="input-group">
-                                                    <SearchProduto name="id_produto" id="id_produto" ref={this.childProduto} onChange={this.changeHandlerChild} onInput={this.handleInput} onBlur={this.handleBlur} />
+                                                    <input name="id_produto" id="id_produto" ref={this.produto} onChange={this.changeHandler} onInput={this.handleInput} onBlur={this.handleBlur} className="form-control" />
                                                     <div className="input-group-append">
-                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerChildProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
+                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-12">
-                                            {this.renderProdutosEncontrados()}
-                                        </div>
+                                        {this.renderProdutoSelecionado()}
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
@@ -756,6 +920,48 @@ export default class NovaPrevenda extends React.Component{
                                 </div>
                                 <div className="modal-footer">
                                     <button type="submit" className="btn btn-nortelink">Adicionar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="modal-produto">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <form id="modal-produto-form">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">Procurar Produto</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <label htmlFor="desejo">Você deseja buscar produtos por</label>
+                                                <select name="desejo" id="desejo" className="form-control" onChange={this.changeDesejo}>
+                                                    <option value="">&nbsp;</option>
+                                                    <option value="id">Código</option>
+                                                    <option value="descr">Descrição</option>
+                                                    <option value="cod_barras">Código de barras</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            {this.renderOptionsBusca()}
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            {this.renderProdutosEncontrados()}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-nortelink" onClick={this.handleProdutoClick}>Procurar</button>
                                 </div>
                             </form>
                         </div>

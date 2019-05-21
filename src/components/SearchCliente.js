@@ -9,7 +9,6 @@ const inputStyle = {
     textTransform: 'uppercase'
 }
 
-
 export default class SearchCliente extends React.Component {
 
     constructor(props) {
@@ -53,7 +52,7 @@ export default class SearchCliente extends React.Component {
             return (
                 <div className="form-group">
                     <label htmlFor="codigo">Código do cliente</label>
-                    <input type="text" placeholder="Código do Cliente" name="codigo" id="codigo" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" name="codigo" id="codigo" className="form-control" />
                 </div>
             );
         } else if (this.state.showCPFCNPJ) {
@@ -63,18 +62,16 @@ export default class SearchCliente extends React.Component {
                     <MaskedInput
                         mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
                         guide={false}
-                        placeholder="CPF ou CNPJ"
+                        placeholder="Insira aqui"
                         className="form-control"
-                        name="cpf_cnpj"
-                        id="cpf_cnpj"
-                        required />
+                        id="cpf_cnpj" />
                 </div>
             );
         } else {
             return (
                 <div className="form-group">
                     <label htmlFor="nome">Nome do cliente</label>
-                    <input type="text" placeholder="Nome do Cliente" name="nome" id="nome" className="form-control" style={inputStyle} />
+                    <input type="text" placeholder="Insira aqui" name="nome" id="nome" className="form-control" style={inputStyle} />
                 </div>
             );
         }

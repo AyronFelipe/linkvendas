@@ -98,9 +98,7 @@ export default class SearchParceiro extends React.Component{
                         guide={false}
                         placeholder="Insira aqui"
                         className="form-control"
-                        name="cpf_cnpj"
-                        id="cpf_cnpj_parceiro"
-                        required />
+                        id="cpf_cnpj_parceiro" />
                 </div>
             );
         } else if (this.state.showNome) {
