@@ -705,13 +705,13 @@ export default class NovaPrevenda extends React.Component{
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_venda" className="placeholder">Código da Venda Temporária <span className="text-danger">*</span></label>
+                                                                            <label htmlFor="id_venda" className="placeholder">Cód. da Venda Temporária <span className="text-danger">*</span></label>
                                                                             <input name="id_venda" id="id_venda" className="form-control" onChange={this.changeHandler} required ref={this.id_venda} readOnly={this.state.readOnly} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_cliente" className="placeholder">Código do Cliente <span className="text-danger">*</span></label>
+                                                                            <label htmlFor="id_cliente" className="placeholder">Cód. do Cliente <span className="text-danger">*</span></label>
                                                                             <div className="input-group">
                                                                                 <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} />
                                                                                 <div className="input-group-append">
@@ -737,7 +737,7 @@ export default class NovaPrevenda extends React.Component{
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-6">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_pos" className="placeholder">Código da posição inicial da pré-venda </label>
+                                                                            <label htmlFor="id_pos" className="placeholder">Cód. da posição inicial</label>
                                                                             <input name="id_pos" id="id_pos" className="form-control" onChange={this.changeHandler} />
                                                                         </div>
                                                                     </div>
@@ -756,19 +756,19 @@ export default class NovaPrevenda extends React.Component{
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="vl_itens">Valor total dos produtos <span className="text-danger">*</span></label>
+                                                                            <label htmlFor="vl_itens">Valor total dos prod.<span className="text-danger">*</span></label>
                                                                             <input type="number" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required readOnly={this.state.readOnly} ref={this.vl_itens} min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="vl_desconto">Valor do desconto sobre os produtos <span className="text-danger">*</span></label>
+                                                                            <label htmlFor="vl_desconto">Desc. sobre os prod. <span className="text-danger">*</span></label>
                                                                             <input type="text" name="vl_desconto" id="vl_desconto" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="vl_acrescimo">Valor do acréscimo sobre os produtos <span className="text-danger">*</span></label>
+                                                                            <label htmlFor="vl_acrescimo">Acréscimo sobre os prod. <span className="text-danger">*</span></label>
                                                                             <input type="text" name="vl_acrescimo" id="vl_acrescimo" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
                                                                         </div>
                                                                     </div>
@@ -791,7 +791,7 @@ export default class NovaPrevenda extends React.Component{
                                                                         <div className="col-sm-12 col-md-4">
                                                                             <div className="form-group">
                                                                                 <label htmlFor="parcelas">Quantidade de parcelas de pagamento</label>
-                                                                                <input type="number" id="parcelas" className="form-control" onChange={this.changeHandler} name="parcelas" />
+                                                                                <input type="number" id="parcela" className="form-control" onChange={this.changeHandler} name="parcelas" />
                                                                             </div>
                                                                         </div>
                                                                         <div className="col-sm-12 col-md-4">
@@ -815,13 +815,13 @@ export default class NovaPrevenda extends React.Component{
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="data_entrega">Data de entrega dos produtos</label>
+                                                                            <label htmlFor="data_entrega">Data de entrega dos prod.</label>
                                                                             <input type="date" className="form-control" id="data_entrega" name="data_entrega" onChange={this.changeHandler} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_end_entrega">Código do endereço de entrega do cliente</label>
+                                                                            <label htmlFor="id_end_entrega">Cód. do endereço de entrega</label>
                                                                             <input name="id_end_entrega" id="id_end_entrega" className="form-control" onChange={this.changeHandler} />
                                                                         </div>
                                                                     </div>
@@ -829,13 +829,13 @@ export default class NovaPrevenda extends React.Component{
                                                                 <div className="row">
                                                                     <div className="col-sm-12 col-md-6">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_obra">Código da obra</label>
+                                                                            <label htmlFor="id_obra">Cód. da obra</label>
                                                                             <input name="id_obra" id="id_obra" className="form-control" onChange={this.changeHandler} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-6">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="id_parceiro">Código do parceiro</label>
+                                                                            <label htmlFor="id_parceiro">Cód. do Parceiro</label>
                                                                             <div className="input-group">
                                                                                 <SearchParceiro name="id_parceiro" id="id_parceiro" ref={this.childParceiro} onChange={this.changeHandlerChild} />
                                                                                 <div className="input-group-append">
@@ -848,7 +848,7 @@ export default class NovaPrevenda extends React.Component{
                                                                 <div className="row">
                                                                     <div className="col-12">
                                                                         <div className="form-group">
-                                                                            <label htmlFor="obs">Observações referentes à venda</label>
+                                                                            <label htmlFor="obs">Observações</label>
                                                                             <textarea name="obs" id="obs" cols="30" rows="10" className="form-control" onChange={this.changeHandler} ></textarea>
                                                                         </div>
                                                                     </div>
@@ -884,7 +884,7 @@ export default class NovaPrevenda extends React.Component{
                                     <div className="row">
                                         <div className="col-12">
                                             <div className="form-group">
-                                                <label htmlFor="id_produto" className="placeholder">Código do Produto <span className="text-danger">*</span></label>
+                                                <label htmlFor="id_produto" className="placeholder">Código<span className="text-danger">*</span></label>
                                                 <div className="input-group">
                                                     <input name="id_produto" id="id_produto" ref={this.produto} onChange={this.changeHandler} onInput={this.handleInput} onBlur={this.handleBlur} className="form-control" />
                                                     <div className="input-group-append">
@@ -896,7 +896,7 @@ export default class NovaPrevenda extends React.Component{
                                         {this.renderProdutoSelecionado()}
                                         <div className="col-12">
                                             <div className="form-group">
-                                                <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço do Produto <span className="text-danger">*</span></label>
+                                                <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço<span className="text-danger">*</span></label>
                                                 <select name="id_tab_preco" id="id_tab_preco" ref={this.id_tab_preco} onInput={this.handleInput} onChange={this.changeHandler} className="form-control" required>
                                                     <option value="">&nbsp;</option>
                                                     {this.state.tabs_preco.map((tab_preco) => 
@@ -907,13 +907,13 @@ export default class NovaPrevenda extends React.Component{
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
-                                                <label htmlFor="preco">Preço unitário do produto <span className="text-danger">*</span></label>
+                                                <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
                                                 <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={this.state.readOnly} min="0" step="0.01" />
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
-                                                <label htmlFor="quantidade">Quantidade vendida do produto <span className="text-danger">*</span></label>
+                                                <label htmlFor="quantidade">Quantidade vendida<span className="text-danger">*</span></label>
                                                 <input type="number" name="quantidade" id="quantidade" className="form-control" required onChange={this.changeHandler} min="0" step="0.01" />
                                             </div>
                                         </div>

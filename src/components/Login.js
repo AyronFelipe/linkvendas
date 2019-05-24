@@ -124,7 +124,7 @@ export default class Login extends React.Component{
                                     <div className="select2-input">
                                         <select id="loja" name="loja" type="text" className="form-control" onChange={this.changeHandler} required>
                                             {this.state.lojas.map((loja) =>
-                                                <option key={loja.id} value={loja.id}>{loja.nome}</option>
+                                                <option key={loja.id} value={loja.id}>{loja.id} - {loja.nome}</option>
                                             )}
                                         </select>
                                     </div>

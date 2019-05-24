@@ -9,7 +9,7 @@ export default class DetalheCliente extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { cliente: '', carregaInfo: true };
+        this.state = { cliente: '', carregaInfo: true, readOnly: true };
     }
 
     getCliente = () => {
@@ -89,75 +89,75 @@ export default class DetalheCliente extends React.Component {
                                                         <h4>Informações Pessoais</h4>
                                                         <div className="separator-solid"></div>
                                                         <div className="row">
-                                                            <div className="col-md-3 info-invoice">
+                                                            <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">CPF ou CNPJ</h5>
-                                                                { this.state.cliente.cpf_cnpj == '' ? <p>Não informado</p> : <p>{this.state.cliente.cpf_cnpj}</p> }
+                                                                {this.state.cliente.cpf_cnpj == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.cpf_cnpj}></input> }
                                                             </div>
-                                                            <div className="col-md-3 info-invoice">
+                                                            <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Telefone</h5>
-                                                                {this.state.cliente.telefone == '' ? <p>Não informado</p> : <p>{this.state.cliente.telefone}</p> }
+                                                                {this.state.cliente.telefone == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.telefone}></input> }
                                                             </div>
-                                                            <div className="col-md-3 info-invoice">
+                                                            <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Celular</h5>
-                                                                {this.state.cliente.celular == '' ? <p>Não informado</p> : <p>{this.state.cliente.celular}</p> }
-                                                            </div>
-                                                            <div className="col-md-3 info-invoice">
-                                                                <h5 className="sub">Está ativo?</h5>
-                                                                {this.state.cliente.ativo ? <p>Sim</p> :<p>Não</p>}
+                                                                {this.state.cliente.celular == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.celular}></input> }
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
+                                                                <h5 className="sub">Está ativo?</h5>
+                                                                {this.state.cliente.ativo ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Sim" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não" ></input>}
+                                                            </div>
+                                                            <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Código da Loja</h5>
-                                                                <p>{this.state.cliente.id_loja}</p>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.id_loja} ></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Código do Grupo</h5>
-                                                                {this.state.cliente.id_grupo == '' ? <p>Nâo informado</p> : <p>{this.state.cliente.id_grupo}</p> }
+                                                                {this.state.cliente.id_grupo == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.id_grupo}></input> }
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor do limite de crédito do cliente para compras a prazo</h5>
-                                                                <p>{this.state.cliente.limite_cred.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor do limite de crédito</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.limite_cred.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} ></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Planos</h5>
-                                                                {this.state.cliente.planos == '' ? <p>Não informado</p> : <p>{this.state.cliente.planos}</p> }
+                                                                {this.state.cliente.planos == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.planos}></input> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Tabelas</h5>
-                                                                { this.state.cliente.tabelas == '' ? <p>Não informado</p> : <p>{this.state.cliente.planos}</p> }
+                                                                {this.state.cliente.tabelas == '' ? <input type="text" className="form-control" readOnly={this.state.readOnly} value="Não informado" ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.tabelas}></input> }
                                                             </div>
                                                         </div>
                                                         <h4>Financeiro</h4>
                                                         <div className="separator-solid  mb-3"></div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Maior número de dias de atraso do cliente</h5>
-                                                                {this.state.cliente.financeiro.dias_atraso == 1 ? <p>{this.state.cliente.financeiro.dias_atraso} dia</p> : <p>{this.state.cliente.financeiro.dias_atraso} dias</p> }
+                                                                <h5 className="sub">Maior núm. de dias de atraso</h5>
+                                                                {this.state.cliente.financeiro.dias_atraso == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso} dia`} ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso} dias`}></input> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor total dos débitos do cliente</h5>
-                                                                <p>{this.state.cliente.financeiro.saldo_devedor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor tot. dos débitos</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_devedor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor total dos acordos pendentes</h5>
-                                                                <p>{this.state.cliente.financeiro.saldo_acordos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor tot. dos acord. pendentes</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_acordos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor total dos débitos em atraso</h5>
-                                                                <p>{this.state.cliente.financeiro.debito_atraso.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor tot. dos débitos em atraso</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.debito_atraso.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor total dos cheques devolvidos</h5>
-                                                                <p>{this.state.cliente.financeiro.cheques_devol.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor tot. dos cheques devolvidos</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.cheques_devol.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor do limite disponível para compras a prazo</h5>
-                                                                <p>{this.state.cliente.financeiro.limite_disp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
+                                                                <h5 className="sub">Valor do limite disponível</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.limite_disp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
                                                             </div>
                                                         </div>
                                                     </div>
