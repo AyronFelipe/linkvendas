@@ -157,7 +157,7 @@ export default class DetalheProduto extends React.Component {
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Frações contidas na und. de venda</h5>
+                                                                <h5 className="sub">Frações das und. de venda</h5>
                                                                 {this.state.produto.quant_fracoes == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.quant_fracoes} unidade`} ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.quant_fracoes} unidades`} ></input>}
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
@@ -165,21 +165,21 @@ export default class DetalheProduto extends React.Component {
                                                                 {this.state.produto.referencia == '' ? <input type="text" value="Não informado" className="form-control" readOnly={this.state.readOnly} /> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.produto.referencia} ></input> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Saldo de estoque disp. no dep.</h5>
+                                                                <h5 className="sub">Disponível no depósito</h5>
                                                                 {this.state.produto.saldo_dep == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_dep} unidade`} ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_dep} unidades`}></input>}
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Saldo de estoque em frações disp. na loja</h5>
+                                                                <h5 className="sub">Estoque em frações disp.</h5>
                                                                 {this.state.produto.saldo_dep_frc == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_dep_frc} unidade`}></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_dep_frc} unidades`}></input>}
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Saldo de estoque disp. para venda</h5>
+                                                                <h5 className="sub">Disponível para venda</h5>
                                                                 {this.state.produto.saldo_loja == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_loja} unidade`}></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_loja} unidades`}></input>}
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Saldo de estoque em frações disp. na loja</h5>
+                                                                <h5 className="sub">Frações disp. na loja</h5>
                                                                 {this.state.produto.saldo_loja_frc == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_loja_frc} unidade`}></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.produto.saldo_loja_frc} unidades`}></input>}
                                                             </div>
                                                         </div>

@@ -119,7 +119,7 @@ export default class DetalheCliente extends React.Component {
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor do limite de crédito</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.limite_cred.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })} ></input>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.limite_cred.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Planos</h5>
@@ -134,30 +134,30 @@ export default class DetalheCliente extends React.Component {
                                                         <div className="separator-solid  mb-3"></div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Maior núm. de dias de atraso</h5>
-                                                                {this.state.cliente.financeiro.dias_atraso == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso} dia`} ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso} dias`}></input> }
+                                                                <h5 className="sub">Max núm. de dias de atraso</h5>
+                                                                {this.state.cliente.financeiro.dias_atraso == 1 ? <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso}`} ></input> : <input type="text" className="form-control" readOnly={this.state.readOnly} value={`${this.state.cliente.financeiro.dias_atraso}`}></input> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor tot. dos débitos</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_devedor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
+                                                                <h5 className="sub">Tot. dos débitos</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_devedor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor tot. dos acord. pendentes</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_acordos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
+                                                                <h5 className="sub">Tot. dos acord. pend.</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.saldo_acordos.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}></input>
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor tot. dos débitos em atraso</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.debito_atraso.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
+                                                                <h5 className="sub">Tot. dos déb. em atraso</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.debito_atraso.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor tot. dos cheques devolvidos</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.cheques_devol.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
+                                                                    <h5 className="sub">Tot. dos cheques dev.</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.cheques_devol.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}></input>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Valor do limite disponível</h5>
-                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.limite_disp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}></input>
+                                                                <h5 className="sub">Limite disponível</h5>
+                                                                <input type="text" className="form-control" readOnly={this.state.readOnly} value={this.state.cliente.financeiro.limite_disp.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}></input>
                                                             </div>
                                                         </div>
                                                     </div>
