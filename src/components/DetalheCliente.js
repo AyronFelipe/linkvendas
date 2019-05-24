@@ -86,96 +86,78 @@ export default class DetalheCliente extends React.Component {
                                                         </div>
                                                     </div>
                                                     <div className="card-body">
+                                                        <h4>Informações Pessoais</h4>
                                                         <div className="separator-solid"></div>
                                                         <div className="row">
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Tipo de Pessoa: J - pessoa jurídica ou F - pessoa física</h5>
-                                                                <p>{this.state.cliente.pessoa}</p>
+                                                            <div className="col-md-3 info-invoice">
+                                                                <h5 className="sub">CPF ou CNPJ</h5>
+                                                                { this.state.cliente.cpf_cnpj == '' ? <p>Não informado</p> : <p>{this.state.cliente.cpf_cnpj}</p> }
                                                             </div>
-                                                            <div className="col-md-4 info-invoice">
+                                                            <div className="col-md-3 info-invoice">
+                                                                <h5 className="sub">Telefone</h5>
+                                                                {this.state.cliente.telefone == '' ? <p>Não informado</p> : <p>{this.state.cliente.telefone}</p> }
+                                                            </div>
+                                                            <div className="col-md-3 info-invoice">
+                                                                <h5 className="sub">Celular</h5>
+                                                                {this.state.cliente.celular == '' ? <p>Não informado</p> : <p>{this.state.cliente.celular}</p> }
+                                                            </div>
+                                                            <div className="col-md-3 info-invoice">
                                                                 <h5 className="sub">Está ativo?</h5>
-                                                                {
-                                                                    this.state.cliente.ativo ?
-                                                                    <p>Sim</p>
-                                                                    :
-                                                                    <p>Não</p>
-                                                                }
-                                                            </div>
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Data de Cadastro</h5>
-                                                                <p>{this.state.cliente.data_cad}</p>
+                                                                {this.state.cliente.ativo ? <p>Sim</p> :<p>Não</p>}
                                                             </div>
                                                         </div>
                                                         <div className="row">
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Data da Última Atualização</h5>
-                                                                    <p>{this.state.cliente.data_atu}</p>
-                                                            </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Código da Loja</h5>
                                                                 <p>{this.state.cliente.id_loja}</p>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Código do Grupo</h5>
-                                                                <p>{this.state.cliente.id_grupo}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">CPF ou CNPJ</h5>
-                                                                <p>{this.state.cliente.cpf_cnpj}</p>
-                                                            </div>
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Telefone</h5>
-                                                                <p>{this.state.cliente.telefone}</p>
-                                                            </div>
-                                                            <div className="col-md-4 info-invoice">
-                                                                <h5 className="sub">Celular</h5>
-                                                                <p>{this.state.cliente.celular}</p>
+                                                                {this.state.cliente.id_grupo == '' ? <p>Nâo informado</p> : <p>{this.state.cliente.id_grupo}</p> }
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor do limite de crédito do cliente para compras a prazo</h5>
-                                                                <p>{this.state.cliente.limite_cred}</p>
+                                                                <p>{this.state.cliente.limite_cred.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Planos</h5>
-                                                                <p>{this.state.cliente.planos}</p>
+                                                                {this.state.cliente.planos == '' ? <p>Não informado</p> : <p>{this.state.cliente.planos}</p> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Tabelas</h5>
-                                                                <p>{this.state.cliente.tabelas}</p>
+                                                                { this.state.cliente.tabelas == '' ? <p>Não informado</p> : <p>{this.state.cliente.planos}</p> }
                                                             </div>
                                                         </div>
-                                                        <div class="separator-solid  mb-3"></div>
-                                                        <h5>Financeiro</h5>
+                                                        <h4>Financeiro</h4>
+                                                        <div className="separator-solid  mb-3"></div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Maior número de dias de atraso do cliente</h5>
-                                                                <p>{this.state.cliente.financeiro.dias_atraso}</p>
+                                                                {this.state.cliente.financeiro.dias_atraso == 1 ? <p>{this.state.cliente.financeiro.dias_atraso} dia</p> : <p>{this.state.cliente.financeiro.dias_atraso} dias</p> }
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor total dos débitos do cliente</h5>
-                                                                <p>{this.state.cliente.financeiro.saldo_devedor}</p>
+                                                                <p>{this.state.cliente.financeiro.saldo_devedor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor total dos acordos pendentes</h5>
-                                                                <p>{this.state.cliente.financeiro.saldo_acordos}</p>
+                                                                <p>{this.state.cliente.financeiro.saldo_acordos.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                         </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor total dos débitos em atraso</h5>
-                                                                <p>{this.state.cliente.financeiro.debito_atraso}</p>
+                                                                <p>{this.state.cliente.financeiro.debito_atraso.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor total dos cheques devolvidos</h5>
-                                                                <p>{this.state.cliente.financeiro.cheques_devol}</p>
+                                                                <p>{this.state.cliente.financeiro.cheques_devol.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Valor do limite disponível para compras a prazo</h5>
-                                                                <p>{this.state.cliente.financeiro.limite_disp}</p>
+                                                                <p>{this.state.cliente.financeiro.limite_disp.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</p>
                                                             </div>
                                                         </div>
                                                     </div>

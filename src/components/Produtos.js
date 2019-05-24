@@ -181,21 +181,21 @@ export default class Produtos extends React.Component{
             return(
                 <div className="form-group">
                     <label htmlFor="id">Código</label>
-                    <input type="text" placeholder="Código do Produto" ref={this.id} name="id" id="id" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" />
                 </div>
             )
         } else if (this.state.showDescricao) {
             return(
                 <div className="form-group">
                     <label htmlFor="id">Descrição</label>
-                    <input type="text" placeholder="Descrição do Produto" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
                 </div>
             )
         } else {
             return(
                 <div className="form-group">
                     <label htmlFor="id">Código de Barras</label>
-                    <input type="text" placeholder="Código de Barras" ref={this.id} name="id" id="id" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" />
                 </div>
             )
         }

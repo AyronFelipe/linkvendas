@@ -172,7 +172,7 @@ export default class Clientes extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">Código do cliente</label>
-                    <input type="text" placeholder="Código do Cliente" ref={this.id} name="id" id="id" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" />
                 </div>
             );
         } else if (this.state.showCPFCNPJ) {
@@ -182,7 +182,7 @@ export default class Clientes extends React.Component{
                     <MaskedInput
                         mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
                         guide={false}
-                        placeholder="CPF ou CNPJ"
+                        placeholder="Insira aqui"
                         className="form-control"
                         name="id"
                         id="cpf_cnpj"
@@ -193,7 +193,7 @@ export default class Clientes extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">Nome do cliente</label>
-                    <input type="text" placeholder="Nome do Cliente" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
                 </div>
             );
         }
