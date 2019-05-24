@@ -33,6 +33,7 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
+            /*
             swal("Atenção!", `${error.response.data.message}`, {
                 icon: "warning",
                 buttons: {
@@ -44,6 +45,7 @@ export default class Prevendas extends React.Component{
             .then(() => {
                 verifyToken(error.response.data.message);
             });
+            */
         });
     }
 
