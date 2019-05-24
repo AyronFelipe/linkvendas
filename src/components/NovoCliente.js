@@ -340,7 +340,7 @@ export default class NovoCliente extends React.Component{
                                                     <div className="col-md-4 col-sm-12">
                                                         <div className="form-group">
                                                             <label htmlFor="email">E-mail</label>
-                                                            <input type="text" name="email" id="email" className="form-control" onChange={this.changeHandler} />
+                                                            <input type="email" name="email" id="email" className="form-control" onChange={this.changeHandler} />
                                                         </div>
                                                     </div>
                                                 </div>

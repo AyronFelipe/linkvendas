@@ -527,27 +527,28 @@ export default class NovaPrevenda extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">Código</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="codigo" id="codigo" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="codigo" id="codigo" className="form-control" required />
                 </div>
             )
         } else if (this.state.showDescricao) {
             return (
                 <div className="form-group">
                     <label htmlFor="id">Descrição</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="descricao" id="descricao" className="form-control value" style={inputStyle} />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="descricao" id="descricao" className="form-control value" style={inputStyle} required />
                 </div>
             )
         } else {
             return (
                 <div className="form-group">
                     <label htmlFor="id">Código de Barras</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="cod_barras" id="cod_barras" className="form-control value" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="cod_barras" id="cod_barras" className="form-control value" required />
                 </div>
             )
         }
     }
 
-    handleProdutoClick = () => {
+    handleProdutoSubmit = (e) => {
+        e.preventDefault();
         if (this.state.showCodigo) {
             axios({
                 url: `http://api.nortelink.com.br/api/v1/produtos/${this.id.current.value}`,
@@ -928,7 +929,7 @@ export default class NovaPrevenda extends React.Component{
                 <div className="modal fade" id="modal-produto">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                            <form id="modal-produto-form">
+                            <form id="modal-produto-form" onSubmit={this.handleProdutoSubmit}>
                                 <div className="modal-header">
                                     <h5 className="modal-title">Procurar Produto</h5>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -940,7 +941,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="desejo">Você deseja buscar produtos por</label>
-                                                <select name="desejo" id="desejo" className="form-control" onChange={this.changeDesejo}>
+                                                <select name="desejo" id="desejo" className="form-control" onChange={this.changeDesejo} required>
                                                     <option value="">&nbsp;</option>
                                                     <option value="id">Código</option>
                                                     <option value="descr">Descrição</option>
@@ -961,7 +962,7 @@ export default class NovaPrevenda extends React.Component{
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-nortelink" onClick={this.handleProdutoClick}>Procurar</button>
+                                    <button type="submit" className="btn btn-nortelink">Procurar</button>
                                 </div>
                             </form>
                         </div>

@@ -7,11 +7,13 @@ const inputStyle = {
     textTransform: 'uppercase'
 }
 
+const PAGE = 1;
+
 export default class Login extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {type: 'password', usuario: '', senha: '', loja: ''};
+        this.state = { type: 'password', usuario: '', senha: '', loja: '', lojas: [] };
         this.senha = React.createRef();
         this.changeSenhaType = this.changeSenhaType.bind(this);
     }
@@ -21,6 +23,7 @@ export default class Login extends React.Component{
     }
 
     changeHandler = (e) => {
+        console.log('oi');
         this.setState({[e.target.name]: e.target.value.toUpperCase()});
     }
 
@@ -34,7 +37,7 @@ export default class Login extends React.Component{
         let body = {
             usuario: this.state.usuario,
             senha: this.state.senha,
-            loja: this.state.loja
+            loja: $('#loja').val()
         }
         axios.post(`http://api.nortelink.com.br/api/v1/login/`, qs.stringify(body), config)
         .then((res) => {
@@ -52,6 +55,46 @@ export default class Login extends React.Component{
                     }
                 },
             });
+        });
+    }
+
+    getLojas = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/lojas/`,
+            method: `get`,
+            params: {
+                page: PAGE,
+            }
+        })
+        .then((res) => {
+            this.setState({ lojas: res.data });
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message;
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+        })
+    }
+
+    componentDidMount = () => {
+        this.getLojas();
+        $('#loja').select2({
+            theme: 'bootstrap'
+        });
+        $('.select2-selection').css({
+            'padding-top': '20px',
+            'padding-bottom': '20px'
         });
     }
 
@@ -78,7 +121,13 @@ export default class Login extends React.Component{
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="loja">ID de sua loja</label>
-                                    <input id="loja" name="loja" type="text" className="form-control" value={this.state.loja} onChange={this.changeHandler} required />
+                                    <div className="select2-input">
+                                        <select id="loja" name="loja" type="text" className="form-control" onChange={this.changeHandler} required>
+                                            {this.state.lojas.map((loja) =>
+                                                <option key={loja.id} value={loja.id}>{loja.nome}</option>
+                                            )}
+                                        </select>
+                                    </div>
                                 </div>
                                 <div className="form-action mb-3">
                                     <button className="btn btn-nortelink btn-rounded btn-login" type="submit">Login</button>
