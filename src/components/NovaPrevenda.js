@@ -59,6 +59,7 @@ export default class NovaPrevenda extends React.Component{
             order: '',
             produto_selecionado_id: '',
             produto_selecionado: [],
+            produto_alterar: [],
         };
         this.childCliente = React.createRef();
         this.childParceiro = React.createRef();
@@ -227,6 +228,7 @@ export default class NovaPrevenda extends React.Component{
     }
 
     excluirProduto = (id_item) => {
+        const list_soma = [];
         axios.delete(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${id_item}`, config)
         .then((res) => {
             swal("Item excluído com sucesso", {
@@ -241,6 +243,13 @@ export default class NovaPrevenda extends React.Component{
                 axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
                 .then((res) => {
                     this.setState({ itens: res.data.itens });
+                    this.state.itens.map((item) => {
+                        list_soma.push(item.preco * item.quantidade);
+                    })
+                    let soma = list_soma.reduce((a, b) => a + b, 0);
+                    this.setState({ vl_itens: soma, vl_total: soma, });
+                    this.vl_itens.current.value = this.state.vl_itens;
+                    this.vl_total.current.value = this.state.vl_total;
                 })
                 .catch((error) => {
                     let erro = '';
@@ -396,7 +405,7 @@ export default class NovaPrevenda extends React.Component{
                             <button className="btn btn-danger mx-1 my-1" type="button" onClick={() => this.excluirProduto(item.id_item)}>
                                 <i className="fas fa-trash-alt"></i>
                             </button>
-                            <button className="btn btn-primary mx-1 my-1" type="button" onClick={this.alterarProduto}>
+                            <button className="btn btn-primary mx-1 my-1" type="button" onClick={() => this.showModalAlterarProduto(item.id_item)}>
                                 <i className="fas fa-pen"></i>
                             </button>
                         </td>
@@ -679,6 +688,107 @@ export default class NovaPrevenda extends React.Component{
                 });
             });
         }
+    }
+
+    showModalAlterarProduto = (id_item) => {
+        $("#modal-alterar-produto").modal('show');
+        axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${id_item}`, config)
+        .then((res) => {
+            this.setState({ produto_alterar: res.data.item });
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        })
+    }
+
+    alterarProduto = (e) => {
+        const list_soma = [];
+        e.preventDefault();
+        let body = {
+            quantidade: $('#quantidade_alterada').val(),
+            id_venda: this.state.produto_alterar.id_venda,
+            id_item: this.state.produto_alterar.id_item,
+            id_produto: this.state.produto_alterar.id_produto,
+            preco: $('#preco_alterado').val(),
+        }
+        axios.put(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${this.state.produto_alterar.id_item}`, qs.stringify(body), config)
+        .then((res) => {
+            swal("Item alterado com sucesso", {
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-success'
+                    }
+                },
+            })
+            axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
+            .then((res) => {
+                this.setState({ itens: res.data.itens });
+                this.state.itens.map((item) => {
+                    list_soma.push(item.preco * item.quantidade);
+                })
+                let soma = list_soma.reduce((a, b) => a + b, 0);
+                this.setState({ vl_itens: soma, vl_total: soma, });
+                $("#modal-alterar-produto").modal('hide');
+                document.getElementById('modal-alterar-produto-form').reset();
+                this.vl_itens.current.value = this.state.vl_itens;
+                this.vl_total.current.value = this.state.vl_total;
+            })
+            .catch((error) => {
+                let erro = '';
+                if (error.response.data.erros) {
+                    erro = error.response.data.erros;
+                } else {
+                    erro = error.response.data.message
+                }
+                swal("Erro!", `${erro}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            })
+        })
+        .catch((error) => {
+            let erro = '';
+            if (error.response.data.erros) {
+                erro = error.response.data.erros;
+            } else {
+                erro = error.response.data.message
+            }
+            swal("Erro!", `${erro}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        })
     }
 
     render(){
@@ -980,7 +1090,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="quantidade">Quantidade vendida<span className="text-danger">*</span></label>
-                                                <input type="number" name="quantidade" id="quantidade" className="form-control" required onChange={this.changeHandler} min="0" step="0.01" />
+                                                <input type="number" name="quantidade" id="quantidade" className="form-control" required onChange={this.changeHandler} min="1" step="0.01" />
                                             </div>
                                         </div>
                                     </div>
@@ -1029,6 +1139,41 @@ export default class NovaPrevenda extends React.Component{
                                 </div>
                                 <div className="modal-footer">
                                     <button type="submit" className="btn btn-nortelink">Procurar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="modal-alterar-produto">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <form id="modal-alterar-produto-form" onSubmit={this.alterarProduto}>
+                                <div className="modal-header">
+                                    <h5 className="modal-title">ALTERAR PRODUTO {this.state.produto_alterar.descricao}</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <label htmlFor="quantidade">Quantidade vendida<span className="text-danger">*</span></label>
+                                                <input type="number" name="quantidade_alterada" id="quantidade_alterada" className="form-control" required min="1" step="0.01" defaultValue={this.state.produto_alterar.quantidade || ''} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
+                                                <input type="number" name="preco_alterado" id="preco_alterado" className="form-control" required readOnly={true} min="1" step="0.01" defaultValue={this.state.produto_alterar.preco || ''} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="submit" className="btn btn-nortelink">Alterar</button>
                                 </div>
                             </form>
                         </div>
