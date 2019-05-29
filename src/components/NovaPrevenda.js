@@ -48,7 +48,6 @@ export default class NovaPrevenda extends React.Component{
             id_produto: '',
             preco: '',
             quantidade: '',
-            produtos: [],
             itens: [],
             readOnly: false,
             id_tab_preco: '',
@@ -221,9 +220,9 @@ export default class NovaPrevenda extends React.Component{
                     }
                 },
             })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
         });
     }
 
@@ -393,7 +392,14 @@ export default class NovaPrevenda extends React.Component{
                         <td>{item.preco.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                         <td>{item.quantidade}</td>
                         <td>{item.vl_total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
-                        <td><button className="btn btn-danger" type="button" onClick={() => this.excluirProduto(item.id_item)}><i className="fas fa-trash-alt"></i></button></td>
+                        <td>
+                            <button className="btn btn-danger mx-1 my-1" type="button" onClick={() => this.excluirProduto(item.id_item)}>
+                                <i className="fas fa-trash-alt"></i>
+                            </button>
+                            <button className="btn btn-primary mx-1 my-1" type="button" onClick={this.alterarProduto}>
+                                <i className="fas fa-pen"></i>
+                            </button>
+                        </td>
                     </tr>
                 )
             )
@@ -450,6 +456,7 @@ export default class NovaPrevenda extends React.Component{
         $('#modal').find('#id_produto').val(id_produto_selecionado);
         document.getElementById('modal-produto-form').reset();
         this.handleBlur(e);
+        this.handleInput();
     }
 
     renderProdutosEncontrados = () => {
@@ -617,6 +624,63 @@ export default class NovaPrevenda extends React.Component{
         }
     }
 
+    handleBlurTabPreco = (e) => {
+        if ( this.state.itens.length > 0 ) {
+            let body = {
+                id_venda: this.state.id_venda,
+                id_tab_preco: e.target.value,
+            }
+            axios.put(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/precos`, qs.stringify(body), config)
+            .then((res) => {
+                this.setState({ vl_itens: res.data.vl_total, vl_total: res.data.vl_total });
+                this.vl_itens.current.value = res.data.vl_total;
+                this.vl_total.current.value = res.data.vl_total;
+                axios.get(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/`, config)
+                .then((res) => {
+                    this.setState({ itens: res.data.itens });
+                })
+                .catch((error) => {
+                    let erro = '';
+                    if (error.response.data.erros) {
+                        erro = error.response.data.erros;
+                    } else {
+                        erro = error.response.data.message
+                    }
+                    swal("Erro!", `${erro}`, {
+                        icon: "error",
+                        buttons: {
+                            confirm: {
+                                className: 'btn btn-danger'
+                            }
+                        },
+                    })
+                    .then(() => {
+                        verifyToken(error.response.data.message);
+                    });
+                })
+            })
+            .catch((error) => {
+                let erro = '';
+                if (error.response.data.erros) {
+                    erro = error.response.data.erros;
+                } else {
+                    erro = error.response.data.message
+                }
+                swal("Erro!", `${erro}`, {
+                    icon: "error",
+                    buttons: {
+                        confirm: {
+                            className: 'btn btn-danger'
+                        }
+                    },
+                })
+                .then(() => {
+                    verifyToken(error.response.data.message);
+                });
+            });
+        }
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -662,15 +726,28 @@ export default class NovaPrevenda extends React.Component{
                                                                     <h5 className="card-title">
                                                                         Adicione produtos à pré-venda
                                                                     </h5>
-                                                                    <button className="btn btn-nortelink btn-lg ml-auto" data-toggle="modal" data-target="#modal" type="button"><i className="la flaticon-add"></i> Adicionar Produto</button>
                                                                 </div>
                                                             </div>
                                                             <div className="card-body">
                                                                 <div className="row">
-                                                                    <div className="col-sm-12 col-md-3">
+                                                                    <div className="col-12">
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço<span className="text-danger">*</span></label>
+                                                                            <select name="id_tab_preco" id="id_tab_preco" ref={this.id_tab_preco} onInput={this.handleInput} onChange={this.changeHandler} onBlur={this.handleBlurTabPreco} className="form-control" required>
+                                                                                <option value="">&nbsp;</option>
+                                                                                {this.state.tabs_preco.map((tab_preco) =>
+                                                                                    <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
+                                                                                )}
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className="table-responsive">
+                                                                <div className="row">
+                                                                    <div className="col-sm-12 col-md-3 offset-md-9">
+                                                                        <button className="btn btn-nortelink btn-lg btn-block" data-toggle="modal" data-target="#modal" type="button"><i className="la flaticon-add"></i> Adicionar Produto</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="table-responsive mt-4">
                                                                     <table className="table">
                                                                         <thead>
                                                                             <tr>
@@ -896,19 +973,8 @@ export default class NovaPrevenda extends React.Component{
                                         {this.renderProdutoSelecionado()}
                                         <div className="col-12">
                                             <div className="form-group">
-                                                <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço<span className="text-danger">*</span></label>
-                                                <select name="id_tab_preco" id="id_tab_preco" ref={this.id_tab_preco} onInput={this.handleInput} onChange={this.changeHandler} className="form-control" required>
-                                                    <option value="">&nbsp;</option>
-                                                    {this.state.tabs_preco.map((tab_preco) => 
-                                                        <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
-                                                    )}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={this.state.readOnly} min="0" step="0.01" />
+                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={true} min="1" step="0.01" />
                                             </div>
                                         </div>
                                         <div className="col-12">
