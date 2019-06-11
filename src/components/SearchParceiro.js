@@ -115,6 +115,10 @@ export default class SearchParceiro extends React.Component{
         $('#modal-parceiro').modal('hide');
         this.input.current.value = e.target.value;
         this.props.onChange(this.input.current.name, this.input.current.value);
+        $('#cpf_cnpj_parceiro').val('');
+        $('#nome_parceiro').val('');
+        $("#desejo").val($("#desejo option:first").val());
+        this.setState({ parceiros: [], showCPFCNPJ: true });
     }
 
     renderParceirosEncontrados = () => {

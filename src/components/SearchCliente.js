@@ -159,7 +159,7 @@ export default class SearchCliente extends React.Component {
         $('#codigo').val('');
         $('#cpf_cnpj').val('');
         $('#nome').val('');
-        $('#desejo').val('');
+        $("#desejo").val($("#desejo option:first").val());        
         this.setState({ showCodigo: true, clientes: [] });
     }
 
