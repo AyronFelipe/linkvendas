@@ -156,6 +156,11 @@ export default class SearchCliente extends React.Component {
         $('#modal-cliente').modal('hide');
         this.input.current.value = e.target.value;
         this.props.onChange(this.input.current.name, this.input.current.value);
+        $('#codigo').val('');
+        $('#cpf_cnpj').val('');
+        $('#nome').val('');
+        $('#desejo').val('');
+        this.setState({ showCodigo: true, clientes: [] });
     }
 
     render() {
