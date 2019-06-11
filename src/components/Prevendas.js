@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { verifyToken } from '../utils';
+import { Link } from 'react-router-dom';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -12,7 +12,16 @@ export default class Prevendas extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = { prevendas: [], carregaInfo: true, page: PRIMEIRA_PAGE };
+        this.state = {
+            prevendas: [],
+            carregaInfo: true,
+            page: PRIMEIRA_PAGE,
+            showData: false,
+            showCliente: false,
+            showPlanoPag: false,
+            showSituacao: false,
+            situacoes: [],
+        };
     }
 
     getPrevendas = () => {
@@ -33,19 +42,6 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
-            /*
-            swal("Atenção!", `${error.response.data.message}`, {
-                icon: "warning",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-warning'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
-            */
         });
     }
 
@@ -57,12 +53,16 @@ export default class Prevendas extends React.Component{
                 </td>
             </tr>
         } else {
-            if (this.state.prevendas.length) {
+            if (this.state.prevendas.length >= 1) {
                 return this.state.prevendas.map((prevenda) =>
                     <tr key={prevenda.id}>
                         <td>{prevenda.id}</td>
                         <td>{prevenda.descricao}</td>
-                        <td><button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button></td>
+                        <td>
+                            <Link to={`/pre-venda/${prevenda.id}/detalhe/`}>
+                                <button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button>
+                            </Link>
+                        </td>
                     </tr>
                 )
             } else {
@@ -75,8 +75,165 @@ export default class Prevendas extends React.Component{
         }
     }
 
+    renderOptionsBusca = () => {
+        if (this.state.showData) {
+            return(
+                <div className="row">
+                    <div className="col-6">
+                        <div className="form-group">
+                            <label htmlFor="data_ini">Data Inicial</label>
+                            <input type="date" id="data_ini" className="form-control" placeholder="Insira aqui" name="data_ini" />
+                        </div>
+                    </div>
+                    <div className="col-6">
+                        <div className="form-group">
+                            <label htmlFor="data_ini">Data Final</label>
+                            <input type="date" id="data_fim" className="form-control" placeholder="Insira aqui" name="data_fim" />
+                        </div>
+                    </div>
+                </div>
+            ); 
+        } else if (this.state.showCliente) {
+            return(
+                <div className="form-group">
+                    <label htmlFor="id_cliente">Código do Cliente</label>
+                    <input type="text" placeholder="Insira aqui" name="id_cliente" id="id_cliente" className="form-control" />
+                </div>
+            );
+        } else if (this.state.showPlanoPag) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="id_plano_pag">Código do Plano de Pagamento</label>
+                    <input type="text" placeholder="Insira aqui" name="id_plano_pag" id_plano_pag="id_plano_pag" className="form-control" />
+                </div>
+            );
+        } else if (this.state.showSituacao) {
+            return (
+                <div className="form-group">
+                    <label htmlFor="situacao">Situação</label>
+                    <div className="select2-input">
+                        <select name="situacao" id="situacao" className="form-control">
+                            <option value="">&nbsp;</option>
+                            {this.state.situacoes.map((situacao) => 
+                                <option value={situacao.id} key={situacao.id}>{situacao.descricao}</option>
+                            )}
+                        </select>
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    getSituacoes = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/ofsituacoes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: PRIMEIRA_PAGE,
+            }
+        })
+        .then((res) => {
+            this.setState({ situacoes: res.data })
+        })
+        .catch((error) => {
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            })
+            .then(() => {
+                verifyToken(error.response.data.message);
+            });
+        })
+    }
+
+    changeDesejo = (e) => {
+        if (e.target.value == 'data') {
+            this.setState({
+                showCliente: false,
+                showData: true,
+                showPlanoPag: false,
+                showSituacao: false,
+            })
+        } else if (e.target.value == 'cliente') {
+            this.setState({
+                showCliente: true,
+                showData: false,
+                showPlanoPag: false,
+                showSituacao: false,
+            })
+        } else if (e.target.value == 'plano_pagamento') {
+            this.setState({
+                showCliente: false,
+                showData: false,
+                showPlanoPag: true,
+                showSituacao: false,
+            })
+        } else if (e.target.value == 'situacao') {
+            this.setState({
+                showCliente: false,
+                showData: false,
+                showPlanoPag: false,
+                showSituacao: true,
+            })
+        }
+    }
+
     buscaPrevenda = () => {
-        return true;
+        e.preventDefault();
+        if (this.state.showCliente) {
+            params = {
+                page: PRIMEIRA_PAGE,
+                id_cliente: $('#id_cliente').val(),
+            }
+        } else if (this.state.showData) {
+            params = {
+                page: PRIMEIRA_PAGE,
+                data_ini: $('#data_ini').val(),
+                data_fim: $('#data_fim').val(),
+            }
+        } else if (this.state.showPlanoPag) {
+            params = {
+                page: PRIMEIRA_PAGE,
+                id_plano_pag: $('#id_plano_pag').val(),
+            }
+        } else if (this.state.showSituacao) {
+            params = {
+                page: PRIMEIRA_PAGE,
+                situacao: $('#situacao').val(),
+            }
+        }
+        this.setState({ carregaInfo: true });
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: params
+        })
+        .then((res) => {
+            this.setState({ prevendas: res.data, carregaInfo: false });
+        })
+        .catch((error) => {
+            this.setState({ prevendas: '', carregaInfo: false });
+            swal("Erro!", `${error.response.data.message}`, {
+                icon: "error",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-danger'
+                    }
+                },
+            }).then(() => {
+                verifyToken(error.response.data.message);
+            });
+        });
     }
 
     componentDidMount(){
@@ -86,6 +243,14 @@ export default class Prevendas extends React.Component{
             }
         });
         this.getPrevendas();
+        $('#situacao').select2({
+            theme: 'bootstrap'
+        });
+        $('.select2-selection').css({
+            'padding-top': '20px',
+            'padding-bottom': '20px'
+        });
+        this.getSituacoes();
     }
 
 
@@ -121,58 +286,31 @@ export default class Prevendas extends React.Component{
                                         <div className="card-body">
                                             <form>
                                                 <div className="row">
-                                                    <div className="col-sm-12 col-md-6">
+                                                    <div className="col-12">
                                                         <div className="form-group">
-                                                            <label htmlFor="numero">Número da pré-venda</label>
-                                                            <input type="text" ref={this.numero} name="numero" id="numero" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-12 col-md-3">
-                                                        <div className="form-group">
-                                                            <label htmlFor="data_ini">Data inicial do período</label>
-                                                            <input type="date" ref={this.data_ini} name="data_ini" id="data_ini" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-12 col-md-3">
-                                                        <div className="form-group">
-                                                            <label htmlFor="data_fim">Data final do período</label>
-                                                            <input type="date" ref={this.data_fim} name="data_fim" id="data_fim" className="form-control" />
+                                                            <label htmlFor="numero">Você deseja buscar pré-venda por</label>
+                                                            <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
+                                                                <option value="">&nbsp;</option>
+                                                                <option value="data">Data de Início e Data de Fim</option>
+                                                                <option value="cliente">Código de Cliente</option>
+                                                                <option value="plano_pagamento">Código de Plano de Pagamento</option>
+                                                                <option value="situacao">Situação</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="row">
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="form-group">
-                                                            <label htmlFor="id_cliente">Código do Cliente</label>
-                                                            <input type="text" ref={this.id_cliente} name="id_cliente" id="id_cliente" className="form-control" />
+                                                <form onSubmit={this.buscaPrevenda}>
+                                                    <div className="row">
+                                                        <div className="col-12">
+                                                            {this.renderOptionsBusca()}
                                                         </div>
                                                     </div>
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="form-group">
-                                                            <label htmlFor="id_plano_pag">Código do plano de pagamento</label>
-                                                            <input type="text" ref={this.id_plano_pag} name="id_plano_pag" id="id_plano_pag" className="form-control" />
+                                                    <div className="row">
+                                                        <div className="col-sm-12 col-md-3 offset-md-9">
+                                                            <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="form-group">
-                                                            <label htmlFor="situacao">Situação da Pré-venda</label>
-                                                            <input type="text" ref={this.situacao} name="situacao" id="situacao" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-sm-12 col-md-6">
-                                                        <div className="form-group">
-                                                            <label htmlFor="id_posicao">Código da posição da pré-venda</label>
-                                                            <input type="text" ref={this.id_posicao} name="id_posicao" id="id_posicao" className="form-control" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="row">
-                                                    <div className="col-sm-12 col-md-3 offset-md-9">
-                                                        <button type="button" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </form>
                                         </div>
                                     </div>

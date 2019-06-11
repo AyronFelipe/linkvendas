@@ -11,6 +11,7 @@ import MainInterno from './MainInterno';
 import PrivateRoute from './PrivateRoute';
 import DetalheProduto from './DetalheProduto';
 import DetalheCliente from './DetalheCliente';
+import DetalhePrevenda from './DetalhePrevenda';
 import { isAuthenticated } from '../auth';
 
 class Initial extends React.Component{
@@ -43,6 +44,7 @@ export default class App extends React.Component{
                     <PrivateRoute authenticated={this.state.authenticated} path='/pre-vendas/' exact component={Prevendas} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/produto/:id/detalhe/' component={DetalheProduto} />
                     <PrivateRoute authenticated={this.state.authenticated} path='/cliente/:id/detalhe/' component={DetalheCliente} />
+                    <PrivateRoute authenticated={this.state.authenticated} path='/pre-venda/:id/detalhe/' component={DetalhePrevenda} />
                 </div>
             </Router>
         )
