@@ -3,7 +3,6 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 
 const PRIMEIRA_PAGE = 1;
