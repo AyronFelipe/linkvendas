@@ -283,33 +283,31 @@ export default class Prevendas extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
-                                            <form>
-                                                <div className="row">
-                                                    <div className="col-12">
-                                                        <div className="form-group">
-                                                            <label htmlFor="numero">Você deseja buscar pré-venda por</label>
-                                                            <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
-                                                                <option value="">&nbsp;</option>
-                                                                <option value="data">Data de Início e Data de Fim</option>
-                                                                <option value="cliente">Código de Cliente</option>
-                                                                <option value="plano_pagamento">Código de Plano de Pagamento</option>
-                                                                <option value="situacao">Situação</option>
-                                                            </select>
-                                                        </div>
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <div className="form-group">
+                                                        <label htmlFor="numero">Você deseja buscar pré-venda por</label>
+                                                        <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
+                                                            <option value="">&nbsp;</option>
+                                                            <option value="data">Data de Início e Data de Fim</option>
+                                                            <option value="cliente">Código de Cliente</option>
+                                                            <option value="plano_pagamento">Código de Plano de Pagamento</option>
+                                                            <option value="situacao">Situação</option>
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <form onSubmit={this.buscaPrevenda}>
-                                                    <div className="row">
-                                                        <div className="col-12">
-                                                            {this.renderOptionsBusca()}
-                                                        </div>
+                                            </div>
+                                            <form onSubmit={this.buscaPrevenda}>
+                                                <div className="row">
+                                                    <div className="col-12">
+                                                        {this.renderOptionsBusca()}
                                                     </div>
-                                                    <div className="row">
-                                                        <div className="col-sm-12 col-md-3 offset-md-9">
-                                                            <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
-                                                        </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col-sm-12 col-md-3 offset-md-9">
+                                                        <button type="submit" className="btn btn-nortelink btn-round btn-lg btn-block" onClick={this.buscaCliente}><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
