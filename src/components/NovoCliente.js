@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import qs from 'qs';
-import { verifyToken } from '../utils';
+import { abstractError } from '../utils';
 import MaskedInput from 'react-text-mask';
 
 
@@ -85,6 +85,9 @@ export default class NovoCliente extends React.Component{
                     this.setState({ id_municipio: res.data.ibge});
                     this.setState({uf: res.data.uf.toUpperCase()});
                 }
+            })
+            .catch((error) => {
+                abstractError(error);
             });
         }
     }
@@ -135,23 +138,7 @@ export default class NovoCliente extends React.Component{
             });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
+import { abstractError } from '../utils';
 
 
 const PAGE = 1;
@@ -108,16 +109,7 @@ export default class SearchCliente extends React.Component {
         })
         .catch((error) => {
             this.setState({ clientes: '' });
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            }).then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 

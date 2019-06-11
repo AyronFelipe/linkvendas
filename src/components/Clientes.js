@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import { verifyToken } from '../utils';
+import { verifyToken, abstractError } from '../utils';
 import MaskedInput from 'react-text-mask';
 
 
@@ -44,17 +44,7 @@ export default class Clientes extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
@@ -120,16 +110,7 @@ export default class Clientes extends React.Component{
         })
         .catch((error) => {
             this.setState({ clientes: '', carregaInfo: false });
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            }).then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 

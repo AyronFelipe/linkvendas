@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { verifyToken } from '../utils';
+import { abstractError } from '../utils';
 
 const PRIMEIRA_PAGE = 1;
 
@@ -42,17 +42,7 @@ export default class Produtos extends React.Component{
             this.setState({produtos: res.data, carregaInfo: false});
         })
         .catch((error) => {
-            console.log(error.response.data);
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            }).then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
@@ -72,17 +62,7 @@ export default class Produtos extends React.Component{
             })
             .catch((error) => {
                 this.setState({ produtos: '', carregaInfo: false, });
-                swal("Erro!", `Produto não encontrado`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
         } else {
             axios({
@@ -101,17 +81,7 @@ export default class Produtos extends React.Component{
             })
             .catch((error) => {
                 this.setState({ produtos: '', carregaInfo: false, });
-                swal("Erro!", `Produto não encontrado`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
 
         }

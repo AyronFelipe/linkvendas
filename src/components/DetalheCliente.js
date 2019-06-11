@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
-import { verifyToken } from '../utils';
+import { abstractError } from '../utils';
 
 
 export default class DetalheCliente extends React.Component {
@@ -26,17 +26,7 @@ export default class DetalheCliente extends React.Component {
             this.setState({ cliente: res.data, carregaInfo: false });
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 

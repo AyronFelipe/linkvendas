@@ -3,6 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { abstractError } from '../utils';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -41,6 +42,7 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
+            abstractError(error);
         });
     }
 
@@ -138,17 +140,7 @@ export default class Prevendas extends React.Component{
             this.setState({ situacoes: res.data })
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 
@@ -222,16 +214,7 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ prevendas: '', carregaInfo: false });
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            }).then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 

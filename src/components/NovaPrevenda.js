@@ -5,7 +5,8 @@ import SearchCliente from './SearchCliente';
 import SearchParceiro from './SearchParceiro';
 import axios from 'axios';
 import qs from 'qs';
-import { verifyToken } from '../utils';
+import { abstractError } from '../utils';
+
 
 const config = {
     headers: {
@@ -131,23 +132,7 @@ export default class NovaPrevenda extends React.Component{
             console.log(res);
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 
@@ -187,43 +172,11 @@ export default class NovaPrevenda extends React.Component{
                 this.vl_total.current.value = this.state.vl_total;
             })
             .catch((error) => {
-                let erro = '';
-                if (error.response.data.erros) {
-                    erro = error.response.data.erros;
-                } else {
-                    erro = error.response.data.message
-                }
-                swal("Erro!", `${erro}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
@@ -252,47 +205,15 @@ export default class NovaPrevenda extends React.Component{
                     this.vl_total.current.value = this.state.vl_total;
                 })
                 .catch((error) => {
-                    let erro = '';
-                    if (error.response.data.erros) {
-                        erro = error.response.data.erros;
-                    } else {
-                        erro = error.response.data.message
-                    }
                     this.id_venda.current.value = '';
                     this.vl_total.current.value = '';
                     this.setState({ itens: [], id_venda: res.data.id_venda, vl_total: res.data.vl_total });
-                    swal("Atenção!", `${erro}`, {
-                        icon: "warning",
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-warning'
-                            }
-                        },
-                    })
-                    .then(() => {
-                        verifyToken(error.response.data.message);
-                    });
+                    abstractError(error);
                 });
             });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 
@@ -306,23 +227,7 @@ export default class NovaPrevenda extends React.Component{
                 this.preco.current.value = res.data.preco_venda;
             })
             .catch((error) => {
-                let erro = '';
-                if (error.response.data.erros) {
-                    erro = error.response.data.erros;
-                } else {
-                    erro = error.response.data.message;
-                }
-                swal("Erro!", `${erro}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             })
         }
     }
@@ -342,17 +247,7 @@ export default class NovaPrevenda extends React.Component{
             this.setState({ tabs_preco: res.data });
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
@@ -371,23 +266,7 @@ export default class NovaPrevenda extends React.Component{
             this.setState({ id_plano_pag_options: res.data });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message;
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
@@ -434,17 +313,7 @@ export default class NovaPrevenda extends React.Component{
                 this.setState({ produto_selecionado: [res.data] });
             })
             .catch((error) => {
-                swal("Erro!", `Produto não encontrado`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
         }
     }
@@ -577,17 +446,7 @@ export default class NovaPrevenda extends React.Component{
                 this.setState({ produtos_encontrados: [res.data] });
             })
             .catch((error) => {
-                swal("Erro!", `Produto não encontrado`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
         } else {
             axios({
@@ -605,17 +464,7 @@ export default class NovaPrevenda extends React.Component{
                 this.setState({ produtos_encontrados: res.data });
             })
             .catch((error) => {
-                swal("Erro!", `Produto não encontrado`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
 
         }
@@ -669,23 +518,7 @@ export default class NovaPrevenda extends React.Component{
                 })
             })
             .catch((error) => {
-                let erro = '';
-                if (error.response.data.erros) {
-                    erro = error.response.data.erros;
-                } else {
-                    erro = error.response.data.message
-                }
-                swal("Erro!", `${erro}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             });
         }
     }
@@ -697,23 +530,7 @@ export default class NovaPrevenda extends React.Component{
             this.setState({ produto_alterar: res.data.item });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 
@@ -751,43 +568,11 @@ export default class NovaPrevenda extends React.Component{
                 this.vl_total.current.value = this.state.vl_total;
             })
             .catch((error) => {
-                let erro = '';
-                if (error.response.data.erros) {
-                    erro = error.response.data.erros;
-                } else {
-                    erro = error.response.data.message
-                }
-                swal("Erro!", `${erro}`, {
-                    icon: "error",
-                    buttons: {
-                        confirm: {
-                            className: 'btn btn-danger'
-                        }
-                    },
-                })
-                .then(() => {
-                    verifyToken(error.response.data.message);
-                });
+                abstractError(error);
             })
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         })
     }
 

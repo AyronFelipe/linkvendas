@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import qs from 'qs';
 import { storageToken, isAuthenticated } from '../auth';
+import { abstractError } from '../utils';
 
 const inputStyle = {
     textTransform: 'uppercase'
@@ -23,7 +24,6 @@ export default class Login extends React.Component{
     }
 
     changeHandler = (e) => {
-        console.log('oi');
         this.setState({[e.target.name]: e.target.value.toUpperCase()});
     }
 
@@ -47,14 +47,7 @@ export default class Login extends React.Component{
             }
         })
         .catch((error) => {
-            swal("Erro!", `${error.response.data.message}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            });
+            abstractError(error);
         });
     }
 
@@ -70,20 +63,7 @@ export default class Login extends React.Component{
             this.setState({ lojas: res.data });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message;
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
+            abstractError(error);
         })
     }
 

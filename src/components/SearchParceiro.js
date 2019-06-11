@@ -1,6 +1,7 @@
 import React from 'react';
 import MaskedInput from 'react-text-mask';
 import axios from 'axios';
+import { abstractError } from '../utils';
 
 const PAGE = 1;
 
@@ -68,23 +69,7 @@ export default class SearchParceiro extends React.Component{
             this.setState({ parceiros: res.data });
         })
         .catch((error) => {
-            let erro = '';
-            if (error.response.data.erros) {
-                erro = error.response.data.erros;
-            } else {
-                erro = error.response.data.message;
-            }
-            swal("Erro!", `${erro}`, {
-                icon: "error",
-                buttons: {
-                    confirm: {
-                        className: 'btn btn-danger'
-                    }
-                },
-            })
-            .then(() => {
-                verifyToken(error.response.data.message);
-            });
+            abstractError(error);
         });
     }
 
