@@ -42,7 +42,7 @@ export default class Prevendas extends React.Component{
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
-            abstractError(error);
+            //abstractError(error);
         });
     }
 

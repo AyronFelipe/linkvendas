@@ -61,6 +61,7 @@ export default class NovaPrevenda extends React.Component{
             produto_selecionado_id: '',
             produto_selecionado: [],
             produto_alterar: [],
+            pdesc: '',
         };
         this.childCliente = React.createRef();
         this.childParceiro = React.createRef();
@@ -146,6 +147,7 @@ export default class NovaPrevenda extends React.Component{
             quantidade: this.state.quantidade,
             id_tab_preco: this.state.id_tab_preco,
             preco: this.state.preco,
+            pdesc: this.state.pdesc,
         }
 
         if (this.state.id_venda == '') {
@@ -869,7 +871,13 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={true} min="1" step="0.01" />
+                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={false} min="1" step="0.01" />
+                                            </div>
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <label htmlFor="pdesc">Desconto (%)</label>
+                                                <input type="number" name="pdesc" id="pdesc" className="form-control" min="1" step="0.01" onChange={this.changeHandler} />
                                             </div>
                                         </div>
                                         <div className="col-12">
