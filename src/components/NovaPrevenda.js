@@ -545,6 +545,7 @@ export default class NovaPrevenda extends React.Component{
             id_item: this.state.produto_alterar.id_item,
             id_produto: this.state.produto_alterar.id_produto,
             preco: $('#preco_alterado').val(),
+            pdesc: $('#pdesc_alterado').val(),
         }
         axios.put(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${this.state.produto_alterar.id_item}`, qs.stringify(body), config)
         .then((res) => {
@@ -953,6 +954,14 @@ export default class NovaPrevenda extends React.Component{
                                             <div className="form-group">
                                                 <label htmlFor="quantidade">Quantidade vendida<span className="text-danger">*</span></label>
                                                 <input type="number" name="quantidade_alterada" id="quantidade_alterada" className="form-control" required min="1" step="0.01" defaultValue={this.state.produto_alterar.quantidade || ''} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="form-group">
+                                                <label htmlFor="pdesc">Desconto (%)</label>
+                                                <input type="number" name="pdesc_alterado" id="pdesc_alterado" className="form-control" min="1" step="0.01" defaultValue={this.state.produto_alterar.pdesc || ''} />
                                             </div>
                                         </div>
                                     </div>
