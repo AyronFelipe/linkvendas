@@ -16,11 +16,8 @@ export default class Prevendas extends React.Component{
             prevendas: [],
             carregaInfo: true,
             page: PRIMEIRA_PAGE,
-            showData: false,
-            showCliente: false,
-            showPlanoPag: false,
-            showSituacao: false,
             situacoes: [],
+            planos_pag: [],
         };
     }
 
@@ -76,55 +73,6 @@ export default class Prevendas extends React.Component{
         }
     }
 
-    renderOptionsBusca = () => {
-        if (this.state.showData) {
-            return(
-                <div className="row">
-                    <div className="col-6">
-                        <div className="form-group">
-                            <label htmlFor="data_ini">Data Inicial</label>
-                            <input type="date" id="data_ini" className="form-control" placeholder="Insira aqui" name="data_ini" />
-                        </div>
-                    </div>
-                    <div className="col-6">
-                        <div className="form-group">
-                            <label htmlFor="data_ini">Data Final</label>
-                            <input type="date" id="data_fim" className="form-control" placeholder="Insira aqui" name="data_fim" />
-                        </div>
-                    </div>
-                </div>
-            ); 
-        } else if (this.state.showCliente) {
-            return(
-                <div className="form-group">
-                    <label htmlFor="id_cliente">Código do Cliente</label>
-                    <input type="text" placeholder="Insira aqui" name="id_cliente" id="id_cliente" className="form-control" />
-                </div>
-            );
-        } else if (this.state.showPlanoPag) {
-            return (
-                <div className="form-group">
-                    <label htmlFor="id_plano_pag">Código do Plano de Pagamento</label>
-                    <input type="text" placeholder="Insira aqui" name="id_plano_pag" id_plano_pag="id_plano_pag" className="form-control" />
-                </div>
-            );
-        } else if (this.state.showSituacao) {
-            return (
-                <div className="form-group">
-                    <label htmlFor="situacao">Situação</label>
-                    <div className="select2-input">
-                        <select name="situacao" id="situacao" className="form-control">
-                            <option value="">&nbsp;</option>
-                            {this.state.situacoes.map((situacao) => 
-                                <option value={situacao.id} key={situacao.id}>{situacao.descricao}</option>
-                            )}
-                        </select>
-                    </div>
-                </div>
-            );
-        }
-    }
-
     getSituacoes = () => {
         axios({
             url: `http://api.nortelink.com.br/api/v1/ofsituacoes/`,
@@ -144,62 +92,27 @@ export default class Prevendas extends React.Component{
         })
     }
 
-    changeDesejo = (e) => {
-        if (e.target.value == 'data') {
-            this.setState({
-                showCliente: false,
-                showData: true,
-                showPlanoPag: false,
-                showSituacao: false,
-            })
-        } else if (e.target.value == 'cliente') {
-            this.setState({
-                showCliente: true,
-                showData: false,
-                showPlanoPag: false,
-                showSituacao: false,
-            })
-        } else if (e.target.value == 'plano_pagamento') {
-            this.setState({
-                showCliente: false,
-                showData: false,
-                showPlanoPag: true,
-                showSituacao: false,
-            })
-        } else if (e.target.value == 'situacao') {
-            this.setState({
-                showCliente: false,
-                showData: false,
-                showPlanoPag: false,
-                showSituacao: true,
-            })
-        }
+    getPlanosPag = () => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/planospag/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: PRIMEIRA_PAGE,
+            }
+        })
+        .then((res) => {
+            this.setState({ planos_pag: res.data })
+        })
+        .catch((error) => {
+            abstractError(error);
+        })
     }
 
     buscaPrevenda = () => {
         e.preventDefault();
-        if (this.state.showCliente) {
-            params = {
-                page: PRIMEIRA_PAGE,
-                id_cliente: $('#id_cliente').val(),
-            }
-        } else if (this.state.showData) {
-            params = {
-                page: PRIMEIRA_PAGE,
-                data_ini: $('#data_ini').val(),
-                data_fim: $('#data_fim').val(),
-            }
-        } else if (this.state.showPlanoPag) {
-            params = {
-                page: PRIMEIRA_PAGE,
-                id_plano_pag: $('#id_plano_pag').val(),
-            }
-        } else if (this.state.showSituacao) {
-            params = {
-                page: PRIMEIRA_PAGE,
-                situacao: $('#situacao').val(),
-            }
-        }
         this.setState({ carregaInfo: true });
         axios({
             url: `http://api.nortelink.com.br/api/v1/clientes/`,
@@ -207,7 +120,14 @@ export default class Prevendas extends React.Component{
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
             },
-            params: params
+            params: {
+                page: PRIMEIRA_PAGE,
+                data_ini: $('#data_ini').val(),
+                data_fim: $('#data_fim').val(),
+                id_cliente: $('#id_cliente').val(),
+                id_plano_pag: $('#id_plano_pag').val(),
+                situacao: $('#situacao').val(),
+            }
         })
         .then((res) => {
             this.setState({ prevendas: res.data, carregaInfo: false });
@@ -225,14 +145,11 @@ export default class Prevendas extends React.Component{
             }
         });
         this.getPrevendas();
-        $('#situacao').select2({
+        $('.select2').select2({
             theme: 'bootstrap'
         });
-        $('.select2-selection').css({
-            'padding-top': '20px',
-            'padding-bottom': '20px'
-        });
         this.getSituacoes();
+        this.getPlanosPag();
     }
 
 
@@ -266,24 +183,49 @@ export default class Prevendas extends React.Component{
                                             <div className="card-title">Busca</div>
                                         </div>
                                         <div className="card-body">
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <div className="form-group">
-                                                        <label htmlFor="numero">Você deseja buscar pré-venda por</label>
-                                                        <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
-                                                            <option value="">&nbsp;</option>
-                                                            <option value="data">Data de Início e Data de Fim</option>
-                                                            <option value="cliente">Código de Cliente</option>
-                                                            <option value="plano_pagamento">Código de Plano de Pagamento</option>
-                                                            <option value="situacao">Situação</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <form onSubmit={this.buscaPrevenda}>
                                                 <div className="row">
                                                     <div className="col-12">
-                                                        {this.renderOptionsBusca()}
+                                                        <div className="row">
+                                                            <div className="col-6">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="data_ini">Data Inicial</label>
+                                                                    <input type="date" id="data_ini" className="form-control" placeholder="Insira aqui" name="data_ini" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-6">
+                                                                <div className="form-group">
+                                                                    <label htmlFor="data_ini">Data Final</label>
+                                                                    <input type="date" id="data_fim" className="form-control" placeholder="Insira aqui" name="data_fim" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="id_cliente">Código do Cliente</label>
+                                                            <input type="text" placeholder="Insira aqui" name="id_cliente" id="id_cliente" className="form-control" />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="id_plano_pag">Código do Plano de Pagamento</label>
+                                                            <div className="select2-input">
+                                                                <select name="id_plano_pag" id="id_plano_pag" className="form-control select2" multiple>
+                                                                    <option value="">&nbsp;</option>
+                                                                    {this.state.planos_pag.map((plano) => 
+                                                                        <option value={plano.id} key={plano.id}>{plano.nome}</option>
+                                                                    )}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="situacao">Situação</label>
+                                                            <div className="select2-input">
+                                                                <select name="situacao" id="situacao" className="form-control select2" multiple>
+                                                                    <option value="">&nbsp;</option>
+                                                                    {this.state.situacoes.map((situacao) =>
+                                                                        <option value={situacao.id} key={situacao.id}>{situacao.descricao}</option>
+                                                                    )}
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
