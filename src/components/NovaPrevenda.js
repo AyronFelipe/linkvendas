@@ -166,7 +166,7 @@ export default class NovaPrevenda extends React.Component{
                 $('#modal').modal('hide');
                 document.getElementById('modal-form').reset();
                 this.state.itens.map((item) => {
-                    list_soma.push(item.preco * item.quantidade);
+                    list_soma.push(item.vl_total * item.quantidade);
                 })
                 let soma = list_soma.reduce((a, b) => a + b, 0);
                 this.setState({ vl_itens: soma, vl_total: soma, produto_selecionado: [], produto_selecionado_id: '' });
@@ -199,7 +199,7 @@ export default class NovaPrevenda extends React.Component{
                 .then((res) => {
                     this.setState({ itens: res.data.itens });
                     this.state.itens.map((item) => {
-                        list_soma.push(item.preco * item.quantidade);
+                        list_soma.push(item.vl_total * item.quantidade);
                     })
                     let soma = list_soma.reduce((a, b) => a + b, 0);
                     this.setState({ vl_itens: soma, vl_total: soma, });
@@ -561,7 +561,7 @@ export default class NovaPrevenda extends React.Component{
             .then((res) => {
                 this.setState({ itens: res.data.itens });
                 this.state.itens.map((item) => {
-                    list_soma.push(item.preco * item.quantidade);
+                    list_soma.push(item.vl.total * item.quantidade);
                 })
                 let soma = list_soma.reduce((a, b) => a + b, 0);
                 this.setState({ vl_itens: soma, vl_total: soma, });
@@ -872,7 +872,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={false} min="1" step="0.01" />
+                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={false} min="0" step="0.01" />
                                             </div>
                                         </div>
                                         <div className="col-12">

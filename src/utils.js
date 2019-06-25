@@ -1,10 +1,4 @@
 module.exports = {
-    verifyToken: function(message){
-        if (message.includes('Token')) {
-            localStorage.token = '';
-            window.location.href = '/login/';
-        }
-    },
     abstractError: function(error){
         let erro = '';
         if (error.response.data.erros) {
@@ -21,7 +15,10 @@ module.exports = {
             },
         })
         .then(() => {
-            verifyToken(error.response.data.message);
+            if (error.response.data.message != undefined && error.response.data.message.includes('Token')) {
+                localStorage.token = '';
+                window.location.href = '/login/';
+            }
         });
     }
 }
