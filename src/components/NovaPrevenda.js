@@ -698,7 +698,7 @@ export default class NovaPrevenda extends React.Component{
                                                                         <div className="form-group">
                                                                             <label htmlFor="id_cliente" className="placeholder">Cód. do Cliente <span className="text-danger">*</span></label>
                                                                             <div className="input-group">
-                                                                                <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} />
+                                                                                <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} required={true} />
                                                                                 <div className="input-group-append">
                                                                                     <button className="btn btn-nortelink" type="button" onClick={ this.triggerChildClienteSearch }><i className="fas fa-search"></i> Procurar</button>
                                                                                 </div>

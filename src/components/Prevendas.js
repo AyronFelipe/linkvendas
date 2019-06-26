@@ -126,6 +126,8 @@ export default class Prevendas extends React.Component{
     buscaPrevenda = (e) => {
         e.preventDefault();
         this.setState({ carregaInfo: true });
+        let planos_pag = [];
+
         axios({
             url: `http://api.nortelink.com.br/api/v1/prevendas/`,
             method: `get`,
@@ -137,8 +139,8 @@ export default class Prevendas extends React.Component{
                 data_ini: $('#data_ini').val(),
                 data_fim: $('#data_fim').val(),
                 id_cliente: $('#id_cliente').val(),
-                id_plano_pag: $('#id_plano_pag').val(),
-                situacao: $('#situacao').val(),
+                id_plano_pag: $('#id_plano_pag').val().join('|'),
+                situacao: $('#situacao').val().join('|'),
             }
         })
         .then((res) => {
@@ -221,7 +223,7 @@ export default class Prevendas extends React.Component{
                                                         <div className="form-group">
                                                             <label htmlFor="id_cliente">Código do Cliente</label>
                                                             <div className="input-group">
-                                                                <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} />
+                                                                <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} requi red={false} />
                                                                 <div className="input-group-append">
                                                                     <button className="btn btn-nortelink" type="button" onClick={this.triggerChildClienteSearch}><i className="fas fa-search"></i> Procurar</button>
                                                                 </div>
