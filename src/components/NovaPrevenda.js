@@ -888,7 +888,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="pdesc">Desconto (%)</label>
-                                                <input type="number" name="pdesc" id="pdesc" className="form-control" min="1" step="0.01" onChange={this.changeHandler} />
+                                                <input type="number" name="pdesc" id="pdesc" className="form-control" min="0" step="0.01" onChange={this.changeHandler} />
                                             </div>
                                         </div>
                                         <div className="col-12">
