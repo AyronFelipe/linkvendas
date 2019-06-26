@@ -6,11 +6,11 @@ module.exports = {
         } else {
             erro = error.response.data.message
         }
-        swal("Erro!", `${erro}`, {
-            icon: "error",
+        swal("Oops!", `${erro}`, {
+            icon: "warning",
             buttons: {
                 confirm: {
-                    className: 'btn btn-danger'
+                    className: 'btn btn-warning'
                 }
             },
         })

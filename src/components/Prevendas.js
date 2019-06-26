@@ -78,7 +78,7 @@ export default class Prevendas extends React.Component{
             } else {
                 return(
                     <tr>
-                        <td colSpan="5">Nenhuma pré-venda cadastrada</td>
+                        <td colSpan="5">Nenhuma pré-venda encontrada</td>
                     </tr>
                 );
             }
