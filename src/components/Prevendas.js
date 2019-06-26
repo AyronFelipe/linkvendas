@@ -4,6 +4,7 @@ import SideMenu from './SideMenu';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { abstractError } from '../utils';
+import SearchCliente from './SearchCliente';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -19,6 +20,15 @@ export default class Prevendas extends React.Component{
             situacoes: [],
             planos_pag: [],
         };
+        this.childCliente = React.createRef();
+    }
+
+    triggerChildClienteSearch = () => {
+        this.childCliente.current.searchCliente();
+    }
+
+    changeHandlerChild = (field, value) => {
+        this.setState({ [field]: value });
     }
 
     getPrevendas = () => {
@@ -53,12 +63,14 @@ export default class Prevendas extends React.Component{
         } else {
             if (this.state.prevendas.length >= 1) {
                 return this.state.prevendas.map((prevenda) =>
-                    <tr key={prevenda.id}>
-                        <td>{prevenda.id}</td>
-                        <td>{prevenda.descricao}</td>
+                    <tr key={prevenda.id_prevenda}>
+                        <td>{prevenda.id_prevenda}</td>
+                        <td>{prevenda.nome_cliente}</td>
+                        <td>{prevenda.nome_plano_pag}</td>
+                        <td>{prevenda.vl_total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
                         <td>
-                            <Link to={`/pre-venda/${prevenda.id}/detalhe/`}>
-                                <button className="btn btn-small btn-nortelink"><i class="fas fa-ellipsis-v"></i></button>
+                            <Link to={`/pre-venda/${prevenda.numero}/detalhe/`}>
+                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
                             </Link>
                         </td>
                     </tr>
@@ -111,11 +123,11 @@ export default class Prevendas extends React.Component{
         })
     }
 
-    buscaPrevenda = () => {
+    buscaPrevenda = (e) => {
         e.preventDefault();
         this.setState({ carregaInfo: true });
         axios({
-            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            url: `http://api.nortelink.com.br/api/v1/prevendas/`,
             method: `get`,
             headers: {
                 'Authorization': `Bearer ${localStorage.token}`
@@ -190,19 +202,24 @@ export default class Prevendas extends React.Component{
                                                             <div className="col-6">
                                                                 <div className="form-group">
                                                                     <label htmlFor="data_ini">Data Inicial</label>
-                                                                    <input type="date" id="data_ini" className="form-control" placeholder="Insira aqui" name="data_ini" />
+                                                                    <input type="date" id="data_ini" className="form-control date-nortelink" placeholder="Insira aqui" name="data_ini" />
                                                                 </div>
                                                             </div>
                                                             <div className="col-6">
                                                                 <div className="form-group">
                                                                     <label htmlFor="data_ini">Data Final</label>
-                                                                    <input type="date" id="data_fim" className="form-control" placeholder="Insira aqui" name="data_fim" />
+                                                                    <input type="date" id="data_fim" className="form-control date-nortelink" placeholder="Insira aqui" name="data_fim" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="id_cliente">Código do Cliente</label>
-                                                            <input type="text" placeholder="Insira aqui" name="id_cliente" id="id_cliente" className="form-control" />
+                                                            <div className="input-group">
+                                                                <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} />
+                                                                <div className="input-group-append">
+                                                                    <button className="btn btn-nortelink" type="button" onClick={this.triggerChildClienteSearch}><i className="fas fa-search"></i> Procurar</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="id_plano_pag">Código do Plano de Pagamento</label>
@@ -246,7 +263,9 @@ export default class Prevendas extends React.Component{
                                                     <thead>
                                                         <tr>
                                                             <th>Número</th>
-                                                            <th>Período</th>
+                                                            <th>Cliente</th>
+                                                            <th>Plano de Pagamento</th>
+                                                            <th>Valor Total</th>
                                                             <th>Ações</th>
                                                         </tr>
                                                     </thead>

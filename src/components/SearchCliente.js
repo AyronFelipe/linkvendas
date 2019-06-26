@@ -151,14 +151,14 @@ export default class SearchCliente extends React.Component {
         $('#codigo').val('');
         $('#cpf_cnpj').val('');
         $('#nome').val('');
-        $("#desejo").val($("#desejo option:first").val());        
+        $("#desejo").val($("#desejo option:first").val());
         this.setState({ showCodigo: true, clientes: [] });
     }
 
     render() {
         return (
             <React.Fragment>
-                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required />
+                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required placeholder="Insira aqui" />
                 <div className="modal fade" id="modal-cliente">
                     <div className="modal-dialog">
                         <div className="modal-content">

@@ -130,7 +130,17 @@ export default class NovaPrevenda extends React.Component{
 
         axios.post(`http://api.nortelink.com.br/api/v1/prevendas/`, qs.stringify(body), config)
         .then((res) => {
-            console.log(res);
+            swal("Pré-venda gerada com sucesso", {
+                icon: "success",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-success'
+                    }
+                },
+            })
+            .then(() => {
+                window.location.href = '/pre-vendas/';
+            })
         })
         .catch((error) => {
             abstractError(error);
@@ -166,7 +176,7 @@ export default class NovaPrevenda extends React.Component{
                 $('#modal').modal('hide');
                 document.getElementById('modal-form').reset();
                 this.state.itens.map((item) => {
-                    list_soma.push(item.vl_total * item.quantidade);
+                    list_soma.push(item.vl_total);
                 })
                 let soma = list_soma.reduce((a, b) => a + b, 0);
                 this.setState({ vl_itens: soma, vl_total: soma, produto_selecionado: [], produto_selecionado_id: '' });
@@ -199,7 +209,7 @@ export default class NovaPrevenda extends React.Component{
                 .then((res) => {
                     this.setState({ itens: res.data.itens });
                     this.state.itens.map((item) => {
-                        list_soma.push(item.vl_total * item.quantidade);
+                        list_soma.push(item.vl_total);
                     })
                     let soma = list_soma.reduce((a, b) => a + b, 0);
                     this.setState({ vl_itens: soma, vl_total: soma, });
@@ -561,7 +571,7 @@ export default class NovaPrevenda extends React.Component{
             .then((res) => {
                 this.setState({ itens: res.data.itens });
                 this.state.itens.map((item) => {
-                    list_soma.push(item.vl.total * item.quantidade);
+                    list_soma.push(item.vl.total);
                 })
                 let soma = list_soma.reduce((a, b) => a + b, 0);
                 this.setState({ vl_itens: soma, vl_total: soma, });
