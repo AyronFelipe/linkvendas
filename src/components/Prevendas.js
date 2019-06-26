@@ -150,6 +150,11 @@ export default class Prevendas extends React.Component{
         });
     }
 
+    defaultValueDate = () => {
+        let today = new Date();
+        $('.date-nortelink').val(today.toISOString().substr(0, 10));
+    }
+
     componentDidMount(){
         $('#basic-datatables').DataTable({
             "language": {
@@ -162,6 +167,7 @@ export default class Prevendas extends React.Component{
         });
         this.getSituacoes();
         this.getPlanosPag();
+        this.defaultValueDate();
     }
 
 
