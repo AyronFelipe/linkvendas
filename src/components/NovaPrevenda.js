@@ -6,6 +6,7 @@ import SearchParceiro from './SearchParceiro';
 import axios from 'axios';
 import qs from 'qs';
 import { abstractError } from '../utils';
+import CurrencyFormat from 'react-currency-format';
 
 
 const config = {
@@ -182,6 +183,7 @@ export default class NovaPrevenda extends React.Component{
                 this.setState({ vl_itens: soma, vl_total: soma, produto_selecionado: [], produto_selecionado_id: '' });
                 this.vl_itens.current.value = this.state.vl_itens;
                 this.vl_total.current.value = this.state.vl_total;
+                this.setState({ preco: '' });
             })
             .catch((error) => {
                 abstractError(error);
@@ -742,25 +744,81 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_itens">Valor total dos prod.<span className="text-danger">*</span></label>
-                                                                            <input type="number" name="vl_itens" id="vl_itens" className="form-control" onChange={this.changeHandler} required readOnly={this.state.readOnly} ref={this.vl_itens} min="0" step="0.01" />
+                                                                            <CurrencyFormat
+                                                                                thousandSeparator={`.`}
+                                                                                thousandSpacing={`3`}
+                                                                                decimalSeparator={`,`}
+                                                                                decimalScale={2}
+                                                                                allowNegative={false}
+                                                                                prefix={`R$ `}
+                                                                                name="vl_itens"
+                                                                                id="vl_itens"
+                                                                                className="form-control"
+                                                                                onChange={this.changeHandler}
+                                                                                required
+                                                                                readOnly={this.state.readOnly}
+                                                                                ref={this.vl_itens}
+                                                                                value={this.state.vl_itens}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_desconto">Desc. sobre os prod. <span className="text-danger">*</span></label>
-                                                                            <input type="text" name="vl_desconto" id="vl_desconto" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
+                                                                            <CurrencyFormat
+                                                                                thousandSeparator={`.`}
+                                                                                thousandSpacing={`3`}
+                                                                                decimalSeparator={`,`}
+                                                                                decimalScale={2}
+                                                                                allowNegative={false}
+                                                                                prefix={`R$ `}
+                                                                                name="vl_desconto"
+                                                                                id="vl_desconto"
+                                                                                className="form-control"
+                                                                                onChange={this.changeHandler}
+                                                                                required
+                                                                                value={this.state.vl_desconto}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_acrescimo">Acréscimo sobre os prod. <span className="text-danger">*</span></label>
-                                                                            <input type="text" name="vl_acrescimo" id="vl_acrescimo" className="form-control" onChange={this.changeHandler} required min="0" step="0.01" />
+                                                                            <CurrencyFormat
+                                                                                thousandSeparator={`.`}
+                                                                                thousandSpacing={`3`}
+                                                                                decimalSeparator={`,`}
+                                                                                decimalScale={2}
+                                                                                allowNegative={false}
+                                                                                prefix={`R$ `}
+                                                                                name="vl_acrescimo"
+                                                                                id="vl_acrescimo"
+                                                                                className="form-control"
+                                                                                onChange={this.changeHandler}
+                                                                                required
+                                                                                value={this.state.vl_acrescimo}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-3">
                                                                         <div className="form-group">
                                                                             <label htmlFor="vl_total">Valor total da venda <span className="text-danger">*</span></label>
-                                                                            <input type="number" id="vl_total" name="vl_total" className="form-control" ref={this.vl_total} onChange={this.changeHandler} required readOnly={this.state.readOnly} min="0" step="0.01" />
+                                                                            <CurrencyFormat
+                                                                                thousandSeparator={`.`}
+                                                                                thousandSpacing={`3`}
+                                                                                decimalSeparator={`,`}
+                                                                                decimalScale={2}
+                                                                                allowNegative={false}
+                                                                                prefix={`R$ `}
+                                                                                name="vl_total"
+                                                                                id="vl_total"
+                                                                                className="form-control"
+                                                                                onChange={this.changeHandler}
+                                                                                required
+                                                                                ref={this.vl_total}
+                                                                                readOnly={this.state.readOnly}
+                                                                                value={this.state.vl_total}
+                                                                            />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -882,13 +940,30 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
-                                                <input type="number" name="preco" id="preco" className="form-control" required onChange={this.changeHandler} ref={this.preco} readOnly={false} min="0" step="0.01" />
+                                                <CurrencyFormat
+                                                    thousandSeparator={`.`}
+                                                    thousandSpacing={`3`}
+                                                    decimalSeparator={`,`}
+                                                    decimalScale={2}
+                                                    allowNegative={false}
+                                                    prefix={`R$ `}
+                                                    name="preco"
+                                                    id="preco"
+                                                    className="form-control"
+                                                    required
+                                                    ref={this.preco}
+                                                    value={this.state.preco}
+                                                    onValueChange={(values) => {
+                                                        const {formattedValue, value} = values;
+                                                        this.setState({ preco: value })
+                                                    }}
+                                                />
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="pdesc">Desconto (%)</label>
-                                                <input type="number" name="pdesc" id="pdesc" className="form-control" min="0" step="0.01" onChange={this.changeHandler} />
+                                                <input type="number" name="pdesc" id="pdesc" className="form-control" min="0" step="0.01" onChange={this.changeHandler} defaultValue={0} />
                                             </div>
                                         </div>
                                         <div className="col-12">
@@ -979,7 +1054,21 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="preco">Preço unitário<span className="text-danger">*</span></label>
-                                                <input type="number" name="preco_alterado" id="preco_alterado" className="form-control" required readOnly={true} min="1" step="0.01" defaultValue={this.state.produto_alterar.preco || ''} />
+                                                <CurrencyFormat
+                                                    thousandSeparator={`.`}
+                                                    thousandSpacing={`3`}
+                                                    decimalSeparator={`,`}
+                                                    decimalScale={2}
+                                                    allowNegative={false}
+                                                    prefix={`R$ `}
+                                                    name="preco_alterado"
+                                                    id="preco_alterado"
+                                                    className="form-control"
+                                                    onChange={this.changeHandler}
+                                                    required
+                                                    value={this.state.produto_alterar.preco || ''}
+                                                    readOnly={true}
+                                                />
                                             </div>
                                         </div>
                                     </div>

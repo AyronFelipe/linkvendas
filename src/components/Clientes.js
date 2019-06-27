@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import { verifyToken, abstractError } from '../utils';
+import { abstractError } from '../utils';
 import MaskedInput from 'react-text-mask';
 
 
