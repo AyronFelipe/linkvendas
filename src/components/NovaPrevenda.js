@@ -219,9 +219,7 @@ export default class NovaPrevenda extends React.Component{
                     this.vl_total.current.value = this.state.vl_total;
                 })
                 .catch((error) => {
-                    this.id_venda.current.value = '';
-                    this.vl_total.current.value = '';
-                    this.setState({ itens: [], id_venda: res.data.id_venda, vl_total: res.data.vl_total });
+                    this.setState({ itens: [], vl_total: '', vl_itens: '', });
                     abstractError(error);
                 });
             });
@@ -556,7 +554,7 @@ export default class NovaPrevenda extends React.Component{
             id_venda: this.state.produto_alterar.id_venda,
             id_item: this.state.produto_alterar.id_item,
             id_produto: this.state.produto_alterar.id_produto,
-            preco: $('#preco_alterado').val(),
+            preco: parseInt($('#preco_alterado').val().replace('R$', '').replace('.', '')),
             pdesc: $('#pdesc_alterado').val(),
         }
         axios.put(`http://api.nortelink.com.br/api/v1/vendas/${this.state.id_venda}/itens/${this.state.produto_alterar.id_item}`, qs.stringify(body), config)
@@ -573,7 +571,7 @@ export default class NovaPrevenda extends React.Component{
             .then((res) => {
                 this.setState({ itens: res.data.itens });
                 this.state.itens.map((item) => {
-                    list_soma.push(item.vl.total);
+                    list_soma.push(item.vl_total);
                 })
                 let soma = list_soma.reduce((a, b) => a + b, 0);
                 this.setState({ vl_itens: soma, vl_total: soma, });
@@ -1046,7 +1044,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="pdesc">Desconto (%)</label>
-                                                <input type="number" name="pdesc_alterado" id="pdesc_alterado" className="form-control" min="1" step="0.01" defaultValue={this.state.produto_alterar.pdesc || ''} />
+                                                <input type="number" name="pdesc_alterado" id="pdesc_alterado" className="form-control" min="0" step="0.01" defaultValue={this.state.produto_alterar.pdesc || '0'} />
                                             </div>
                                         </div>
                                     </div>
@@ -1067,7 +1065,7 @@ export default class NovaPrevenda extends React.Component{
                                                     onChange={this.changeHandler}
                                                     required
                                                     value={this.state.produto_alterar.preco || ''}
-                                                    readOnly={true}
+                                                    readOnly={false}
                                                 />
                                             </div>
                                         </div>
