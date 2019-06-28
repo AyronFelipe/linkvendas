@@ -589,6 +589,10 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
+    descontoValorTotal = () => {
+        alert(this.state.vl_desconto);
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -757,6 +761,10 @@ export default class NovaPrevenda extends React.Component{
                                                                                 readOnly={this.state.readOnly}
                                                                                 ref={this.vl_itens}
                                                                                 value={this.state.vl_itens}
+                                                                                onValueChange={(values) => {
+                                                                                    const { formattedValue, value } = values;
+                                                                                    this.setState({ vl_itens: value })
+                                                                                }}
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -774,8 +782,13 @@ export default class NovaPrevenda extends React.Component{
                                                                                 id="vl_desconto"
                                                                                 className="form-control"
                                                                                 onChange={this.changeHandler}
+                                                                                onBlur={this.descontoValorTotal}
                                                                                 required
                                                                                 value={this.state.vl_desconto}
+                                                                                onValueChange={(values) => {
+                                                                                    const { formattedValue, value } = values;
+                                                                                    this.setState({ vl_desconto: value })
+                                                                                }}
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -795,6 +808,10 @@ export default class NovaPrevenda extends React.Component{
                                                                                 onChange={this.changeHandler}
                                                                                 required
                                                                                 value={this.state.vl_acrescimo}
+                                                                                onValueChange={(values) => {
+                                                                                    const { formattedValue, value } = values;
+                                                                                    this.setState({ vl_acrescimo: value })
+                                                                                }}
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -816,6 +833,10 @@ export default class NovaPrevenda extends React.Component{
                                                                                 ref={this.vl_total}
                                                                                 readOnly={this.state.readOnly}
                                                                                 value={this.state.vl_total}
+                                                                                onValueChange={(values) => {
+                                                                                    const { formattedValue, value } = values;
+                                                                                    this.setState({ vl_total: value })
+                                                                                }}
                                                                             />
                                                                         </div>
                                                                     </div>
