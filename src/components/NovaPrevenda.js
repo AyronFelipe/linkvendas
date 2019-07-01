@@ -35,8 +35,8 @@ export default class NovaPrevenda extends React.Component{
             id_pos: '',
             mod_venda: '',
             vl_itens: '',
-            vl_desconto: '',
-            vl_acrescimo: '',
+            vl_desconto: 0,
+            vl_acrescimo: 0,
             vl_total: '',
             vl_entrada: '',
             parcelas: '',
@@ -589,8 +589,23 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
-    descontoValorTotal = () => {
-        alert(this.state.vl_desconto);
+    alteraValorTotal = () => {
+        let acrescimo = parseInt($('#vl_acrescimo').val().replace('R$', '').replace('.', ''));
+        let desconto = parseInt($('#vl_desconto').val().replace('R$', '').replace('.', ''));
+        let valor_total = parseInt($('#vl_total').val().replace('R$', '').replace('.', ''));
+        let valor_itens = parseInt($('#vl_itens').val().replace('R$', '').replace('.', ''));
+        if (isNaN(acrescimo)) {
+            this.setState({ vl_acrescimo: 0 });
+        }
+        if (isNaN(desconto)) {
+            this.setState({ vl_desconto: 0 });
+        }
+        if (!isNaN(valor_total)) {
+            isNaN(acrescimo) ? acrescimo = 0 : acrescimo = acrescimo;
+            isNaN(desconto) ? desconto = 0 : desconto = desconto;
+            let valor = (valor_itens + acrescimo) - desconto;
+            this.setState({ vl_total: valor});
+        }
     }
 
     render(){
@@ -758,7 +773,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 className="form-control"
                                                                                 onChange={this.changeHandler}
                                                                                 required
-                                                                                readOnly={this.state.readOnly}
+                                                                                readOnly={true}
                                                                                 ref={this.vl_itens}
                                                                                 value={this.state.vl_itens}
                                                                                 onValueChange={(values) => {
@@ -782,7 +797,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 id="vl_desconto"
                                                                                 className="form-control"
                                                                                 onChange={this.changeHandler}
-                                                                                onBlur={this.descontoValorTotal}
+                                                                                onBlur={this.alteraValorTotal}
                                                                                 required
                                                                                 value={this.state.vl_desconto}
                                                                                 onValueChange={(values) => {
@@ -806,6 +821,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 id="vl_acrescimo"
                                                                                 className="form-control"
                                                                                 onChange={this.changeHandler}
+                                                                                onBlur={this.alteraValorTotal}
                                                                                 required
                                                                                 value={this.state.vl_acrescimo}
                                                                                 onValueChange={(values) => {
@@ -831,7 +847,7 @@ export default class NovaPrevenda extends React.Component{
                                                                                 onChange={this.changeHandler}
                                                                                 required
                                                                                 ref={this.vl_total}
-                                                                                readOnly={this.state.readOnly}
+                                                                                readOnly={true}
                                                                                 value={this.state.vl_total}
                                                                                 onValueChange={(values) => {
                                                                                     const { formattedValue, value } = values;
