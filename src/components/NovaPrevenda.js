@@ -490,7 +490,12 @@ export default class NovaPrevenda extends React.Component{
             return(
                 <div className="col-12">
                     <div className="form-group">
+                        <label className="placeholder">Descrição</label>
                         <input type="text" readOnly={true} value={this.state.produto_selecionado[0].descricao} className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label className="placeholder">Disponível para Venda</label>
+                        {this.state.produto_selecionado[0].saldo_loja == 1 ? <input type="text" className="form-control" readOnly={true} value={`${this.state.produto_selecionado[0].saldo_loja} unidade`}></input> : <input type="text" className="form-control" readOnly={true} value={`${this.state.produto_selecionado[0].saldo_loja} unidades`}></input>}
                     </div>
                 </div>
             );
