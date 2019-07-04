@@ -170,6 +170,9 @@ export default class Prevendas extends React.Component{
         this.getSituacoes();
         this.getPlanosPag();
         this.defaultValueDate();
+        $('.select2-container--bootstrap').css({
+            'width': '100%',
+        });
     }
 
 
@@ -231,24 +234,32 @@ export default class Prevendas extends React.Component{
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="id_plano_pag">Código do Plano de Pagamento</label>
-                                                            <div className="select2-input">
-                                                                <select name="id_plano_pag" id="id_plano_pag" className="form-control select2" multiple>
-                                                                    <option value="">&nbsp;</option>
-                                                                    {this.state.planos_pag.map((plano) => 
-                                                                        <option value={plano.id} key={plano.id}>{plano.nome}</option>
-                                                                    )}
-                                                                </select>
+                                                            <div className="row">
+                                                                <div className="col-12">
+                                                                    <div className="select2-input">
+                                                                        <select name="id_plano_pag" id="id_plano_pag" className="form-control select2" multiple>
+                                                                            <option value="">&nbsp;</option>
+                                                                            {this.state.planos_pag.map((plano) => 
+                                                                                <option value={plano.id} key={plano.id}>{plano.nome}</option>
+                                                                            )}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="form-group">
                                                             <label htmlFor="situacao">Situação</label>
-                                                            <div className="select2-input">
-                                                                <select name="situacao" id="situacao" className="form-control select2" multiple>
-                                                                    <option value="">&nbsp;</option>
-                                                                    {this.state.situacoes.map((situacao) =>
-                                                                        <option value={situacao.id} key={situacao.id}>{situacao.descricao}</option>
-                                                                    )}
-                                                                </select>
+                                                            <div className="row">
+                                                                <div className="col-12">
+                                                                    <div className="select2-input">
+                                                                        <select name="situacao" id="situacao" className="form-control select2" multiple>
+                                                                            <option value="">&nbsp;</option>
+                                                                            {this.state.situacoes.map((situacao) =>
+                                                                                <option value={situacao.id} key={situacao.id}>{situacao.descricao}</option>
+                                                                            )}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

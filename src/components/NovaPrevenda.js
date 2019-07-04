@@ -733,8 +733,6 @@ export default class NovaPrevenda extends React.Component{
                                                                                     <option key={plano.id} value={plano.id}>{plano.nome}</option>
                                                                                 )}
                                                                             </select>
-                                                                            <div className="select2-input">
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

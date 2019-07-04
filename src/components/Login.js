@@ -76,6 +76,9 @@ export default class Login extends React.Component{
             'padding-top': '20px',
             'padding-bottom': '20px'
         });
+        $('.select2-container--bootstrap').css({
+            'width': '100%',
+        });
     }
 
     render(){
