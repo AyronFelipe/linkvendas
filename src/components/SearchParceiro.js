@@ -160,7 +160,6 @@ export default class SearchParceiro extends React.Component{
                                         <div className="form-group">
                                             <label htmlFor="desejo">Você deseja buscar por</label>
                                             <select id="desejo" className="form-control" onChange={this.changeDesejo}>
-                                                <option value="">&nbsp;</option>
                                                 <option value="cpf_cnpj">CPF/CNPJ</option>
                                                 <option value="nome">Nome</option> 
                                             </select>

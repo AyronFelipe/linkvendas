@@ -179,7 +179,6 @@ export default class SearchCliente extends React.Component {
                                         <div className="form-group">
                                             <label htmlFor="desejo">Você deseja buscar cliente por</label>
                                             <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
-                                                <option value="">&nbsp;</option>
                                                 <option value="id">Código</option>
                                                 <option value="cpfcnpj">CPF ou CNPJ</option>
                                                 <option value="nome">Nome</option>
