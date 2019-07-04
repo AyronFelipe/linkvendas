@@ -69,12 +69,24 @@ export default class DetalheProduto extends React.Component {
                                                                 <img src="/static/images/logo.png" alt="Logo Responsive"/>
                                                             </div>
                                                         </div>
-                                                        <div className="invoice-desc">
+                                                        <div className="invoice">
                                                             { this.state.produto.compl_descr }
                                                         </div>
                                                     </div>
                                                     <div className="card-body">
                                                         <div className="separator-solid"></div>
+                                                        <h4>Informações</h4>
+                                                        <div className="separator-solid"></div>
+                                                        <div className="row">
+                                                            <div className="col-md-6 info-invoice">
+                                                                <h5 className="sub">Código</h5>
+                                                                {this.state.produto.id == '' ? <input type="text" className="form-control" value="Não informado" readOnly={this.state.readOnly} /> : <input type="text" className="form-control" value={this.state.produto.id} readOnly={this.state.readOnly} /> }
+                                                            </div>
+                                                            <div className="col-md-6 info-invoice">
+                                                                <h5 className="sub">Classificação</h5>
+                                                                {this.state.produto.classificacao == '' ? <input type="text" className="form-control" value="Não informado" readOnly={this.state.readOnly} /> : <input type="text" className="form-control" value={this.state.produto.classificacao} readOnly={this.state.readOnly} /> }
+                                                            </div>
+                                                        </div>
                                                         <div className="row">
                                                             <div className="col-md-4 info-invoice">
                                                                 <h5 className="sub">Cód. de Barras</h5>
