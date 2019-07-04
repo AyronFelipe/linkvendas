@@ -155,10 +155,19 @@ export default class SearchCliente extends React.Component {
         this.setState({ showCodigo: true, clientes: [] });
     }
 
+    fillSpace = (e) => {
+        if (e.target.value != '' && e.target.value.length < 8) {
+            let id = e.target.value
+            let add = 8 - id.length;
+            for (var i = 0; i < add; i++) id = '0' + id;
+            this.input.current.value = id;
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
-                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required={this.props.required} placeholder="Insira aqui" />
+                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} required={this.props.required} placeholder="Insira aqui" onBlur={this.fillSpace} />
                 <div className="modal fade" id="modal-cliente">
                     <div className="modal-dialog">
                         <div className="modal-content">
