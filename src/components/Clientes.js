@@ -130,21 +130,21 @@ export default class Clientes extends React.Component{
                 showCPFCNPJ: false,
                 showNome: false,
             });
-            this.id.current.value = '';
+            $('.opt').val('');
         } else if (e.target.value == 'cpfcnpj') {
             this.setState({
                 showCodigo: false,
                 showCPFCNPJ: true,
                 showNome: false,
             });
-            this.id.current.value = '';
+            $('.opt').val('');
         } else {
             this.setState({
                 showCodigo: false,
                 showCPFCNPJ: false,
                 showNome: true,
             });
-            this.id.current.value = '';
+            $('.opt').val('');
         }
     }
 
@@ -153,7 +153,7 @@ export default class Clientes extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">Código do cliente</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control opt" />
                 </div>
             );
         } else if (this.state.showCPFCNPJ) {
@@ -164,7 +164,7 @@ export default class Clientes extends React.Component{
                         mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
                         guide={false}
                         placeholder="Insira aqui"
-                        className="form-control"
+                        className="form-control opt"
                         name="id"
                         id="cpf_cnpj"
                         required />
@@ -174,7 +174,7 @@ export default class Clientes extends React.Component{
             return (
                 <div className="form-group">
                     <label htmlFor="id">Nome do cliente</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" style={inputStyle} />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control opt" style={inputStyle} />
                 </div>
             );
         }
@@ -215,7 +215,6 @@ export default class Clientes extends React.Component{
                                                     <div className="form-group">
                                                         <label htmlFor="desejo">Você deseja buscar cliente por</label>
                                                         <select name="desejo" id="desejo" onChange={this.changeDesejo} className="form-control">
-                                                            <option value="">&nbsp;</option>
                                                             <option value="id">Código</option>
                                                             <option value="cpfcnpj">CPF ou CNPJ</option>
                                                             <option value="nome">Nome</option>

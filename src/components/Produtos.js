@@ -215,7 +215,6 @@ export default class Produtos extends React.Component{
                                                     <div className="form-group">
                                                         <label htmlFor="desejo">Você deseja buscar produtos por</label>
                                                         <select name="desejo" id="desejo" className="form-control" onChange={this.changeDesejo}>
-                                                            <option value="">&nbsp;</option>
                                                             <option value="id">Código</option>
                                                             <option value="descr">Descrição</option>
                                                             <option value="cod_barras">Código de barras</option>
