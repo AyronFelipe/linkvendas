@@ -189,7 +189,7 @@ export default class Prevendas extends React.Component{
                                     </div>
                                     <div className="ml-md-auto py-2 py-md-0">
                                         <Link to="/nova-pre-venda/">
-                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Cadastrar Pré-venda</button>
+                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Gerar Pré-venda</button>
                                         </Link>
                                     </div>
                                 </div>
@@ -225,7 +225,7 @@ export default class Prevendas extends React.Component{
                                                             <div className="input-group">
                                                                 <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} requi red={false} />
                                                                 <div className="input-group-append">
-                                                                    <button className="btn btn-nortelink" type="button" onClick={this.triggerChildClienteSearch}><i className="fas fa-search"></i> Procurar</button>
+                                                                    <button className="btn btn-nortelink" type="button" onClick={this.triggerChildClienteSearch}><i className="fas fa-search"></i> Buscar Cliente</button>
                                                                 </div>
                                                             </div>
                                                         </div>

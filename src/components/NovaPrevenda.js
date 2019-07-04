@@ -719,7 +719,7 @@ export default class NovaPrevenda extends React.Component{
                                                                             <div className="input-group">
                                                                                 <SearchCliente name="id_cliente" id="id_cliente" ref={this.childCliente} onChange={this.changeHandlerChild} required={true} />
                                                                                 <div className="input-group-append">
-                                                                                    <button className="btn btn-nortelink" type="button" onClick={ this.triggerChildClienteSearch }><i className="fas fa-search"></i> Procurar</button>
+                                                                                    <button className="btn btn-nortelink" type="button" onClick={ this.triggerChildClienteSearch }><i className="fas fa-search"></i> Buscar</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -917,7 +917,7 @@ export default class NovaPrevenda extends React.Component{
                                                                             <div className="input-group">
                                                                                 <SearchParceiro name="id_parceiro" id="id_parceiro" ref={this.childParceiro} onChange={this.changeHandlerChild} />
                                                                                 <div className="input-group-append">
-                                                                                    <button className="btn btn-nortelink" type="button" onClick={ this.triggerChildParceiroSearch }><i className="fas fa-search"></i> Procurar</button>
+                                                                                    <button className="btn btn-nortelink" type="button" onClick={ this.triggerChildParceiroSearch }><i className="fas fa-search"></i> Buscar</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -966,7 +966,7 @@ export default class NovaPrevenda extends React.Component{
                                                 <div className="input-group">
                                                     <input name="id_produto" id="id_produto" ref={this.produto} onChange={this.changeHandler} onInput={this.handleInput} onBlur={this.handleBlur} className="form-control" />
                                                     <div className="input-group-append">
-                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerProdutoSearch}><i className="fas fa-search"></i> Procurar</button>
+                                                        <button className="btn btn-nortelink" type="button" onClick={this.triggerProdutoSearch}><i className="fas fa-search"></i> Buscar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1021,7 +1021,7 @@ export default class NovaPrevenda extends React.Component{
                         <div className="modal-content">
                             <form id="modal-produto-form" onSubmit={this.handleProdutoSubmit}>
                                 <div className="modal-header">
-                                    <h5 className="modal-title">Procurar Produto</h5>
+                                    <h5 className="modal-title">Buscar Produto</h5>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -1052,7 +1052,7 @@ export default class NovaPrevenda extends React.Component{
                                     </div>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="submit" className="btn btn-nortelink">Procurar</button>
+                                    <button type="submit" className="btn btn-nortelink">Buscar</button>
                                 </div>
                             </form>
                         </div>

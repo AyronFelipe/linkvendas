@@ -145,7 +145,7 @@ export default class SearchParceiro extends React.Component{
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">Procurar Parceiro</h5>
+                                <h5 className="modal-title">Buscar Parceiro</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -173,7 +173,7 @@ export default class SearchParceiro extends React.Component{
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-nortelink" onClick={this.handleParceiroClick}>Procurar</button>
+                                <button type="button" className="btn btn-nortelink" onClick={this.handleParceiroClick}>Buscar</button>
                             </div>
                         </div>
                     </div>
