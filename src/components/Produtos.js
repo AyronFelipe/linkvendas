@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { abstractError } from '../utils';
+import { abstractError, fillWithZeros } from '../utils';
 
 const PRIMEIRA_PAGE = 1;
 
@@ -151,7 +151,7 @@ export default class Produtos extends React.Component{
             return(
                 <div className="form-group">
                     <label htmlFor="id">Código</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="id" id="id" className="form-control" onBlur={this.fillSpace} />
                 </div>
             )
         } else if (this.state.showDescricao) {
@@ -169,6 +169,11 @@ export default class Produtos extends React.Component{
                 </div>
             )
         }
+    }
+
+    fillSpace = (e) => {
+        let fill = fillWithZeros(e.target.value, 5);
+        $('#id').val(fill);
     }
 
     componentDidMount() {

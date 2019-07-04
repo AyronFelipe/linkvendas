@@ -1,7 +1,7 @@
 import React from 'react';
 import MaskedInput from 'react-text-mask';
 import axios from 'axios';
-import { abstractError } from '../utils';
+import { abstractError, fillWithZeros } from '../utils';
 
 const PAGE = 1;
 
@@ -137,10 +137,14 @@ export default class SearchParceiro extends React.Component{
         }
     }
 
+    fillSpace = (e) => {
+        this.input.current.value = fillWithZeros(e.target.value, 5);
+    }
+
     render(){
         return(
             <React.Fragment>
-                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} />
+                <input type="text" ref={this.input} name={this.props.name} id={this.props.id} className="form-control" readOnly={this.state.readonly} onChange={this.changeHandler} onBlur={this.fillSpace} />
                 <div className="modal fade" id="modal-parceiro">
                     <div className="modal-dialog">
                         <div className="modal-content">

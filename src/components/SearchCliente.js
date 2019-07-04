@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import MaskedInput from 'react-text-mask';
-import { abstractError } from '../utils';
+import { abstractError, fillWithZeros } from '../utils';
 
 
 const PAGE = 1;
@@ -156,12 +156,8 @@ export default class SearchCliente extends React.Component {
     }
 
     fillSpace = (e) => {
-        if (e.target.value != '' && e.target.value.length < 8) {
-            let id = e.target.value
-            let add = 8 - id.length;
-            for (var i = 0; i < add; i++) id = '0' + id;
-            this.input.current.value = id;
-        }
+        let fill = fillWithZeros(e.target.value, 8);
+        this.input.current.value = fill;
     }
 
     render() {

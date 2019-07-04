@@ -20,5 +20,15 @@ module.exports = {
                 window.location.href = '/login/';
             }
         });
+    },
+    fillWithZeros: function(str, qunt){
+        if (str != '' && str.length < qunt) {
+            let id = str
+            let add = qunt - id.length;
+            for (var i = 0; i < add; i++) id = '0' + id;
+            return id;
+        }
+
+        return '';
     }
 }

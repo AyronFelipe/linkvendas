@@ -5,7 +5,7 @@ import SearchCliente from './SearchCliente';
 import SearchParceiro from './SearchParceiro';
 import axios from 'axios';
 import qs from 'qs';
-import { abstractError } from '../utils';
+import { abstractError, fillWithZeros } from '../utils';
 import CurrencyFormat from 'react-currency-format';
 
 
@@ -314,6 +314,9 @@ export default class NovaPrevenda extends React.Component{
 
     handleBlur = (e) => {
         if (e.target.value != '') {
+
+            this.produto.current.value = fillWithZeros(e.target.value, 5);
+
             axios({
                 url: `http://api.nortelink.com.br/api/v1/produtos/${e.target.value}`,
                 method: `get`,
@@ -710,7 +713,7 @@ export default class NovaPrevenda extends React.Component{
                                                                     <div className="col-sm-12 col-md-4">
                                                                         <div className="form-group">
                                                                             <label htmlFor="id_venda" className="placeholder">Cód. da Venda Temporária <span className="text-danger">*</span></label>
-                                                                            <input name="id_venda" id="id_venda" className="form-control" onChange={this.changeHandler} required ref={this.id_venda} readOnly={this.state.readOnly} />
+                                                                            <input name="id_venda" id="id_venda" className="form-control" onChange={this.changeHandler} required ref={this.id_venda} readOnly={true} />
                                                                         </div>
                                                                     </div>
                                                                     <div className="col-sm-12 col-md-4">
