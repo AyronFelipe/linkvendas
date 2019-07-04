@@ -207,13 +207,13 @@ export default class Prevendas extends React.Component{
                                                 <div className="row">
                                                     <div className="col-12">
                                                         <div className="row">
-                                                            <div className="col-6">
+                                                            <div className="col-sm-6 col-12">
                                                                 <div className="form-group">
                                                                     <label htmlFor="data_ini">Data Inicial</label>
                                                                     <input type="date" id="data_ini" className="form-control date-nortelink" placeholder="Insira aqui" name="data_ini" />
                                                                 </div>
                                                             </div>
-                                                            <div className="col-6">
+                                                            <div className="col-sm-6 col-12">
                                                                 <div className="form-group">
                                                                     <label htmlFor="data_ini">Data Final</label>
                                                                     <input type="date" id="data_fim" className="form-control date-nortelink" placeholder="Insira aqui" name="data_fim" />

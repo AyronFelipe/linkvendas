@@ -15,3 +15,7 @@
 .logo-header[data-background-color="nortelink"] {
     background: #153e4d !important;
 }
+
+.select2-container--bootstrap {
+    width: 100%;
+}
