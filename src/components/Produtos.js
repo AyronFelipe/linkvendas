@@ -109,6 +109,8 @@ export default class Produtos extends React.Component{
                     <tr key={produto.id}>
                         <td>{produto.id}</td>
                         <td>{produto.descricao}</td>
+                        <td>{produto.saldo_loja == 1 ? `${produto.saldo_loja} unidade` : `${produto.saldo_loja} unidades`}</td>
+                        <td>{produto.preco_venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                         <td>
                             <Link to={`/produto/${produto.id}/detalhe/`}>
                                 <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
@@ -256,6 +258,8 @@ export default class Produtos extends React.Component{
                                                         <tr>
                                                             <th>Código</th>
                                                             <th>Descrição</th>
+                                                            <th>Estoque</th>
+                                                            <th>Preço</th>
                                                             <th>Ações</th>
                                                         </tr>
                                                     </thead>

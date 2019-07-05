@@ -60,6 +60,7 @@ export default class Clientes extends React.Component{
             if (this.state.clientes.length >= 1) {
                 return this.state.clientes.map((cliente) => 
                     <tr key={cliente.id}>
+                        <td>{cliente.id}</td>
                         <td>{cliente.nome}</td>
                         <td>{cliente.cpf_cnpj}</td>
                         <td>
@@ -251,6 +252,7 @@ export default class Clientes extends React.Component{
                                                 <table className="table mt-3">
                                                     <thead>
                                                         <tr>
+                                                            <th>Código</th>
                                                             <th>Nome</th>
                                                             <th>CPF / CNPJ</th>
                                                             <th>Ações</th>
