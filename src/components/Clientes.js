@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import { abstractError } from '../utils';
+import { abstractError, scroll } from '../utils';
 import MaskedInput from 'react-text-mask';
 import BackButton from './BackButton';
 
@@ -116,6 +116,7 @@ export default class Clientes extends React.Component{
                 this.setState({ clientes: '', carregaInfo: false });
                 abstractError(error);
             });
+            scroll('card-clientes');
         }
     }
 
@@ -242,7 +243,7 @@ export default class Clientes extends React.Component{
                                             </form>
                                         </div>
                                     </div>
-                                    <div className="card">
+                                    <div className="card" id="card-clientes">
                                         <div className="card-header">
                                             <div className="card-title">Tabela de Clientes</div>
                                         </div>

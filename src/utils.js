@@ -29,5 +29,9 @@ module.exports = {
             return id;
         }
         return str;
+    },
+    scroll: function(id) {
+        const element = document.getElementById(id);
+        element.scrollIntoView({ behavior: 'smooth' });
     }
 }

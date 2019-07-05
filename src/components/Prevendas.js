@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { abstractError } from '../utils';
+import { abstractError, scroll } from '../utils';
 import SearchCliente from './SearchCliente';
 import BackButton from './BackButton';
 
@@ -127,7 +127,6 @@ export default class Prevendas extends React.Component{
     buscaPrevenda = (e) => {
         e.preventDefault();
         this.setState({ carregaInfo: true });
-        let planos_pag = [];
 
         axios({
             url: `http://api.nortelink.com.br/api/v1/prevendas/`,
@@ -151,6 +150,7 @@ export default class Prevendas extends React.Component{
             this.setState({ prevendas: '', carregaInfo: false });
             abstractError(error);
         });
+        scroll('card-prevendas');
     }
 
     defaultValueDate = () => {
@@ -273,7 +273,7 @@ export default class Prevendas extends React.Component{
                                             </form>
                                         </div>
                                     </div>
-                                    <div className="card">
+                                    <div className="card" id="card-prevendas">
                                         <div className="card-header">
                                             <div className="card-title">Pré-vendas</div>
                                         </div>

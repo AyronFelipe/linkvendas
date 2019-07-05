@@ -3,7 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { abstractError, fillWithZeros } from '../utils';
+import { abstractError, fillWithZeros, scroll } from '../utils';
 import BackButton from './BackButton';
 
 const PRIMEIRA_PAGE = 1;
@@ -93,6 +93,7 @@ export default class Produtos extends React.Component{
                 });
             }
         }
+        scroll('card-produtos');
     }
 
     renderProdutos = () => {
@@ -245,7 +246,7 @@ export default class Produtos extends React.Component{
                                             </form>
                                         </div>
                                     </div>
-                                    <div className="card">
+                                    <div className="card" id="card-produtos">
                                         <div className="card-header">
                                             <div className="card-title">Tabela de Produtos</div>
                                         </div>
