@@ -161,7 +161,6 @@ export default class NovoCliente extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
-                            <BackButton />
                             <div className="row">
                                 <div className="col-12">
                                     <div className="card">
@@ -372,6 +371,7 @@ export default class NovoCliente extends React.Component{
                                             </form>
                                         </div>
                                     </div>
+                                    <BackButton />
                                 </div>
                             </div>
                         </div>

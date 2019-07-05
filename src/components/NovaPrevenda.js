@@ -635,7 +635,6 @@ export default class NovaPrevenda extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
-                            <BackButton />
                             <div className="row">
                                 <div className="col-12 justify-content-center">
                                     <form onSubmit={this.handleSubmit}>
@@ -953,6 +952,7 @@ export default class NovaPrevenda extends React.Component{
                                     </form>
                                 </div>
                             </div>
+                            <BackButton />
                         </div>
                     </div>
                 </div>

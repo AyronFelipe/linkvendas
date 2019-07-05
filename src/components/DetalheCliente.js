@@ -52,7 +52,6 @@ export default class DetalheCliente extends React.Component {
                             </div>
                         </div>
                         <div className="page-inner">
-                            <BackButton />
                             <div className="row justify-content-center">
                                 {
                                     this.state.carregaInfo ?
@@ -168,6 +167,7 @@ export default class DetalheCliente extends React.Component {
                                                 </div>
                                             </div>
                                         </div>
+                                        <BackButton />
                                     </div>
                                 }
                             </div>

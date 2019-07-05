@@ -212,7 +212,6 @@ export default class Produtos extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
-                            <BackButton />
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="card">
@@ -267,6 +266,7 @@ export default class Produtos extends React.Component{
                                             </div>
                                         </div>
                                     </div>
+                                    <BackButton />
                                 </div>
                             </div>
                         </div>
