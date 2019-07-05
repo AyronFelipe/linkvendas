@@ -50,40 +50,47 @@ export default class Produtos extends React.Component{
         e.preventDefault();
         this.setState({ carregaInfo: true });
         if (this.state.showCodigo) {
-            axios({
-                url: `http://api.nortelink.com.br/api/v1/produtos/${this.id.current.value}`,
-                method: `get`,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-            })
-            .then((res) => {
-                this.setState({ produtos: [res.data], carregaInfo: false });
-            })
-            .catch((error) => {
-                this.setState({ produtos: '', carregaInfo: false, });
-                abstractError(error);
-            });
+            if (this.id.current.value == '') {
+                this.getProdutos();
+            } else {
+                axios({
+                    url: `http://api.nortelink.com.br/api/v1/produtos/${this.id.current.value}`,
+                    method: `get`,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.token}`
+                    },
+                })
+                .then((res) => {
+                    this.setState({ produtos: [res.data], carregaInfo: false });
+                })
+                .catch((error) => {
+                    this.setState({ produtos: '', carregaInfo: false, });
+                    abstractError(error);
+                });
+            }
         } else {
-            axios({
-                url: `http://api.nortelink.com.br/api/v1/produtos/`,
-                method: `get`,
-                headers: {
-                    'Authorization': `Bearer ${localStorage.token}`
-                },
-                params: {
-                    page: this.state.page,
-                    [this.state.order]: this.id.current.value.toUpperCase(),
-                }
-            })
-            .then((res) => {
-                this.setState({ produtos: res.data, carregaInfo: false });
-            })
-            .catch((error) => {
-                this.setState({ produtos: '', carregaInfo: false, });
-                abstractError(error);
-            });
-
+            if (this.id.current.value == '') {
+                this.getProdutos();
+            } else {
+                axios({
+                    url: `http://api.nortelink.com.br/api/v1/produtos/`,
+                    method: `get`,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.token}`
+                    },
+                    params: {
+                        page: this.state.page,
+                        [this.state.order]: this.id.current.value.toUpperCase(),
+                    }
+                })
+                .then((res) => {
+                    this.setState({ produtos: res.data, carregaInfo: false });
+                })
+                .catch((error) => {
+                    this.setState({ produtos: '', carregaInfo: false, });
+                    abstractError(error);
+                });
+            }
         }
     }
 

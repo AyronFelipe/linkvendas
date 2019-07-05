@@ -93,25 +93,29 @@ export default class Clientes extends React.Component{
             value = this.id.current.value.toUpperCase();
         }
         this.setState({ carregaInfo: true });
-        axios({
-            url: `http://api.nortelink.com.br/api/v1/clientes/`,
-            method: `get`,
-            headers: {
-                'Authorization': `Bearer ${localStorage.token}`
-            },
-            params: {
-                page: this.state.page,
-                order: order,
-                value: value
-            }
-        })
-        .then((res) => {
-            this.setState({ clientes: res.data, carregaInfo: false });
-        })
-        .catch((error) => {
-            this.setState({ clientes: '', carregaInfo: false });
-            abstractError(error);
-        });
+        if (value == '') {
+            this.getClientes();
+        } else {
+            axios({
+                url: `http://api.nortelink.com.br/api/v1/clientes/`,
+                method: `get`,
+                headers: {
+                    'Authorization': `Bearer ${localStorage.token}`
+                },
+                params: {
+                    page: this.state.page,
+                    order: order,
+                    value: value
+                }
+            })
+            .then((res) => {
+                this.setState({ clientes: res.data, carregaInfo: false });
+            })
+            .catch((error) => {
+                this.setState({ clientes: '', carregaInfo: false });
+                abstractError(error);
+            });
+        }
     }
 
     componentDidMount() {
