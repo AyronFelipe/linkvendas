@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { abstractError } from '../utils';
 import SearchCliente from './SearchCliente';
+import BackButton from './BackButton';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -175,7 +176,6 @@ export default class Prevendas extends React.Component{
         });
     }
 
-
     render(){
         return(
             <React.Fragment>
@@ -192,13 +192,14 @@ export default class Prevendas extends React.Component{
                                     </div>
                                     <div className="ml-md-auto py-2 py-md-0">
                                         <Link to="/nova-pre-venda/">
-                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Gerar Pré-venda</button>
+                                            <button className="btn btn-nortelink btn-round"><i className="la flaticon-add mr-2"></i> Nova Pré-venda</button>
                                         </Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="card">

@@ -5,6 +5,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { abstractError } from '../utils';
 import MaskedInput from 'react-text-mask';
+import BackButton from './BackButton';
 
 
 const CEP_LENGTH = 8;
@@ -160,6 +161,7 @@ export default class NovoCliente extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row">
                                 <div className="col-12">
                                     <div className="card">

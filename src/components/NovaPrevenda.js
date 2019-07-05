@@ -7,6 +7,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { abstractError, fillWithZeros } from '../utils';
 import CurrencyFormat from 'react-currency-format';
+import BackButton from './BackButton';
 
 
 const config = {
@@ -634,6 +635,7 @@ export default class NovaPrevenda extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row">
                                 <div className="col-12 justify-content-center">
                                     <form onSubmit={this.handleSubmit}>

@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { abstractError } from '../utils';
 import MaskedInput from 'react-text-mask';
+import BackButton from './BackButton';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -207,6 +208,7 @@ export default class Clientes extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="card">

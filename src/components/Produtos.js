@@ -4,6 +4,7 @@ import SideMenu from './SideMenu';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { abstractError, fillWithZeros } from '../utils';
+import BackButton from './BackButton';
 
 const PRIMEIRA_PAGE = 1;
 
@@ -210,6 +211,7 @@ export default class Produtos extends React.Component{
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row">
                                 <div className="col-sm-12">
                                     <div className="card">

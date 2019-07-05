@@ -3,6 +3,7 @@ import Header from './Header';
 import SideMenu from './SideMenu';
 import axios from 'axios';
 import { abstractError } from '../utils';
+import BackButton from './BackButton';
 
 
 export default class DetalheCliente extends React.Component {
@@ -51,6 +52,7 @@ export default class DetalheCliente extends React.Component {
                             </div>
                         </div>
                         <div className="page-inner">
+                            <BackButton />
                             <div className="row justify-content-center">
                                 {
                                     this.state.carregaInfo ?
