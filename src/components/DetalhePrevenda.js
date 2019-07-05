@@ -57,7 +57,7 @@ export default class DetalhePrevenda extends React.Component {
                                     this.state.carregaInfo ?
                                         <div className="loader loader-lg"></div>
                                     :
-                                        <div className="col-12 col-lg-10 col-xl-9">
+                                        <div className="col-12">
                                             <div className="row align-items-center">
                                                 <div className="col">
                                                     <h4 className="page-title">Pré-venda #{this.state.prevenda.numero}</h4>
