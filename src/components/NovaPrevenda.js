@@ -159,7 +159,7 @@ export default class NovaPrevenda extends React.Component{
             quantidade: this.state.quantidade,
             id_tab_preco: this.state.id_tab_preco,
             preco: this.state.preco,
-            pdesc: this.state.pdesc,
+            pdesc: $('#pdesc').val(),
         }
 
         if (this.state.id_venda == '') {
@@ -1088,7 +1088,7 @@ export default class NovaPrevenda extends React.Component{
                                         <div className="col-12">
                                             <div className="form-group">
                                                 <label htmlFor="pdesc">Desconto (%)</label>
-                                                <input type="number" name="pdesc_alterado" id="pdesc_alterado" className="form-control" min="0" step="0.01" defaultValue={this.state.produto_alterar.pdesc || '0'} />
+                                                <input type="number" name="pdesc_alterado" id="pdesc_alterado" className="form-control" min="0" step="0.01" defaultValue={ this.state.produto_alterar.pdesc } />
                                             </div>
                                         </div>
                                     </div>
