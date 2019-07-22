@@ -114,7 +114,7 @@ export default class Produtos extends React.Component{
                         <td>{produto.preco_venda.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
                         <td>
                             <Link to={`/produto/${produto.id}/detalhe/`}>
-                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
+                                <button className="btn btn-small btn-nortelink"><i className="fas fa-align-justify"></i></button>
                             </Link>
                         </td>
                     </tr>

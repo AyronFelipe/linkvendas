@@ -72,7 +72,7 @@ export default class Prevendas extends React.Component{
                         <td>{prevenda.vl_total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</td>
                         <td>
                             <Link to={`/pre-venda/${prevenda.numero}/detalhe/`}>
-                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
+                                <button className="btn btn-small btn-nortelink"><i className="fas fa-align-justify"></i></button>
                             </Link>
                         </td>
                     </tr>

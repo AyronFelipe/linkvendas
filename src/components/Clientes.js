@@ -72,7 +72,7 @@ export default class Clientes extends React.Component{
                         <td>{cliente.cpf_cnpj}</td>
                         <td>
                             <Link to={`/cliente/${cliente.id}/detalhe/`}>
-                                <button className="btn btn-small btn-nortelink mx-1 my-1"><i className="fas fa-ellipsis-v"></i></button>
+                                <button className="btn btn-small btn-nortelink mx-1 my-1"><i className="fas fa-align-justify"></i></button>
                             </Link>
                             <Link to={`/cliente/${cliente.id}/editar/`}>
                                 <button className="btn btn-small btn-primary mx-1 my-1"><i className="fas fa-pen"></i></button>
