@@ -17,7 +17,7 @@ export default class Pagination extends React.Component {
         return(
             <React.Fragment>
                 <div className="col-sm-12 col-md-5">
-                    <p>Mostrando de 1 a { this.props.rows } de { this.props.count } entradas</p>
+                    <p>Mostrando de { this.props.base } a { this.props.rows } de { this.props.count } entradas</p>
                 </div>
                 <div className="col-sm-12 col-md-7">
                     <nav aria-label="...">

@@ -326,7 +326,12 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
-                                                <Pagination page={this.state.page} onClick={this.handlePagination} rows={this.state.rows} count={this.state.count} />
+                                                <Pagination
+                                                    page={this.state.page} 
+                                                    onClick={this.handlePagination} 
+                                                    rows={parseInt(this.state.rows) * parseInt(this.state.page)} 
+                                                    count={this.state.count}
+                                                    base={ ((parseInt(this.state.rows) * parseInt(this.state.page)) - parseInt(this.state.rows)) + 1 } />
                                             </div>
                                         </div>
                                     </div>
