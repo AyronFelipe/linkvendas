@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { abstractError, fillWithZeros, scroll } from '../utils';
 import BackButton from './BackButton';
+import Pagination from './Pagination';
 
 const PRIMEIRA_PAGE = 1;
 
@@ -196,6 +197,27 @@ export default class Produtos extends React.Component{
         this.getProdutos();
     }
 
+    handlePagination = (page) => {
+        this.setState({ carregaInfo: true });
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/produtos/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: page,
+            }
+        })
+        .then((res) => {
+            this.setState({ produtos: res.data, carregaInfo: false, page: page });
+        })
+        .catch((error) => {
+            this.setState({ carregaInfo: false });
+            abstractError(error);
+        });
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -267,6 +289,7 @@ export default class Produtos extends React.Component{
                                                         {this.renderProdutos()}
                                                     </tbody>
                                                 </table>
+                                                <Pagination page={this.state.page} onClick={this.handlePagination} />
                                             </div>
                                         </div>
                                     </div>

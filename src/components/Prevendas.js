@@ -6,6 +6,7 @@ import axios from 'axios';
 import { abstractError, scroll } from '../utils';
 import SearchCliente from './SearchCliente';
 import BackButton from './BackButton';
+import Pagination from './Pagination';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -40,7 +41,7 @@ export default class Prevendas extends React.Component{
                 'Authorization': `Bearer ${localStorage.token}`
             },
             params: {
-                page: PRIMEIRA_PAGE,
+                page: this.state.page,
                 data_ini: new Date(),
                 data_fim: new Date(),
             }
@@ -176,6 +177,27 @@ export default class Prevendas extends React.Component{
         });
     }
 
+    handlePagination = (page) => {
+        this.setState({ carregaInfo: true });
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: page,
+            }
+        })
+        .then((res) => {
+            this.setState({ prevendas: res.data, carregaInfo: false, page: page });
+        })
+        .catch((error) => {
+            this.setState({ carregaInfo: false });
+            abstractError(error);
+        });
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -292,6 +314,7 @@ export default class Prevendas extends React.Component{
                                                         {this.renderPrevendas()}
                                                     </tbody>
                                                 </table>
+                                                <Pagination page={this.state.page} onClick={this.handlePagination} />
                                             </div>
                                         </div>
                                     </div>
