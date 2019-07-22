@@ -134,6 +134,28 @@ export default class EditarCliente extends React.Component{
                 'Authorization': `Bearer ${localStorage.token}`
             }
         }
+        if ($('#telefone').val() != '' && $('#telefone').val().length < 13) {
+            swal("Telefone informado incorretamente", {
+                icon: "warning",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-warning'
+                    }
+                },
+            });
+            return false
+        }
+        if ($('#celular').val() != '' && $('#celular').val().length < 13) {
+            swal("Telefone informado incorretamente", {
+                icon: "warning",
+                buttons: {
+                    confirm: {
+                        className: 'btn btn-warning'
+                    }
+                },
+            });
+            return false
+        }
         let body = {
             nome: $('#nome').val().toUpperCase(),
             pessoa: $('#pessoa').val(),
@@ -348,7 +370,7 @@ export default class EditarCliente extends React.Component{
                                                     <div className="row">
                                                         <div className="col-md-4 col-sm-12">
                                                             <div className="form-group">
-                                                                <label htmlFor="telefone">Telefone <span className="text-danger">*</span></label>
+                                                                <label htmlFor="telefone">Telefone</label>
                                                                 <MaskedInput
                                                                     mask={['(', /\d/, /\d/, ')', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
                                                                     guide={false}
@@ -356,13 +378,12 @@ export default class EditarCliente extends React.Component{
                                                                     id="telefone"
                                                                     className="form-control"
                                                                     onChange={this.changeHandler}
-                                                                    required
                                                                     defaultValue={this.state.cliente.telefone} />
                                                             </div>
                                                         </div>
                                                         <div className="col-md-4 col-sm-12">
                                                             <div className="form-group">
-                                                                <label htmlFor="celular">Celular <span className="text-danger">*</span></label>
+                                                                <label htmlFor="celular">Celular</label>
                                                                 <MaskedInput
                                                                     mask={['(', /\d/, /\d/, ')', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
                                                                     guide={false}
@@ -370,7 +391,6 @@ export default class EditarCliente extends React.Component{
                                                                     id="celular"
                                                                     className="form-control"
                                                                     onChange={this.changeHandler}
-                                                                    required
                                                                     defaultValue={this.state.cliente.celular} />
                                                             </div>
                                                         </div>
