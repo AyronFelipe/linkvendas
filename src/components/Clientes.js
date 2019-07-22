@@ -191,6 +191,27 @@ export default class Clientes extends React.Component{
         }
     }
 
+    handlePagination = (page) => {
+        this.setState({ carregaInfo: true });
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: page,
+            }
+        })
+            .then((res) => {
+                this.setState({ clientes: res.data, carregaInfo: false });
+            })
+            .catch((error) => {
+                this.setState({ carregaInfo: false });
+                abstractError(error);
+            });
+    }
+
     render(){
         return(
             <React.Fragment>
@@ -266,7 +287,7 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
-                                                <Pagination page={this.state.page} />
+                                                <Pagination page={this.state.page} onClick={this.handlePagination} />
                                             </div>
                                         </div>
                                     </div>

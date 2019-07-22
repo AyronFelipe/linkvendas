@@ -423,12 +423,16 @@ export default class NovaPrevenda extends React.Component{
         }
     }
 
+    fillZero = (e) => {
+        e.target.value = fillWithZeros(e.target.value, 5);
+    }
+
     renderOptionsBusca = () => {
         if (this.state.showCodigo) {
             return (
                 <div className="form-group">
                     <label htmlFor="id">Código</label>
-                    <input type="text" placeholder="Insira aqui" ref={this.id} name="codigo" id="codigo" className="form-control" required />
+                    <input type="text" placeholder="Insira aqui" ref={this.id} name="codigo" id="codigo" className="form-control" required onBlur={this.fillZero} />
                 </div>
             )
         } else if (this.state.showDescricao) {
