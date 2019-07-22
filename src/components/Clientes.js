@@ -6,6 +6,7 @@ import axios from 'axios';
 import { abstractError, scroll } from '../utils';
 import MaskedInput from 'react-text-mask';
 import BackButton from './BackButton';
+import Pagination from './Pagination';
 
 
 const PRIMEIRA_PAGE = 1;
@@ -65,7 +66,10 @@ export default class Clientes extends React.Component{
                         <td>{cliente.cpf_cnpj}</td>
                         <td>
                             <Link to={`/cliente/${cliente.id}/detalhe/`}>
-                                <button className="btn btn-small btn-nortelink"><i className="fas fa-ellipsis-v"></i></button>
+                                <button className="btn btn-small btn-nortelink mx-1 my-1"><i className="fas fa-ellipsis-v"></i></button>
+                            </Link>
+                            <Link to={`/cliente/${cliente.id}/editar/`}>
+                                <button className="btn btn-small btn-primary mx-1 my-1"><i className="fas fa-pen"></i></button>
                             </Link>
                         </td>
                     </tr>
@@ -262,6 +266,7 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
+                                                <Pagination page={this.state.page} />
                                             </div>
                                         </div>
                                     </div>

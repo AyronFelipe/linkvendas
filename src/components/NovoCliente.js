@@ -43,7 +43,7 @@ export default class NovoCliente extends React.Component{
             email: '',
             data_nasc: '',
             sexo: '',
-            consumidor: false
+            consumidor: true
         }
     }
 
@@ -120,9 +120,9 @@ export default class NovoCliente extends React.Component{
             ponto_ref: this.state.ponto_ref.toUpperCase(),
             telefone: this.state.telefone,
             celular: this.state.celular,
-            email: this.state.email,
+            email: $('#email').val(),
             data_nasc: this.state.data_nasc,
-            sexo: this.state.sexo,
+            sexo: $('.form-radio-input').val(),
             consumidor: this.state.consumidor,
         }
         axios.post(`http://api.nortelink.com.br/api/v1/clientes/`, qs.stringify(body), config)

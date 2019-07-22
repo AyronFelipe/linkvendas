@@ -36,7 +36,7 @@ export default class Produtos extends React.Component{
                 'Authorization': `Bearer ${localStorage.token}`
             },
             params: {
-                page: PRIMEIRA_PAGE,
+                page: this.state.page,
             }
         })
         .then((res) => {
