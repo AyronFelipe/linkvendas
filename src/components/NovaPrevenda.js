@@ -230,7 +230,7 @@ export default class NovaPrevenda extends React.Component{
         })
     }
 
-    handleInput = () => {
+    handleInput = (e) => {
         let tab_preco = this.id_tab_preco.current.value;
         let id_produto = this.produto.current.value;
         if (id_produto != '' && tab_preco != '') {
@@ -238,6 +238,7 @@ export default class NovaPrevenda extends React.Component{
             .then((res) => {
                 this.setState({ preco: res.data.preco_venda });
                 this.preco.current.value = res.data.preco_venda;
+                this.handleBlur(e);
             })
             .catch((error) => {
                 abstractError(error);
@@ -327,6 +328,7 @@ export default class NovaPrevenda extends React.Component{
             })
             .then((res) => {
                 this.setState({ produto_selecionado: [res.data] });
+                this.handleInput();
             })
             .catch((error) => {
                 abstractError(error);
@@ -674,7 +676,6 @@ export default class NovaPrevenda extends React.Component{
                                                                         <div className="form-group">
                                                                             <label htmlFor="id_tab_preco" className="placeholder">Código da Tabela de Preço<span className="text-danger">*</span></label>
                                                                             <select name="id_tab_preco" id="id_tab_preco" ref={this.id_tab_preco} onInput={this.handleInput} onChange={this.changeHandler} onBlur={this.handleBlurTabPreco} className="form-control" required>
-                                                                                <option value="">&nbsp;</option>
                                                                                 {this.state.tabs_preco.map((tab_preco) =>
                                                                                     <option key={tab_preco.id} value={tab_preco.id}>{tab_preco.descricao}</option>
                                                                                 )}
