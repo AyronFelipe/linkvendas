@@ -121,7 +121,7 @@ export default class Clientes extends React.Component{
                 }
             })
             .then((res) => {
-                this.setState({ clientes: res.data.rows, carregaInfo: false });
+                this.setState({ clientes: res.data, carregaInfo: false });
             })
             .catch((error) => {
                 this.setState({ clientes: '', carregaInfo: false });
