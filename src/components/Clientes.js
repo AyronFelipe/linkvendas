@@ -10,6 +10,8 @@ import Pagination from './Pagination';
 
 
 const PRIMEIRA_PAGE = 1;
+const ROWS = 20;
+
 
 const inputStyle = {
     textTransform: 'uppercase'
@@ -27,6 +29,8 @@ export default class Clientes extends React.Component{
             showCodigo: true,
             showCPFCNPJ: false,
             showNome: false,
+            rows: ROWS,
+            count: '',
         };
     }
 
@@ -39,10 +43,12 @@ export default class Clientes extends React.Component{
             },
             params: {
                 page: this.state.page,
+                count: 't',
+                rows: this.state.rows,
             }
         })
         .then((res) => {
-            this.setState({clientes: res.data, carregaInfo: false});
+            this.setState({ clientes: res.data.rows, carregaInfo: false, count: res.data.count });
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
@@ -115,7 +121,7 @@ export default class Clientes extends React.Component{
                 }
             })
             .then((res) => {
-                this.setState({ clientes: res.data, carregaInfo: false });
+                this.setState({ clientes: res.data.rows, carregaInfo: false });
             })
             .catch((error) => {
                 this.setState({ clientes: '', carregaInfo: false });
@@ -201,15 +207,39 @@ export default class Clientes extends React.Component{
             },
             params: {
                 page: page,
+                count: 't',
+                rows: this.state.rows,
             }
         })
-            .then((res) => {
-                this.setState({ clientes: res.data, carregaInfo: false, page: page });
-            })
-            .catch((error) => {
-                this.setState({ carregaInfo: false });
-                abstractError(error);
-            });
+        .then((res) => {
+            this.setState({ clientes: res.data.rows, carregaInfo: false, page: page });
+        })
+        .catch((error) => {
+            this.setState({ carregaInfo: false });
+            abstractError(error);
+        });
+    }
+
+    changeRowValue = (e) => {
+        axios({
+            url: `http://api.nortelink.com.br/api/v1/clientes/`,
+            method: `get`,
+            headers: {
+                'Authorization': `Bearer ${localStorage.token}`
+            },
+            params: {
+                page: this.state.page,
+                count: 't',
+                rows: $('#row-value').val(),
+            }
+        })
+        .then((res) => {
+            this.setState({ clientes: res.data.rows, carregaInfo: false, rows: $('#row-value').val() });
+        })
+        .catch((error) => {
+            this.setState({ carregaInfo: false });
+            abstractError(error);
+        });
     }
 
     render(){
@@ -274,6 +304,15 @@ export default class Clientes extends React.Component{
                                         </div>
                                         <div className="card-body">
                                             <div className="table-responsive">
+                                                <div className="col-sm-12 col-md-6">
+                                                    <label>
+                                                        <select className="form-control" id="row-value" onChange={this.changeRowValue}>
+                                                            <option value="20">20</option>
+                                                            <option value="50">50</option>
+                                                            <option value="100">100</option>
+                                                        </select>
+                                                    </label>
+                                                </div>
                                                 <table className="table mt-3">
                                                     <thead>
                                                         <tr>
@@ -287,7 +326,7 @@ export default class Clientes extends React.Component{
                                                         {this.renderClientes()}
                                                     </tbody>
                                                 </table>
-                                                <Pagination page={this.state.page} onClick={this.handlePagination} />
+                                                <Pagination page={this.state.page} onClick={this.handlePagination} rows={this.state.rows} count={this.state.count} />
                                             </div>
                                         </div>
                                     </div>
