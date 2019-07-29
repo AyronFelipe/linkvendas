@@ -115,13 +115,13 @@ export default class Clientes extends React.Component{
                     'Authorization': `Bearer ${localStorage.token}`
                 },
                 params: {
-                    page: this.state.page,
+                    page: PRIMEIRA_PAGE,
                     order: order,
                     value: value
                 }
             })
             .then((res) => {
-                this.setState({ clientes: res.data, carregaInfo: false });
+                this.setState({ clientes: res.data, carregaInfo: false, page: PRIMEIRA_PAGE });
             })
             .catch((error) => {
                 this.setState({ clientes: '', carregaInfo: false });
