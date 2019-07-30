@@ -32,6 +32,7 @@ export default class Clientes extends React.Component{
             rows: ROWS,
             count: '',
             pode_exibir: true,
+            exibe_tudo: true,
         };
     }
 
@@ -49,7 +50,7 @@ export default class Clientes extends React.Component{
             }
         })
         .then((res) => {
-            this.setState({ clientes: res.data.rows, carregaInfo: false, count: res.data.count, pode_exibir: true });
+            this.setState({ clientes: res.data.rows, carregaInfo: false, count: res.data.count, pode_exibir: true, exibe_tudo: true });
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
@@ -122,7 +123,7 @@ export default class Clientes extends React.Component{
                 }
             })
             .then((res) => {
-                this.setState({ clientes: res.data, carregaInfo: false, page: PRIMEIRA_PAGE, pode_exibir: false });
+                this.setState({ clientes: res.data, carregaInfo: false, page: PRIMEIRA_PAGE, pode_exibir: false, exibe_tudo: false });
             })
             .catch((error) => {
                 this.setState({ clientes: '', carregaInfo: false });
@@ -133,11 +134,6 @@ export default class Clientes extends React.Component{
     }
 
     componentDidMount() {
-        $('#basic-datatables').DataTable({
-            "language": {
-                "url": '//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'
-            }
-        });
         this.getClientes();
     }
 
@@ -213,7 +209,7 @@ export default class Clientes extends React.Component{
             }
         })
         .then((res) => {
-            this.setState({ clientes: res.data.rows, carregaInfo: false, page: page });
+            this.setState({ clientes: res.data.rows, carregaInfo: false, page: page, exibe_tudo: true });
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
@@ -235,7 +231,7 @@ export default class Clientes extends React.Component{
             }
         })
         .then((res) => {
-            this.setState({ clientes: res.data.rows, carregaInfo: false, rows: $('#row-value').val() });
+            this.setState({ clientes: res.data.rows, carregaInfo: false, rows: $('#row-value').val(), exibe_tudo: true });
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
@@ -334,7 +330,8 @@ export default class Clientes extends React.Component{
                                                     count={ this.state.count }
                                                     base={ this.state.clientes[0] != undefined ? parseInt(this.state.clientes[0].id) : null }
                                                     pode_exibir={ this.state.pode_exibir }
-                                                    rows={ this.state.rows } />
+                                                    rows={ this.state.rows }
+                                                    exibe_tudo={ this.state.exibe_tudo } />
                                             </div>
                                         </div>
                                     </div>
