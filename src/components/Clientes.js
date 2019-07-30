@@ -31,6 +31,7 @@ export default class Clientes extends React.Component{
             showNome: false,
             rows: ROWS,
             count: '',
+            pode_exibir: true,
         };
     }
 
@@ -48,7 +49,7 @@ export default class Clientes extends React.Component{
             }
         })
         .then((res) => {
-            this.setState({ clientes: res.data.rows, carregaInfo: false, count: res.data.count });
+            this.setState({ clientes: res.data.rows, carregaInfo: false, count: res.data.count, pode_exibir: true });
         })
         .catch((error) => {
             this.setState({ carregaInfo: false });
@@ -121,7 +122,7 @@ export default class Clientes extends React.Component{
                 }
             })
             .then((res) => {
-                this.setState({ clientes: res.data, carregaInfo: false, page: PRIMEIRA_PAGE });
+                this.setState({ clientes: res.data, carregaInfo: false, page: PRIMEIRA_PAGE, pode_exibir: false });
             })
             .catch((error) => {
                 this.setState({ clientes: '', carregaInfo: false });
@@ -327,11 +328,13 @@ export default class Clientes extends React.Component{
                                                     </tbody>
                                                 </table>
                                                 <Pagination
-                                                    page={this.state.page} 
-                                                    onClick={this.handlePagination} 
-                                                    rows={parseInt(this.state.rows) * parseInt(this.state.page)} 
-                                                    count={this.state.count}
-                                                    base={ ((parseInt(this.state.rows) * parseInt(this.state.page)) - parseInt(this.state.rows)) + 1 } />
+                                                    page={ this.state.page }
+                                                    onClick={ this.handlePagination }
+                                                    ultimo={ this.state.clientes[this.state.rows - 1] != undefined ? parseInt(this.state.clientes[this.state.rows - 1].id) : null }
+                                                    count={ this.state.count }
+                                                    base={ this.state.clientes[0] != undefined ? parseInt(this.state.clientes[0].id) : null }
+                                                    pode_exibir={ this.state.pode_exibir }
+                                                    rows={ this.state.rows } />
                                             </div>
                                         </div>
                                     </div>
