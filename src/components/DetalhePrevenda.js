@@ -132,7 +132,7 @@ export default class DetalhePrevenda extends React.Component {
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="separator-solid  mb-3"></div>
+                                                                    <div className="separator-solid  mb-3"></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,9 +146,9 @@ export default class DetalhePrevenda extends React.Component {
                                                                         {this.state.prevenda.parcelas > 0 ? <div><span>Parcelas:</span><span>{this.state.parcelas}</span></div> : null}
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-5 col-md-7 transfer-total">
-                                                                    <h5 class="sub">Total</h5>
-                                                                    <div class="price">{this.state.prevenda.vl_total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</div>
+                                                                <div className="col-sm-5 col-md-7 transfer-total">
+                                                                    <h5 className="sub">Total</h5>
+                                                                    <div className="price">{this.state.prevenda.vl_total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</div>
                                                                 </div>
                                                             </div>
                                                             <div className="separator-solid"></div>

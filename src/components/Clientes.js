@@ -180,8 +180,7 @@ export default class Clientes extends React.Component{
                         placeholder="Insira aqui"
                         className="form-control opt"
                         name="id"
-                        id="cpf_cnpj"
-                        required />
+                        id="cpf_cnpj" />
                 </div>
             );
         } else {
